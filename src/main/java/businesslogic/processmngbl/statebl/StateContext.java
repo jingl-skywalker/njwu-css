@@ -5,13 +5,15 @@
 package businesslogic.processmngbl.statebl;
 
 import businesslogicservice.processmngblservice.state.MyState;
+import java.util.Date;
 
 /**
  *
  * @author Administrator
  */
 public class StateContext {
-
+    
+    StateController stateController;
     CourseLaunchingState cls;
     DroppingState ds;
     FrameLaunchingState fls;
@@ -33,7 +35,12 @@ public class StateContext {
         rss = new ReselectingState(this);
         sls = new SelectingState(this);
         sts = new StartState(this);
+        stateController=new StateController();
         state = sts;
+    }
+    private StateContext(Date date){
+        this();
+        
     }
 
     public static StateContext getStateContext() { //双重加锁保证线程安全
@@ -48,7 +55,7 @@ public class StateContext {
     }
 
     public MyState getState() {
-        return state;
+        return this.state;
     }
 
     public void setState(MyState state) {

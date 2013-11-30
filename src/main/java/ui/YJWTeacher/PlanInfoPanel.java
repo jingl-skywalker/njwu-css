@@ -2,7 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package  ui.YJWTeacher;
+
+package ui.YJWTeacher;
+
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -89,6 +92,7 @@ public class PlanInfoPanel extends javax.swing.JPanel {
 
         sureButton.setBackground(new java.awt.Color(0, 0, 0));
         sureButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        sureButton.setForeground(new java.awt.Color(204, 204, 204));
         sureButton.setText("确认");
         sureButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
         sureButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,8 +103,14 @@ public class PlanInfoPanel extends javax.swing.JPanel {
 
         cancelButton.setBackground(new java.awt.Color(0, 0, 0));
         cancelButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        cancelButton.setForeground(new java.awt.Color(204, 204, 204));
         cancelButton.setText("取消");
         cancelButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -172,11 +182,17 @@ public class PlanInfoPanel extends javax.swing.JPanel {
 
     private void sureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sureButtonActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_sureButtonActionPerformed
 
     private void hourTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourTextFieldActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_hourTextFieldActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

@@ -2,11 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package ui.YJWTeacher;
-
-import ui.Administrator.ModifyKeyPanel;
-
+package ui.Teacher;
 
 /**
  *
@@ -17,7 +13,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
     /**
      * Creates new form PerInfoPanel
      */
-    public PerInfoPanel() {/*修改密码界面的问题！！！！*/
+    public PerInfoPanel() {
         initComponents();
     }
 
@@ -30,26 +26,29 @@ public class PerInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        idLabel = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
-        sexLabel = new javax.swing.JLabel();
         insLabel = new javax.swing.JLabel();
         idTextField = new javax.swing.JTextField();
-        nameTextField = new javax.swing.JTextField();
-        sexTextField = new javax.swing.JTextField();
-        insTextField = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
+        sexLabel = new javax.swing.JLabel();
+        errorButton = new javax.swing.JButton();
         identityLabel = new javax.swing.JLabel();
+        modifyButton = new javax.swing.JButton();
         identityTextField = new javax.swing.JTextField();
         birthLabel = new javax.swing.JLabel();
         birthTextField = new javax.swing.JTextField();
-        modifyButton = new javax.swing.JButton();
-        errorButton = new javax.swing.JButton();
+        idLabel = new javax.swing.JLabel();
+        insTextField = new javax.swing.JTextField();
+        sexTextField = new javax.swing.JTextField();
+        nameTextField = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
-        idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idLabel.setForeground(new java.awt.Color(204, 204, 204));
-        idLabel.setText("工号");
+        insLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        insLabel.setForeground(new java.awt.Color(204, 204, 204));
+        insLabel.setText("学院");
+
+        idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        idTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         nameLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         nameLabel.setForeground(new java.awt.Color(204, 204, 204));
@@ -59,35 +58,20 @@ public class PerInfoPanel extends javax.swing.JPanel {
         sexLabel.setForeground(new java.awt.Color(204, 204, 204));
         sexLabel.setText("性别");
 
-        insLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insLabel.setForeground(new java.awt.Color(204, 204, 204));
-        insLabel.setText("学院");
-
-        idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        sexTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        sexTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        insTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        errorButton.setBackground(new java.awt.Color(0, 0, 0));
+        errorButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        errorButton.setForeground(new java.awt.Color(204, 204, 204));
+        errorButton.setText("编辑");
+        errorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        errorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorButtonActionPerformed(evt);
+            }
+        });
 
         identityLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         identityLabel.setForeground(new java.awt.Color(204, 204, 204));
         identityLabel.setText("身份证号");
-
-        identityTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        identityTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        birthLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        birthLabel.setForeground(new java.awt.Color(204, 204, 204));
-        birthLabel.setText("出生年月");
-
-        birthTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        birthTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         modifyButton.setBackground(new java.awt.Color(0, 0, 0));
         modifyButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -100,16 +84,28 @@ public class PerInfoPanel extends javax.swing.JPanel {
             }
         });
 
-        errorButton.setBackground(new java.awt.Color(0, 0, 0));
-        errorButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        errorButton.setForeground(new java.awt.Color(204, 204, 204));
-        errorButton.setText("编辑");
-        errorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        errorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                errorButtonActionPerformed(evt);
-            }
-        });
+        identityTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        identityTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        birthLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        birthLabel.setForeground(new java.awt.Color(204, 204, 204));
+        birthLabel.setText("出生年月");
+
+        birthTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        birthTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        idLabel.setForeground(new java.awt.Color(204, 204, 204));
+        idLabel.setText("工号");
+
+        insTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        insTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        sexTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        sexTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        nameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -204,5 +200,4 @@ public class PerInfoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel sexLabel;
     private javax.swing.JTextField sexTextField;
     // End of variables declaration//GEN-END:variables
-    private ModifyKeyPanel modifyKeyPanel;
 }
