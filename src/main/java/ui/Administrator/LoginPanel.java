@@ -16,10 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import businesslogicservice.userblservice.UserLoginBLService;
 import businesslogicservice.userblservice.UserLoginFactory;
-import njuseaurora.cssclient.ui.Student.STUmain;
 import ui.JWTeacher.JWmainFrame;
-import ui.Teacher.TEAmain;
-import ui.YJWTeacher.YJWmain;
 import vo.uservo.UserInfoVO;
 
 /**
@@ -390,27 +387,20 @@ public class LoginPanel extends javax.swing.JPanel {
             return;
         }
         switch (type) {
-            case STUDENT: {
-                new STUmain().main(null, userVO);
+            case STUDENT:
                 break;
-            }
-            case TEACHER: {
-                new TEAmain().main(null, userVO);
+            case TEACHER:
                 break;
-            }
             case DEAN: {
                 new JWmainFrame().main(null, userVO);
                 break;
             }
-            case INS_DEAN: {
-                new YJWmain().main(null, userVO);
+            case INS_DEAN:
                 break;
-            }
-            case ADMIN: {
+            case ADMIN:
                 frame.dispose();
                 new AdminMain(userVO, ip, port).setVisible(true);
                 break;
-            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

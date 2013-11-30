@@ -2,9 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package ui.YJWTeacher;
-
+package  ui.YJWTeacher;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;

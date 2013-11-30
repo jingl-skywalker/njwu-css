@@ -2,11 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package ui.YJWTeacher;
-
-import ui.Administrator.ModifyKeyPanel;
-
+package  ui.YJWTeacher;
 
 /**
  *
@@ -17,7 +13,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
     /**
      * Creates new form PerInfoPanel
      */
-    public PerInfoPanel() {/*修改密码界面的问题！！！！*/
+    public PerInfoPanel() {
         initComponents();
     }
 
@@ -30,179 +26,122 @@ public class PerInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        idLabel = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
-        sexLabel = new javax.swing.JLabel();
-        insLabel = new javax.swing.JLabel();
-        idTextField = new javax.swing.JTextField();
-        nameTextField = new javax.swing.JTextField();
-        sexTextField = new javax.swing.JTextField();
-        insTextField = new javax.swing.JTextField();
-        identityLabel = new javax.swing.JLabel();
-        identityTextField = new javax.swing.JTextField();
-        birthLabel = new javax.swing.JLabel();
-        birthTextField = new javax.swing.JTextField();
-        modifyButton = new javax.swing.JButton();
-        errorButton = new javax.swing.JButton();
+        titelPanel2 = new javax.swing.JPanel();
+        peopleLogo2 = new javax.swing.JLabel();
+        nameLogo2 = new javax.swing.JLabel();
+        arrowLogo2 = new javax.swing.JLabel();
+        currentLogo2 = new javax.swing.JLabel();
+        backLogo2 = new javax.swing.JLabel();
+        backLabel2 = new javax.swing.JLabel();
+        homeLogo2 = new javax.swing.JLabel();
+        homeLabel2 = new javax.swing.JLabel();
+        exitLogo2 = new javax.swing.JLabel();
+        exitLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
-        idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idLabel.setForeground(new java.awt.Color(204, 204, 204));
-        idLabel.setText("工号");
+        titelPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        titelPanel2.setPreferredSize(new java.awt.Dimension(365, 37));
 
-        nameLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLabel.setForeground(new java.awt.Color(204, 204, 204));
-        nameLabel.setText("姓名");
+        peopleLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        peopleLogo2.setText("Logo");
 
-        sexLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        sexLabel.setForeground(new java.awt.Color(204, 204, 204));
-        sexLabel.setText("性别");
+        nameLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        nameLogo2.setText("name");
 
-        insLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insLabel.setForeground(new java.awt.Color(204, 204, 204));
-        insLabel.setText("学院");
+        arrowLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        arrowLogo2.setText("->");
 
-        idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        currentLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        currentLogo2.setText("current");
 
-        nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        backLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        backLogo2.setText("Logo");
 
-        sexTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        sexTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        backLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        backLabel2.setText("back");
 
-        insTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        homeLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        homeLogo2.setText("Logo");
 
-        identityLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        identityLabel.setForeground(new java.awt.Color(204, 204, 204));
-        identityLabel.setText("身份证号");
+        homeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        homeLabel2.setText("home");
 
-        identityTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        identityTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        exitLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        exitLogo2.setText("Logo");
 
-        birthLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        birthLabel.setForeground(new java.awt.Color(204, 204, 204));
-        birthLabel.setText("出生年月");
+        exitLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        exitLabel2.setText("exit");
 
-        birthTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        birthTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        modifyButton.setBackground(new java.awt.Color(0, 0, 0));
-        modifyButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        modifyButton.setForeground(new java.awt.Color(204, 204, 204));
-        modifyButton.setText("修改密码");
-        modifyButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        modifyButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modifyButtonActionPerformed(evt);
-            }
-        });
-
-        errorButton.setBackground(new java.awt.Color(0, 0, 0));
-        errorButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        errorButton.setForeground(new java.awt.Color(204, 204, 204));
-        errorButton.setText("编辑");
-        errorButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        errorButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                errorButtonActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout titelPanel2Layout = new javax.swing.GroupLayout(titelPanel2);
+        titelPanel2.setLayout(titelPanel2Layout);
+        titelPanel2Layout.setHorizontalGroup(
+            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titelPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(peopleLogo2)
+                .addGap(18, 18, 18)
+                .addComponent(nameLogo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(arrowLogo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(currentLogo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
+                .addComponent(backLogo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(homeLogo2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(homeLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(exitLogo2)
+                .addGap(5, 5, 5)
+                .addComponent(exitLabel2)
+                .addContainerGap())
+        );
+        titelPanel2Layout.setVerticalGroup(
+            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titelPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(peopleLogo2)
+                    .addComponent(nameLogo2)
+                    .addComponent(arrowLogo2)
+                    .addComponent(currentLogo2)
+                    .addComponent(backLogo2)
+                    .addComponent(backLabel2)
+                    .addComponent(homeLogo2)
+                    .addComponent(homeLabel2)
+                    .addComponent(exitLogo2)
+                    .addComponent(exitLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(sexLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(sexTextField))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(nameLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(nameTextField))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(idLabel)
-                            .addGap(18, 18, 18)
-                            .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(errorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(identityLabel)
-                            .addComponent(insLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(insTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                            .addComponent(identityTextField)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(birthLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(birthTextField))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idLabel)
-                    .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(insLabel)
-                    .addComponent(insTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameLabel)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(identityLabel)
-                    .addComponent(identityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sexLabel)
-                    .addComponent(sexTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(birthLabel)
-                    .addComponent(birthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(errorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 357, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void errorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_errorButtonActionPerformed
-
-    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_modifyButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel birthLabel;
-    private javax.swing.JTextField birthTextField;
-    private javax.swing.JButton errorButton;
-    private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField idTextField;
-    private javax.swing.JLabel identityLabel;
-    private javax.swing.JTextField identityTextField;
-    private javax.swing.JLabel insLabel;
-    private javax.swing.JTextField insTextField;
-    private javax.swing.JButton modifyButton;
-    private javax.swing.JLabel nameLabel;
-    private javax.swing.JTextField nameTextField;
-    private javax.swing.JLabel sexLabel;
-    private javax.swing.JTextField sexTextField;
+    private javax.swing.JLabel arrowLogo2;
+    private javax.swing.JLabel backLabel2;
+    private javax.swing.JLabel backLogo2;
+    private javax.swing.JLabel currentLogo2;
+    private javax.swing.JLabel exitLabel2;
+    private javax.swing.JLabel exitLogo2;
+    private javax.swing.JLabel homeLabel2;
+    private javax.swing.JLabel homeLogo2;
+    private javax.swing.JLabel nameLogo2;
+    private javax.swing.JLabel peopleLogo2;
+    private javax.swing.JPanel titelPanel2;
     // End of variables declaration//GEN-END:variables
-    private ModifyKeyPanel modifyKeyPanel;
 }
