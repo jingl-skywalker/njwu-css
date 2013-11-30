@@ -7,12 +7,12 @@ package vo.framevo;
 import businesslogic.framebl.Block;
 import po.framepo.BlockPO;
 
-
 /**
  *
  * @author Administrator
  */
 public class BlockVO {
+
     private String name;
     private int lower;
     private int upper;
@@ -27,12 +27,12 @@ public class BlockVO {
         this.upper = upper;
         this.description = description;
     }
-    public BlockVO(Block block)
-    {
+
+    public BlockVO(Block block) {
         this(block.getName(), block.getLower(), block.getUpper(), block.getDescription());
     }
-    public BlockVO(BlockPO block)
-    {
+
+    public BlockVO(BlockPO block) {
         this(block.getName(), block.getLower(), block.getUpper(), block.getDescription());
     }
 

@@ -206,6 +206,7 @@ public class FileutilityImpl implements FileUtility {
      * ex); } System.out.println("ok"); }*
      */
     public static void writeToFile(String file, String content) {
+        System.out.println("@Fileurilityimpl.java"+content);
         PrintWriter writer = null;
         try {
             writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")));

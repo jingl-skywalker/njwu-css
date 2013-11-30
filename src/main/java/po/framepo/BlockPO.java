@@ -24,6 +24,9 @@ public class BlockPO implements  Serializable{
         this.upper = upper;
         this.lower = lower;
     }
+    public BlockPO(Block block){
+        this(block.getName(), block.getDescription(), block.getUpper(), block.getLower());
+    }
 
     public String getName() {
         return this.name;

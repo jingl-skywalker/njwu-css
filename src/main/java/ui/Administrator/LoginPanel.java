@@ -4,6 +4,10 @@
  */
 package ui.Administrator;
 
+import businesslogic.processmngbl.noticebl.NoticeList;
+import businesslogic.processmngbl.noticebl.NoticeReceiverFactory;
+import businesslogicservice.processmngblservice.notice.NoticeReceiverService;
+import businesslogicservice.processmngblservice.notice.ROLE;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -384,12 +388,11 @@ public class LoginPanel extends javax.swing.JPanel {
         }
         switch (type) {
             case STUDENT:
-
                 break;
             case TEACHER:
                 break;
             case DEAN: {
-                new JWmainFrame().main(null);
+                new JWmainFrame().main(null, userVO);
                 break;
             }
             case INS_DEAN:
@@ -436,6 +439,13 @@ public class LoginPanel extends javax.swing.JPanel {
         loginFrame.setLocationRelativeTo(loginFrame.getOwner());
         loginFrame.add(loginPanel);
         loginFrame.setVisible(true);
+
+        System.out.println("________test notice receiver____________________");
+        NoticeReceiverFactory noticeReceiverFactory = new NoticeReceiverFactory();
+        NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.ALL);
+        NoticeList nl = nrs.getNoticeList();
+        nl.printNoticeList();
+        System.out.println("test_________notice ___receiver_end");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton adminRadioButton;

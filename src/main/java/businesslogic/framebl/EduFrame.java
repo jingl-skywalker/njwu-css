@@ -29,7 +29,7 @@ public class EduFrame {
         bList = new BlockList();
         try {
             dataFactory = (DataFactory) Naming.lookup("dataFactory");
-            System.out.println(dataFactory==null);
+            System.out.println(dataFactory == null);
             fds = dataFactory.getFrameData();
         } catch (NotBoundException ex) {
             Logger.getLogger(EduFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,8 +45,6 @@ public class EduFrame {
         this.description = description;
         this.total = total;
     }
-
-
 
     public BlockList getBlocks() {
         return bList;
@@ -82,9 +80,9 @@ public class EduFrame {
         this.save();
         return true;
     }
-    public boolean createFrame()
-    {
-        FramePO fpo=new FramePO(this);
+
+    public boolean createFrame() {
+        FramePO fpo = new FramePO(this);
         try {
             fds.insert(fpo);
         } catch (RemoteException ex) {
@@ -97,13 +95,26 @@ public class EduFrame {
     public FrameVO find() {
         FramePO fpo = null;
         try {
-        //    fpo =new FramePO(fds.find());
+            //    fpo =new FramePO(fds.find());
             ///fpo=new FramePO(fds.find());
-            fpo=fds.find();
+            fpo = fds.find();
         } catch (RemoteException ex) {
             Logger.getLogger(EduFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (fpo == null) {
+            System.out.println("@Eduframe.java find fpo is null");
+            return null;
+        }
         FrameVO fvo = new FrameVO(fpo);
+        this.total = fpo.getTotal();
+        this.description = fpo.getBase();
+        this.bList = new BlockList();
+        ArrayList<BlockPO> bpos = fpo.getBlocks();
+        System.out.println("@eduframe.java:print the block messagee");
+        for (BlockPO bpo : bpos) {
+            System.out.println(bpo.toStoreString());
+            bList.add(new Block(bpo));
+        }
         return fvo;
     }
 
@@ -112,7 +123,7 @@ public class EduFrame {
         fpo.setPublic();
         int size = bList.getSum();
         for (int i = 0; i < size; i++) {
-       //     fpo.addBlock(new BlockPO(bList.getBlock(i)));
+            fpo.addBlock(new BlockPO(bList.getBlock(i)));
         }
         try {
             fds.update(fpo);
@@ -120,5 +131,8 @@ public class EduFrame {
             Logger.getLogger(EduFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
+    }
+    public FrameVO getFrameVO(){
+        return new FrameVO(this);
     }
 }

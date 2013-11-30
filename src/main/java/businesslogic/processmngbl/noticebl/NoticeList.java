@@ -54,6 +54,10 @@ public class NoticeList {
         return list.isEmpty();
     }
     public void printNoticeList(){
+        if(this.list.size()==0){
+            System.out.println("null");
+            return ;
+        }
         for(Notice n:this.list){
             System.out.println(n.getContent()+n.getName()+n.getNum()+n.getTime()+n.getRole());
         }

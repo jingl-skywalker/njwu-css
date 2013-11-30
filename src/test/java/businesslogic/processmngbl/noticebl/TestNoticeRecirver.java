@@ -18,9 +18,7 @@ public class TestNoticeRecirver {
         NoticeReceiverFactory noticeReceiverFactory = new NoticeReceiverFactory();
         NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.ALL);
         NoticeList nl = nrs.getNoticeList();
-        Iterator<Notice> notices = nl.getIterator();
-        while (notices.hasNext()) {
-            System.out.println(notices.next().getRole());
-        }
+        
+        nl.printNoticeList();
     }
 }

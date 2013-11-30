@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import po.framepo.BlockPO;
 
 public class FrameData extends UnicastRemoteObject implements FrameDataService {
-    
+
     FileUtility utility = new FileutilityImpl("src/main/resources/frame.txt");
 
     public FrameData() throws RemoteException {
@@ -37,8 +37,9 @@ public class FrameData extends UnicastRemoteObject implements FrameDataService {
     @Override
     public FramePO find() throws RemoteException {
         // TODO Auto-generated method stub
-               ArrayList<String> infos = utility.find();
-        if (infos.get(0).equals("N")) {
+        ArrayList<String> infos = utility.find();
+        System.out.println("framedata.java find print infos.size==0" + (infos.size() == 0));
+        if (infos.size() == 0 || infos.get(0).equals("N")) {
             return null;
         }
         String[] frameInfos = infos.get(1).split(":");
@@ -50,6 +51,6 @@ public class FrameData extends UnicastRemoteObject implements FrameDataService {
         FramePO fpo;
         fpo = new FramePO(Integer.parseInt(frameInfos[1]), frameInfos[0], pos);
         return fpo;
-    
+
     }
 }

@@ -54,22 +54,24 @@ public class SendMsgPanel extends javax.swing.JPanel {
     }
 
     public void refreshNoticePanel(int indexOfNoticeList) {
-        Notice notice = noticeList.getX(indexOfNoticeList+1);
+        Notice notice = noticeList.getX(indexOfNoticeList + 1);
         titleTextField.setText(notice.getName());
         msgTextArea.setText(notice.getContent());
         refreshRadioButtons(notice.getRole());
     }
-    public void setNoticePanelEditable(boolean  editable){
+
+    public void setNoticePanelEditable(boolean editable) {
         titleTextField.setEditable(editable);
         msgTextArea.setEditable(editable);
     }
-    public void refreshRadioButtons(ROLE role){
+
+    public void refreshRadioButtons(ROLE role) {
         teacherChoose.setSelected(false);
         studentChoose.setSelected(false);
         allChoose.setSelected(false);
         insJWchoose.setSelected(false);
-       JRadioButton button=getSelectedButton(role);
-       button.setSelected(true);
+        JRadioButton button = getSelectedButton(role);
+        button.setSelected(true);
     }
 
     public JRadioButton getSelectedButton(ROLE role) {
@@ -79,7 +81,7 @@ public class SendMsgPanel extends javax.swing.JPanel {
             case STUDENT:
                 return studentChoose;
             case INSJW:
-               return insJWchoose;
+                return insJWchoose;
             case BEGINNER:
                 return studentChoose;
             case ALL:
@@ -257,31 +259,29 @@ public class SendMsgPanel extends javax.swing.JPanel {
             .addGroup(msgPanelLayout.createSequentialGroup()
                 .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(msgPanelLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(receiverLabel)
+                        .addGap(70, 70, 70)
+                        .addComponent(insJWchoose)
+                        .addGap(53, 53, 53)
+                        .addComponent(teacherChoose)
+                        .addGap(27, 27, 27)
+                        .addComponent(studentChoose)
+                        .addGap(18, 18, 18)
+                        .addComponent(allChoose))
+                    .addGroup(msgPanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(msgPanelLayout.createSequentialGroup()
+                                .addComponent(titleLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(msgPanelLayout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(msgPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(msgPanelLayout.createSequentialGroup()
-                                .addComponent(receiverLabel)
-                                .addGap(70, 70, 70)
-                                .addComponent(insJWchoose)
-                                .addGap(53, 53, 53)
-                                .addComponent(teacherChoose)
-                                .addGap(27, 27, 27)
-                                .addComponent(studentChoose)
-                                .addGap(18, 18, 18)
-                                .addComponent(allChoose))
-                            .addGroup(msgPanelLayout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(msgPanelLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(titleLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(titleTextField)))))
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(msgPanelLayout.createSequentialGroup()
@@ -295,8 +295,8 @@ public class SendMsgPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(titleLabel)
-                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -305,7 +305,7 @@ public class SendMsgPanel extends javax.swing.JPanel {
                     .addComponent(allChoose)
                     .addComponent(teacherChoose)
                     .addComponent(receiverLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(msgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sureButton)
                     .addComponent(cancelButton)))

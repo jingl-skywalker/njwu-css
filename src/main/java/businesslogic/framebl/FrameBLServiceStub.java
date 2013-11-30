@@ -77,4 +77,14 @@ public class FrameBLServiceStub implements FrameBLService {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public void initFrameMsg() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public FrameVO look(boolean isLocal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

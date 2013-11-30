@@ -8,6 +8,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import ui.Library.Navigation;
+import vo.uservo.UserInfoVO;
 
 
 
@@ -18,6 +19,7 @@ import ui.Library.Navigation;
  */
 public class JWmainFrame extends javax.swing.JFrame {
 
+    UserInfoVO userInfoVO;
     /**
      * Creates new form JWmainFrame
      */
@@ -28,6 +30,7 @@ public class JWmainFrame extends javax.swing.JFrame {
         framePanel = new FramePanel();
         planPanel = new PlanPanel();
         staticsPanel = new StaticsPanel();
+        perInfoPanel = new PerInfoPanel(this);
         processMainPanel = new ProcessMainPanel();
         backLabel.setForeground(Color.BLUE);
         homeLabel.setForeground(Color.BLUE);
@@ -39,12 +42,16 @@ public class JWmainFrame extends javax.swing.JFrame {
         containPanel.add(planPanel,"planP");
         containPanel.add(staticsPanel,"staticsP");
         containPanel.add(processMainPanel,"processMainP");
+        containPanel.add(perInfoPanel,"perInfoP");
         navigation = new Navigation();//-------------------------------导航栏标签
         titelPanel.add(navigation.getArrow(),0,0);
         titelPanel.add(navigation.getNow(),0,0);
         navigation.setNowBounds(201, 7, 84, 19);
     }
-
+    public void setUserInforVO(UserInfoVO userInfoVO){
+        this.userInfoVO=userInfoVO;
+        perInfoPanel.setUserInfoVO(userInfoVO);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -366,12 +373,12 @@ public class JWmainFrame extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addComponent(personLabel))
                             .addComponent(personButton))))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(421, Short.MAX_VALUE))
         );
         jwMainPanelLayout.setVerticalGroup(
             jwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jwMainPanelLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(jwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(frameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -385,9 +392,9 @@ public class JWmainFrame extends javax.swing.JFrame {
                     .addComponent(frameLabel)
                     .addComponent(planLabel)
                     .addComponent(staticsLabel))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout containPanelLayout = new javax.swing.GroupLayout(containPanel);
@@ -398,7 +405,9 @@ public class JWmainFrame extends javax.swing.JFrame {
         );
         containPanelLayout.setVerticalGroup(
             containPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jwMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(containPanelLayout.createSequentialGroup()
+                .addComponent(jwMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
@@ -463,6 +472,9 @@ public class JWmainFrame extends javax.swing.JFrame {
 
     private void personButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_personButtonActionPerformed
         // TODO add your handling code here:
+        cardLayout.show(containPanel, "perInfoP");
+        navigation.setNowText("个人信息");
+        navigation.setVisible(true);
     }//GEN-LAST:event_personButtonActionPerformed
 
     private void planButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planButtonActionPerformed
@@ -549,7 +561,7 @@ public class JWmainFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public  void main(String args[]) {
+    public  void main(String args[], final UserInfoVO userInfoVO) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -576,7 +588,12 @@ public class JWmainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JWmainFrame().setVisible(true);
+                JWmainFrame frame=new JWmainFrame();
+                frame.setUserInforVO(userInfoVO);
+                frame.setVisible(true);
+                System.out.println("@jwmainframe.java"+userInfoVO.toString());
+                System.out.println("ususerinfo null:"+(userInfoVO==null));
+                
             }
         });
     }
@@ -618,5 +635,6 @@ public class JWmainFrame extends javax.swing.JFrame {
     private CardLayout cardLayout;
     private Navigation navigation;
     private boolean isProcess;//for “backLabel”：用来判断是否是process界面
+    private PerInfoPanel perInfoPanel;
 
 }

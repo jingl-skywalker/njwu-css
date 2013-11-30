@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import businesslogic.framebl.Block;
 import businesslogic.framebl.BlockList;
 import businesslogic.framebl.EduFrame;
+import java.util.Iterator;
 import po.framepo.BlockPO;
 import po.framepo.FramePO;
 
@@ -17,9 +18,9 @@ import po.framepo.FramePO;
  */
 public class FrameVO {
 
-    String description;
+    private String description;
     ArrayList<BlockVO> blocks;
-    int total;
+    private int total;
 
     public FrameVO() {
         blocks = new ArrayList<BlockVO>();
@@ -54,4 +55,18 @@ public class FrameVO {
             blocks.add(new BlockVO(fpo.getBlockPO(i)));
         }
     }
+    public Iterator<BlockVO> getBlockIterator(){
+        return blocks.iterator();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+   public BlockVO getBlock(int index){
+       return blocks.get(index);
+   }
 }

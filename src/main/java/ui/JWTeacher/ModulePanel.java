@@ -23,6 +23,9 @@ public class ModulePanel extends javax.swing.JPanel {
         this();
         this.frameBLService=frameBLService;
     }
+    public void setFrameBL(FrameBLService fbls){
+        this.frameBLService=fbls;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,6 +192,7 @@ public class ModulePanel extends javax.swing.JPanel {
             low=Integer.parseInt(lowerString);
         } catch (Exception e) {
         }
+        System.out.println(frameBLService==null);
         frameBLService.createBlock(name, low, up, content);
     }//GEN-LAST:event_sureButtonActionPerformed
 

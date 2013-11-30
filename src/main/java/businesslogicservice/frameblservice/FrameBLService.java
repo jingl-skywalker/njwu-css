@@ -24,5 +24,9 @@ public interface FrameBLService {
     public FrameVO modifyBlock(int ID, String name, int lower, int upper, String description);
 
     public FrameVO look();
+    
+    public void initFrameMsg();
+    
+    public FrameVO look(boolean isLocal);
 	
 }

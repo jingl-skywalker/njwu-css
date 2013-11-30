@@ -11,7 +11,8 @@ import businesslogic.userbl.UserInfoController;
  * @author 天
  */
 public class UserInfoFactory {
-    public UserBLService getUserBLService(String ip,int port){
-        return new UserInfoController(ip,port);
+
+    public UserBLService getUserBLService(String ip, int port) {
+        return new UserInfoController(ip, port);
     }
 }

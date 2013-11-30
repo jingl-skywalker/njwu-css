@@ -14,7 +14,10 @@ import java.util.Date;
 public interface TimeFormat {
 
     public DateFormat getTimeFormat();
-    public  Date getTime(String formattedString);
-    public  String getFormattedTimeString(Date date);
-    public Date getTime(String year,String month,String day,String hour,String min,String second);
+
+    public Date getTime(String formattedString);
+
+    public String getFormattedTimeString(Date date);
+
+    public Date getTime(String year, String month, String day, String hour, String min, String second);
 }
