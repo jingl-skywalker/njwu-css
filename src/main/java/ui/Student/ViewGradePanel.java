@@ -4,6 +4,13 @@
  */
 package ui.Student;
 
+import businesslogicservice.gradeblservice.GradeBLService;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import vo.gradevo.GradeVO;
+
 /**
  *
  * @author zili chen
@@ -13,8 +20,14 @@ public class ViewGradePanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewGradePanel
      */
-    public ViewGradePanel() {
+    
+    private String stuID;
+    private GradeBLService gradebl;
+    
+    public ViewGradePanel(String stuID, GradeBLService gradebl) {
         initComponents();
+        this.stuID = stuID;
+        this.gradebl = gradebl;
     }
 
     /**
@@ -26,17 +39,6 @@ public class ViewGradePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        titelPanel2 = new javax.swing.JPanel();
-        peopleLogo2 = new javax.swing.JLabel();
-        nameLogo2 = new javax.swing.JLabel();
-        arrowLogo2 = new javax.swing.JLabel();
-        currentLogo2 = new javax.swing.JLabel();
-        backLogo2 = new javax.swing.JLabel();
-        backLabel2 = new javax.swing.JLabel();
-        homeLogo2 = new javax.swing.JLabel();
-        homeLabel2 = new javax.swing.JLabel();
-        exitLogo2 = new javax.swing.JLabel();
-        exitLabel2 = new javax.swing.JLabel();
         siftPanel = new javax.swing.JPanel();
         termLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -46,89 +48,10 @@ public class ViewGradePanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         gradeListTable = new javax.swing.JTable();
         creditLabel = new javax.swing.JLabel();
-        placeLabel = new javax.swing.JLabel();
         creditLabel2 = new javax.swing.JLabel();
-        placeLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
-
-        titelPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        titelPanel2.setPreferredSize(new java.awt.Dimension(365, 37));
-
-        peopleLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        peopleLogo2.setText("Logo");
-
-        nameLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLogo2.setText("name");
-
-        arrowLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        arrowLogo2.setText("->");
-
-        currentLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        currentLogo2.setText("current");
-
-        backLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLogo2.setText("Logo");
-
-        backLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLabel2.setText("back");
-
-        homeLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLogo2.setText("Logo");
-
-        homeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLabel2.setText("home");
-
-        exitLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLogo2.setText("Logo");
-
-        exitLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLabel2.setText("exit");
-
-        javax.swing.GroupLayout titelPanel2Layout = new javax.swing.GroupLayout(titelPanel2);
-        titelPanel2.setLayout(titelPanel2Layout);
-        titelPanel2Layout.setHorizontalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(peopleLogo2)
-                .addGap(18, 18, 18)
-                .addComponent(nameLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(arrowLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(currentLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
-                .addComponent(backLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(homeLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(homeLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(exitLogo2)
-                .addGap(5, 5, 5)
-                .addComponent(exitLabel2)
-                .addContainerGap())
-        );
-        titelPanel2Layout.setVerticalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(peopleLogo2)
-                    .addComponent(nameLogo2)
-                    .addComponent(arrowLogo2)
-                    .addComponent(currentLogo2)
-                    .addComponent(backLogo2)
-                    .addComponent(backLabel2)
-                    .addComponent(homeLogo2)
-                    .addComponent(homeLabel2)
-                    .addComponent(exitLogo2)
-                    .addComponent(exitLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        setPreferredSize(new java.awt.Dimension(889, 368));
 
         siftPanel.setBackground(new java.awt.Color(0, 0, 0));
         siftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "筛选课程", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
@@ -145,10 +68,20 @@ public class ViewGradePanel extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        termList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                termListMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(termList);
 
         creditButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         creditButton.setText("查看总学分绩");
+        creditButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                creditButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout siftPanelLayout = new javax.swing.GroupLayout(siftPanel);
         siftPanel.setLayout(siftPanelLayout);
@@ -216,20 +149,10 @@ public class ViewGradePanel extends javax.swing.JPanel {
         creditLabel.setForeground(new java.awt.Color(204, 204, 204));
         creditLabel.setText("本学期的学分绩：");
 
-        placeLabel.setBackground(new java.awt.Color(0, 0, 0));
-        placeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        placeLabel.setForeground(new java.awt.Color(204, 204, 204));
-        placeLabel.setText("年级排名：");
-
         creditLabel2.setBackground(new java.awt.Color(0, 0, 0));
         creditLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         creditLabel2.setForeground(new java.awt.Color(204, 204, 204));
         creditLabel2.setText("XX");
-
-        placeLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        placeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        placeLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        placeLabel2.setText("XX");
 
         javax.swing.GroupLayout gradePanelLayout = new javax.swing.GroupLayout(gradePanel);
         gradePanel.setLayout(gradePanelLayout);
@@ -244,10 +167,6 @@ public class ViewGradePanel extends javax.swing.JPanel {
                 .addComponent(creditLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(creditLabel2)
-                .addGap(76, 76, 76)
-                .addComponent(placeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(placeLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         gradePanelLayout.setVerticalGroup(
@@ -258,9 +177,7 @@ public class ViewGradePanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(gradePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(creditLabel)
-                    .addComponent(placeLabel)
-                    .addComponent(creditLabel2)
-                    .addComponent(placeLabel2))
+                    .addComponent(creditLabel2))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -268,7 +185,6 @@ public class ViewGradePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(siftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,37 +195,62 @@ public class ViewGradePanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(siftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(gradePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void showGradeList(ArrayList<GradeVO> gradelist){
+        Iterator<GradeVO> iterator = gradelist.iterator();
+        DefaultTableModel tableModel = (DefaultTableModel)gradeListTable.getModel();
+        while(iterator.hasNext()){
+            GradeVO grade = iterator.next();
+            String score;
+            if(grade.getGrade() < 0){
+                score = "";
+            }
+            else{
+                score = "" + grade.getGrade();
+            }
+            tableModel.addRow(new Object[]{grade.getCourseNum(), grade.getCouseName(), score});
+        }
+    }
+    
+    private void clearAll(){
+        gradeListTable.removeAll();
+        creditLabel.setText("");
+    }
+    
+    private void termListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_termListMouseClicked
+        String term = (String)termList.getSelectedValue();
+        ArrayList<GradeVO> gradelist = gradebl.getCourseScore(stuID, term);
+        
+        clearAll();
+        if(gradelist != null){
+            showGradeList(gradelist);
+            creditLabel.setText("" + gradebl.getGPA(stuID, term));
+        }
+        
+    }//GEN-LAST:event_termListMouseClicked
+
+    private void creditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creditButtonActionPerformed
+        String totalCredit = "总学分: " + gradebl.getGradeSum(stuID, "");
+        JOptionPane.showMessageDialog(null, totalCredit);
+    }//GEN-LAST:event_creditButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel arrowLogo2;
-    private javax.swing.JLabel backLabel2;
-    private javax.swing.JLabel backLogo2;
     private javax.swing.JButton creditButton;
     private javax.swing.JLabel creditLabel;
     private javax.swing.JLabel creditLabel2;
-    private javax.swing.JLabel currentLogo2;
-    private javax.swing.JLabel exitLabel2;
-    private javax.swing.JLabel exitLogo2;
     private javax.swing.JTable gradeListTable;
     private javax.swing.JPanel gradePanel;
-    private javax.swing.JLabel homeLabel2;
-    private javax.swing.JLabel homeLogo2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel nameLogo2;
-    private javax.swing.JLabel peopleLogo2;
-    private javax.swing.JLabel placeLabel;
-    private javax.swing.JLabel placeLabel2;
     private javax.swing.JPanel siftPanel;
     private javax.swing.JLabel termLabel;
     private javax.swing.JList termList;
-    private javax.swing.JPanel titelPanel2;
     // End of variables declaration//GEN-END:variables
 }

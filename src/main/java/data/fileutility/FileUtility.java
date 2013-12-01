@@ -4,7 +4,10 @@
  */
 package data.fileutility;
 
+import enumeration.ResultMessage;
 import java.util.ArrayList;
+import po.coursepo.CoursePO;
+import po.planpo.PlanPO;
 
 /**
  *
@@ -43,4 +46,17 @@ public interface FileUtility {
      * @return 如果无用户则返回null
      */
     public ArrayList<String[]> getAllUser();
+
+    /**
+     * 修改某一以用户的信息
+     *
+     * @param info 保存一个用户的所有信息
+     * @param id 用户的ID
+     * @return 保存成功返回ResultMessage。success 错误时返回ResultMessage。fail
+     */
+    public ResultMessage changeUser(String id, String info);
+
+    public ArrayList<CoursePO> readCourseInfo();
+
+    public ArrayList<PlanPO> readPlanInfo();
 }

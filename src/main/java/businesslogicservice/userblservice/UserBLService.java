@@ -20,6 +20,14 @@ public interface UserBLService {
      */
     public ArrayList<UserInfoVO> addUser(String file);
     public ResultMessage changeUserInfo();
+      /**
+     * 客户修改自己的用户信息，包括密码
+     * @param v 修改后用户的信息
+     * @return 修改成功则返回ResultMessage.SUCCESS
+     * 失败则返回RessultMessage。Fail
+     */
+    public ResultMessage changeUserInfo(UserInfoVO v);
+  
     /**
      * 删除用户
      * @param vos要删除的用户

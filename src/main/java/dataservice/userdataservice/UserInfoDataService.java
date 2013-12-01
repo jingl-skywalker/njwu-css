@@ -20,6 +20,14 @@ public interface UserInfoDataService extends Remote {
     public ResultMessage insert(ArrayList<UserInfoPO> pos) throws RemoteException;
 
     public ResultMessage update(ArrayList<UserInfoPO> pos) throws RemoteException;
+    
+    /**
+     * 更新某一用户信息
+     * @param p 要更新的用户信息
+     * @return 更新成功则返回ResultMessage.SUccess 失败则返回ResultMessage。fail
+     * @throws RemoteException 
+     */
+    public ResultMessage update(UserInfoPO p) throws RemoteException;
     /**
      * 跟新管理员信息
      * @param p跟新好的管理员po

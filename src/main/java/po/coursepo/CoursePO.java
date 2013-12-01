@@ -5,47 +5,53 @@
 package po.coursepo;
 
 import java.util.ArrayList;
+import vo.coursevo.CourseVO;
 
 /**
  *
  * @author Administrator
  */
 public class CoursePO {
+     
+    private String courseID;//课程号
+    private String courseName;//课程名
+    private String module;//课程模块：通识通修、学科专业、开放选修、毕业论文/设计
+    private String property;//课程性质：必修、指选、选修
+    private String type;//课程类别：
+    private char order;//序列：A,B,C,D,E,F,G,H,I,J,L
+    private String term;//开设学期:2012-1,2012-2,
+    private int credit;//学分
+    private int hour;//周学时
+    private String teaName;//授课教师姓名：刘钦，丁二玉
+    private String time;//授课时间
+    private String institute;//开设院系
+    private String learnIns;//修读院系:软件学院，商学院
+    private String summary;//课程大纲——不可以出现分号
+    private String material;//教材
+    private String reference;//参考文献
+    
+    /*转为存储信息*/
+    public String toStoreString() {
+        StringBuffer sbf = new StringBuffer();
+        sbf.append(courseID+";"+courseName+";"+module+";"+property+";"+type+";"+order+";" +term+";"+credit+";"
+                +hour+";"+teaName+";"+time+";"+institute+";"+learnIns+";"+summary+";"+material+";"+reference);
+        sbf.append("\r\n");
+        return sbf.toString();
+    }
+    
+    /*取CourseVO*/
+    public CourseVO toVO() {
+       return  new CourseVO(courseID,courseName,module,property,type,order,term,credit,hour,teaName,
+                time,institute,learnIns);
+    }
+    
+    /*getter 和 setter*/
+    public String getCourseID() {
+        return courseID;
+    }
 
-    private String courseName;
-    private String courseID;
-    private String courseProperity;
-    private ArrayList<String> teachers = new ArrayList<String>();
-    private int courseTimePerWeek;
-    private int credit;
-    private ArrayList<String> references = new ArrayList<String>();
-    private ArrayList<String> assistants = new ArrayList<String>();
-    private String courseSummary;
-    private String time;
-    private String institude;
-    private boolean isPublic = false;
-   private String learnIns;//修读院系
-   
-    public CoursePO(String courseName, String courseID, String courseProperity, int courseTimePerWeek, int credit, String courseSummary, String time) {
-        this.courseName = courseName;
+    public void setCourseID(String courseID) {
         this.courseID = courseID;
-        this.courseProperity = courseProperity;
-        this.courseTimePerWeek = courseTimePerWeek;
-        this.credit = credit;
-        this.courseSummary = courseSummary;
-        this.time = time;
-    }
-
-    public void addTeacher(String teacher) {
-        teachers.add(teacher);
-    }
-
-    public void addAssistant(String assis) {
-        assistants.add(assis);
-    }
-
-    public void addReferences(String ref) {
-        references.add(ref);
     }
 
     public String getCourseName() {
@@ -56,36 +62,44 @@ public class CoursePO {
         this.courseName = courseName;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getModule() {
+        return module;
     }
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
+    public void setModule(String module) {
+        this.module = module;
     }
 
-    public String getCourseProperity() {
-        return courseProperity;
+    public String getProperty() {
+        return property;
     }
 
-    public void setCourseProperity(String courseProperity) {
-        this.courseProperity = courseProperity;
+    public void setProperty(String property) {
+        this.property = property;
     }
 
-    public ArrayList<String> getTeachers() {
-        return teachers;
+    public String getType() {
+        return type;
     }
 
-    public void setTeachers(ArrayList<String> teachers) {
-        this.teachers = teachers;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public int getCourseTimePerWeek() {
-        return courseTimePerWeek;
+    public char getOrder() {
+        return order;
     }
 
-    public void setCourseTimePerWeek(int courseTimePerWeek) {
-        this.courseTimePerWeek = courseTimePerWeek;
+    public void setOrder(char order) {
+        this.order = order;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
     }
 
     public int getCredit() {
@@ -96,28 +110,20 @@ public class CoursePO {
         this.credit = credit;
     }
 
-    public ArrayList<String> getReferences() {
-        return references;
+    public int getHour() {
+        return hour;
     }
 
-    public void setReferences(ArrayList<String> references) {
-        this.references = references;
+    public void setHour(int hour) {
+        this.hour = hour;
     }
 
-    public ArrayList<String> getAssistants() {
-        return assistants;
+    public String getTeaName() {
+        return teaName;
     }
 
-    public void setAssistants(ArrayList<String> assistants) {
-        this.assistants = assistants;
-    }
-
-    public String getCourseSummary() {
-        return courseSummary;
-    }
-
-    public void setCourseSummary(String courseSummary) {
-        this.courseSummary = courseSummary;
+    public void setTeaName(String teaName) {
+        this.teaName = teaName;
     }
 
     public String getTime() {
@@ -128,20 +134,12 @@ public class CoursePO {
         this.time = time;
     }
 
-    public boolean isIsPublic() {
-        return isPublic;
+    public String getInstitute() {
+        return institute;
     }
 
-    public void setIsPublic(boolean isPublic) {
-        this.isPublic = isPublic;
-    }
-
-    public String getInstitude() {
-        return institude;
-    }
-
-    public void setInstitude(String institude) {
-        this.institude = institude;
+    public void setInstitute(String institute) {
+        this.institute = institute;
     }
 
     public String getLearnIns() {
@@ -150,6 +148,30 @@ public class CoursePO {
 
     public void setLearnIns(String learnIns) {
         this.learnIns = learnIns;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
     
 }

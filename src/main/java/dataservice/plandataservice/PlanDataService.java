@@ -6,6 +6,7 @@ package dataservice.plandataservice;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import po.planpo.PlanPO;
 
@@ -19,5 +20,9 @@ public interface PlanDataService extends Remote{
 
     public void update(PlanPO ppo)throws RemoteException;
 
-    public PlanPO find(String insttitute)throws RemoteException;
+    public ArrayList<PlanPO> finds(String institute,String module) throws RemoteException;
+    
+    public void delete(String institute,String courseID) throws RemoteException;
+    
+    public void writeCourse(String file,String content) throws RemoteException;
 }

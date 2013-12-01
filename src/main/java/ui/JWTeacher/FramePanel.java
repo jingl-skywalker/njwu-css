@@ -385,7 +385,7 @@ public class FramePanel extends javax.swing.JPanel {
 
         mf1.setVisible(true);
         //mf1.main(null, frameBLService);
-
+        this.disable();
     }//GEN-LAST:event_addModuleButton1MouseClicked
 
     private void addModuleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addModuleButton1ActionPerformed

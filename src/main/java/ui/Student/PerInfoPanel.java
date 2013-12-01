@@ -4,6 +4,9 @@
  */
 package ui.Student;
 
+import java.util.Calendar;
+import vo.uservo.UserInfoVO;
+
 /**
  *
  * @author zili chen
@@ -13,8 +16,24 @@ public class PerInfoPanel extends javax.swing.JPanel {
     /**
      * Creates new form PerInfoPanel
      */
-    public PerInfoPanel() {
+    private UserInfoVO student;
+    
+    public PerInfoPanel(UserInfoVO student) {
         initComponents();
+        this.student = student;
+        
+        Calendar calendar = Calendar.getInstance();
+        int nowyear = calendar.get(Calendar.YEAR);
+        int nowmonth = calendar.get(Calendar.MONTH);
+        int grade = Integer.parseInt(student.getYearIn());
+        
+        nameLabel1.setText(student.getName());
+        birthLabel2.setText(student.getGrade());
+        nativeLabel2.setText(student.getIdentification());
+        sexLabel2.setText(student.getSex());
+        idLabel.setText(student.getID());
+        insLabel.setText(student.getDepart());
+        gradeLabel2.setText("大一");
     }
 
     /**
@@ -26,17 +45,6 @@ public class PerInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        titelPanel2 = new javax.swing.JPanel();
-        peopleLogo2 = new javax.swing.JLabel();
-        nameLogo2 = new javax.swing.JLabel();
-        arrowLogo2 = new javax.swing.JLabel();
-        currentLogo2 = new javax.swing.JLabel();
-        backLogo2 = new javax.swing.JLabel();
-        backLabel2 = new javax.swing.JLabel();
-        homeLogo2 = new javax.swing.JLabel();
-        homeLabel2 = new javax.swing.JLabel();
-        exitLogo2 = new javax.swing.JLabel();
-        exitLabel2 = new javax.swing.JLabel();
         infoPanel = new javax.swing.JPanel();
         nameLabel = new javax.swing.JLabel();
         birthLabel = new javax.swing.JLabel();
@@ -45,7 +53,6 @@ public class PerInfoPanel extends javax.swing.JPanel {
         gradeLabel = new javax.swing.JLabel();
         sexLabel = new javax.swing.JLabel();
         idLabel = new javax.swing.JLabel();
-        lengthLabel = new javax.swing.JLabel();
         safeLabel = new javax.swing.JLabel();
         levelLabel = new javax.swing.JLabel();
         setKeyButton = new javax.swing.JButton();
@@ -56,87 +63,9 @@ public class PerInfoPanel extends javax.swing.JPanel {
         sexLabel2 = new javax.swing.JLabel();
         gradeLabel2 = new javax.swing.JLabel();
         nativeLabel2 = new javax.swing.JLabel();
-        lengthLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
-
-        titelPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        titelPanel2.setPreferredSize(new java.awt.Dimension(365, 37));
-
-        peopleLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        peopleLogo2.setText("Logo");
-
-        nameLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLogo2.setText("name");
-
-        arrowLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        arrowLogo2.setText("->");
-
-        currentLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        currentLogo2.setText("current");
-
-        backLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLogo2.setText("Logo");
-
-        backLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLabel2.setText("back");
-
-        homeLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLogo2.setText("Logo");
-
-        homeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLabel2.setText("home");
-
-        exitLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLogo2.setText("Logo");
-
-        exitLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLabel2.setText("exit");
-
-        javax.swing.GroupLayout titelPanel2Layout = new javax.swing.GroupLayout(titelPanel2);
-        titelPanel2.setLayout(titelPanel2Layout);
-        titelPanel2Layout.setHorizontalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(peopleLogo2)
-                .addGap(18, 18, 18)
-                .addComponent(nameLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(arrowLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(currentLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
-                .addComponent(backLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(homeLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(homeLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(exitLogo2)
-                .addGap(5, 5, 5)
-                .addComponent(exitLabel2)
-                .addContainerGap())
-        );
-        titelPanel2Layout.setVerticalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(peopleLogo2)
-                    .addComponent(nameLogo2)
-                    .addComponent(arrowLogo2)
-                    .addComponent(currentLogo2)
-                    .addComponent(backLogo2)
-                    .addComponent(backLabel2)
-                    .addComponent(homeLogo2)
-                    .addComponent(homeLabel2)
-                    .addComponent(exitLogo2)
-                    .addComponent(exitLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        setPreferredSize(new java.awt.Dimension(889, 368));
 
         infoPanel.setBackground(new java.awt.Color(0, 0, 0));
         infoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 204)));
@@ -159,7 +88,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
         nativeLabel.setBackground(new java.awt.Color(0, 0, 0));
         nativeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         nativeLabel.setForeground(new java.awt.Color(204, 204, 204));
-        nativeLabel.setText("籍贯：");
+        nativeLabel.setText("身份证：");
 
         gradeLabel.setBackground(new java.awt.Color(0, 0, 0));
         gradeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -176,11 +105,6 @@ public class PerInfoPanel extends javax.swing.JPanel {
         idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         idLabel.setForeground(new java.awt.Color(204, 204, 204));
         idLabel.setText("学号：");
-
-        lengthLabel.setBackground(new java.awt.Color(0, 0, 0));
-        lengthLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        lengthLabel.setForeground(new java.awt.Color(204, 204, 204));
-        lengthLabel.setText("学制：");
 
         safeLabel.setBackground(new java.awt.Color(0, 0, 0));
         safeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -230,11 +154,6 @@ public class PerInfoPanel extends javax.swing.JPanel {
         nativeLabel2.setForeground(new java.awt.Color(204, 204, 204));
         nativeLabel2.setText("XX");
 
-        lengthLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        lengthLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        lengthLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        lengthLabel2.setText("XX");
-
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
@@ -264,15 +183,12 @@ public class PerInfoPanel extends javax.swing.JPanel {
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nativeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(gradeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sexLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lengthLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(sexLabel, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sexLabel2)
                             .addComponent(gradeLabel2)
-                            .addComponent(nativeLabel2)
-                            .addComponent(lengthLabel2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(nativeLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(safeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -304,9 +220,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
                     .addComponent(insLabel))
                 .addGap(18, 18, 18)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lengthLabel)
                     .addComponent(birthLabel2)
-                    .addComponent(lengthLabel2)
                     .addComponent(birthLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -320,52 +234,37 @@ public class PerInfoPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(166, 166, 166)
                 .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(32, 32, 32)
                 .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel arrowLogo2;
-    private javax.swing.JLabel backLabel2;
-    private javax.swing.JLabel backLogo2;
     private javax.swing.JLabel birthLabel;
     private javax.swing.JLabel birthLabel2;
-    private javax.swing.JLabel currentLogo2;
-    private javax.swing.JLabel exitLabel2;
-    private javax.swing.JLabel exitLogo2;
     private javax.swing.JLabel gradeLabel;
     private javax.swing.JLabel gradeLabel2;
-    private javax.swing.JLabel homeLabel2;
-    private javax.swing.JLabel homeLogo2;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idLabel2;
     private javax.swing.JPanel infoPanel;
     private javax.swing.JLabel insLabel;
     private javax.swing.JLabel insLabel2;
-    private javax.swing.JLabel lengthLabel;
-    private javax.swing.JLabel lengthLabel2;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel nameLabel1;
-    private javax.swing.JLabel nameLogo2;
     private javax.swing.JLabel nativeLabel;
     private javax.swing.JLabel nativeLabel2;
-    private javax.swing.JLabel peopleLogo2;
     private javax.swing.JLabel safeLabel;
     private javax.swing.JButton setKeyButton;
     private javax.swing.JLabel sexLabel;
     private javax.swing.JLabel sexLabel2;
-    private javax.swing.JPanel titelPanel2;
     // End of variables declaration//GEN-END:variables
 }

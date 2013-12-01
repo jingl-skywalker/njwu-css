@@ -4,6 +4,7 @@
  */
 package data.fileutility;
 
+import enumeration.ResultMessage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.stream.FileImageOutputStream;
+import po.coursepo.CoursePO;
+import po.planpo.PlanPO;
 import sun.font.CreatedFontTracker;
 
 /**
@@ -28,7 +31,7 @@ import sun.font.CreatedFontTracker;
  */
 public class FileutilityImpl implements FileUtility {
 
- String fileName;
+    String fileName;
 
     public FileutilityImpl() {
     }
@@ -37,12 +40,12 @@ public class FileutilityImpl implements FileUtility {
         this.fileName = fileName;
     }
 
-    private  BufferedReader createReader() {
+    private BufferedReader createReader() {
         //FileReader fr = new FileReader(this.fileName);
 
         // FileReader fr=ne w FileReader
         // FileInputStream fr=new FileInputStream(new InputStreamReader(this.fileName,"UTF-8"));
-        FileInputStream fs=null;
+        FileInputStream fs = null;
         BufferedReader bf = null;
         try {
             fs = new FileInputStream(this.fileName);
@@ -206,10 +209,10 @@ public class FileutilityImpl implements FileUtility {
      * ex); } System.out.println("ok"); }*
      */
     public static void writeToFile(String file, String content) {
-        System.out.println("@Fileurilityimpl.java"+content);
+        System.out.println("@Fileurilityimpl.java" + content);
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")));
+            writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")));
             writer.print(content);
             writer.flush();
         } catch (UnsupportedEncodingException ex) {
@@ -253,15 +256,16 @@ public class FileutilityImpl implements FileUtility {
         }
         return null;
     }
-     @Override
+
+    @Override
     public String[] getInfo(String id) {
-	       BufferedReader bf = createReader();
+        BufferedReader bf = createReader();
         try {
             String info = null;
             String[] infos;
-            while ((info = bf.readLine())!=null) {
-            infos = info.split(":");
-                if (infos[0].equals(id)){
+            while ((info = bf.readLine()) != null) {
+                infos = info.split(":");
+                if (infos[0].equals(id)) {
                     return infos;
                 }
             }
@@ -271,24 +275,120 @@ public class FileutilityImpl implements FileUtility {
         }
         return null;
     }
- /*
-  * 获取文件所有内容
- */
+    /*
+     * 获取文件所有内容
+     */
+
     @Override
     public String getAll() {
-		BufferedReader bf = createReader();
+        BufferedReader bf = createReader();
         StringBuilder info = new StringBuilder();
-        String s=null;
+        String s = null;
         try {
-            while((s=bf.readLine())!=null){
+            while ((s = bf.readLine()) != null) {
                 info.append(s);
                 info.append("\r\n");
             }
         } catch (IOException ex) {
             Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(info==null)
+        if (info == null) {
             return null;
+        }
         return info.toString();
+    }
+
+    @Override
+    public ResultMessage changeUser(String id, String info) {
+        BufferedReader br = createReader();
+        StringBuilder content = new StringBuilder();
+        String rin = null;
+        String[] rins = null;
+        try {
+            while ((rin = br.readLine()) != null) {
+                rins = rin.split(":");
+                if (rins[0].equals(id)) {
+                    content.append(info);
+                    content.append("\r\n");
+                    continue;
+                }
+                content.append(rin);
+                content.append("\r\n");
+
+
+            }
+            br.close();
+            writeToFile(fileName, content.toString());
+            return ResultMessage.SUCCESS;
+        } catch (IOException ex) {
+            Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ResultMessage.FAIL;
+    }
+
+    public ArrayList<CoursePO> readCourseInfo() {
+        ArrayList<CoursePO> clist = new ArrayList<CoursePO>();
+        try {
+            BufferedReader bf = createReader();
+            CoursePO cpo = new CoursePO();
+            String s = null;
+            while ((s = bf.readLine()) != null) {
+                String list[] = s.split(";");
+                cpo.setCourseID(list[0]);
+                cpo.setCourseName(list[1]);
+                cpo.setModule(list[2]);
+                cpo.setProperty(list[3]);
+                cpo.setType(list[4]);
+                cpo.setOrder(list[5].charAt(0));
+                cpo.setTerm(list[6]);
+                cpo.setCredit(Integer.parseInt(list[7]));
+                cpo.setHour(Integer.parseInt(list[8]));
+                cpo.setTeaName(list[9]);
+                cpo.setTime(list[10]);
+                cpo.setInstitute(list[11]);
+                cpo.setLearnIns(list[12]);
+                cpo.setSummary(list[13]);
+                cpo.setMaterial(list[14]);
+                cpo.setReference(list[15]);
+                clist.add(cpo);
+            }
+            bf.close();
+            return clist;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return clist;
+        } catch (IOException ex) {
+            Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return clist;
+        }
+    }
+
+    public ArrayList<PlanPO> readPlanInfo() {
+        ArrayList<PlanPO> plist = new ArrayList<PlanPO>();
+        try {
+            BufferedReader bf = createReader();
+            PlanPO ppo = new PlanPO();
+            String s = null;
+            while ((s = bf.readLine()) != null) {
+                String list[] = s.split(";");
+                ppo.setInstitute(list[0]);
+                ppo.setTerm(list[1]);
+                ppo.setModule(list[2]);
+                ppo.setProperty(list[3]);
+                ppo.setType(list[4]);
+                ppo.setCourseID(list[5]);
+                ppo.setCourseName(list[6]);
+                ppo.setCredit(Integer.parseInt(list[7]));
+                ppo.setHour(Integer.parseInt(list[8]));
+            }
+            bf.close();
+            return plist;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return plist;
+        } catch (IOException ex) {
+            Logger.getLogger(FileutilityImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return plist;
+        }
     }
 }

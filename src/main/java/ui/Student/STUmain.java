@@ -2,8 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package njuseaurora.cssclient.ui.Student;
+package ui.Student;
 
+import businesslogic.gradebl.GradeFactory;
+import businesslogic.selectionbl.SelectionFactory;
+import businesslogicservice.selectionblservice.SelectionBLService;
+import java.awt.CardLayout;
+import ui.Student.PerInfoPanel;
+import ui.Student.AllCoursePanel;
+import ui.Student.PerCoursePanel;
+import ui.Student.SelectPanel;
+import ui.Student.ViewGradePanel;
 import vo.uservo.UserInfoVO;
 
 /**
@@ -15,8 +24,39 @@ public class STUmain extends javax.swing.JFrame {
     /**
      * Creates new form STUmain
      */
+    private PerCoursePanel perCoursePanel;
+    private PerInfoPanel perInfoPanel;
+    private AllCoursePanel allCoursePanel;
+    private SelectPanel selectPanel;
+    private ViewGradePanel viewGradePanel;
+    private GradeFactory gradeFactory;
+    private SelectionFactory selectionFactory;
+    private UserInfoVO student;
+
     public STUmain() {
         initComponents();
+        setLocationRelativeTo(null);
+//        setUndecorated(true);
+
+    }
+
+    public void initMyConpontent() {
+        gradeFactory = new GradeFactory();
+        selectionFactory = new SelectionFactory();
+
+        perCoursePanel = new PerCoursePanel(student.getID(), selectionFactory.getSelectionController());
+        perInfoPanel = new PerInfoPanel(student);
+        allCoursePanel = new AllCoursePanel(selectionFactory.getSelectionController());
+        selectPanel = new SelectPanel(student.getID(), selectionFactory.getSelectionController());
+        viewGradePanel = new ViewGradePanel(student.getID(), gradeFactory.getGradeController());
+
+        stuCardPanel.add(perCoursePanel, "perCoursePanel");
+        stuCardPanel.add(perInfoPanel, "perInfoPanel");
+        stuCardPanel.add(allCoursePanel, "allCoursePanel");
+        stuCardPanel.add(selectPanel, "selectPanel");
+        stuCardPanel.add(viewGradePanel, "viewGradePanel");
+
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "card2");
     }
 
     /**
@@ -45,6 +85,9 @@ public class STUmain extends javax.swing.JFrame {
         homeLabel2 = new javax.swing.JLabel();
         exitLogo2 = new javax.swing.JLabel();
         exitLabel2 = new javax.swing.JLabel();
+        stuCardPanel = new javax.swing.JPanel();
+        homePanel = new javax.swing.JPanel();
+        notePanel = new javax.swing.JPanel();
         selectButton = new javax.swing.JButton();
         selectLabel = new javax.swing.JLabel();
         gradeButton = new javax.swing.JButton();
@@ -55,7 +98,6 @@ public class STUmain extends javax.swing.JFrame {
         allCourseLabel = new javax.swing.JLabel();
         perInfoButton = new javax.swing.JButton();
         perInfoLabel = new javax.swing.JLabel();
-        notePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,6 +169,11 @@ public class STUmain extends javax.swing.JFrame {
 
         homeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         homeLabel2.setText("home");
+        homeLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeLabel2MouseClicked(evt);
+            }
+        });
 
         exitLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         exitLogo2.setText("Logo");
@@ -147,7 +194,7 @@ public class STUmain extends javax.swing.JFrame {
                 .addComponent(arrowLogo2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(currentLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 429, Short.MAX_VALUE)
                 .addComponent(backLogo2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backLabel2)
@@ -179,40 +226,9 @@ public class STUmain extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        selectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        selectButton.setText("select");
+        stuCardPanel.setLayout(new java.awt.CardLayout());
 
-        selectLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        selectLabel.setForeground(new java.awt.Color(240, 240, 240));
-        selectLabel.setText("选课");
-
-        gradeButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradeButton.setText("grade");
-
-        gradeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradeLabel.setForeground(new java.awt.Color(240, 240, 240));
-        gradeLabel.setText("查看成绩");
-
-        perCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perCourseButton.setText("perCourse");
-
-        perCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
-        perCourseLabel.setText("我的课程");
-
-        allCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        allCourseButton.setText("allCourse");
-
-        allCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        allCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
-        allCourseLabel.setText("全校课程");
-
-        perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoButton.setText("perInfo");
-
-        perInfoLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
-        perInfoLabel.setText("个人信息");
+        homePanel.setBackground(new java.awt.Color(1, 1, 1));
 
         notePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         notePanel.setToolTipText("");
@@ -228,82 +244,157 @@ public class STUmain extends javax.swing.JFrame {
             .addGap(0, 173, Short.MAX_VALUE)
         );
 
+        selectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        selectButton.setText("select");
+        selectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectButtonActionPerformed(evt);
+            }
+        });
+
+        selectLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        selectLabel.setForeground(new java.awt.Color(240, 240, 240));
+        selectLabel.setText("选课");
+
+        gradeButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        gradeButton.setText("grade");
+        gradeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradeButtonActionPerformed(evt);
+            }
+        });
+
+        gradeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        gradeLabel.setForeground(new java.awt.Color(240, 240, 240));
+        gradeLabel.setText("查看成绩");
+
+        perCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perCourseButton.setText("perCourse");
+        perCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                perCourseButtonActionPerformed(evt);
+            }
+        });
+
+        perCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
+        perCourseLabel.setText("我的课程");
+
+        allCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        allCourseButton.setText("allCourse");
+        allCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allCourseButtonActionPerformed(evt);
+            }
+        });
+
+        allCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        allCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
+        allCourseLabel.setText("全校课程");
+
+        perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perInfoButton.setText("perInfo");
+        perInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                perInfoButtonActionPerformed(evt);
+            }
+        });
+
+        perInfoLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
+        perInfoLabel.setText("个人信息");
+
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(homePanelLayout.createSequentialGroup()
+                        .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(gradeLabel))
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(perCourseButton)))))
+                .addContainerGap(283, Short.MAX_VALUE))
+            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(homePanelLayout.createSequentialGroup()
+                    .addGap(28, 28, 28)
+                    .addComponent(selectLabel)
+                    .addGap(209, 209, 209)
+                    .addComponent(perCourseLabel)
+                    .addGap(60, 60, 60)
+                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(homePanelLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(allCourseLabel))
+                        .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(47, 47, 47)
+                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(homePanelLayout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addComponent(perInfoLabel))
+                        .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(307, Short.MAX_VALUE)))
+        );
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(perCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gradeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(homePanelLayout.createSequentialGroup()
+                    .addGap(54, 54, 54)
+                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(selectLabel)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, homePanelLayout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(perInfoLabel))
+                            .addComponent(perInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(homePanelLayout.createSequentialGroup()
+                            .addGap(74, 74, 74)
+                            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(allCourseLabel)
+                                .addComponent(perCourseLabel))))
+                    .addContainerGap(223, Short.MAX_VALUE)))
+        );
+
+        stuCardPanel.add(homePanel, "card2");
+
         javax.swing.GroupLayout stuMainPanelLayout = new javax.swing.GroupLayout(stuMainPanel);
         stuMainPanel.setLayout(stuMainPanelLayout);
         stuMainPanelLayout.setHorizontalGroup(
             stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
-            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(stuMainPanelLayout.createSequentialGroup()
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addComponent(selectButton)
-                                .addGap(45, 45, 45))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stuMainPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(selectLabel)
-                                .addGap(66, 66, 66)))
-                        .addGap(10, 10, 10)
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gradeButton)
-                            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(gradeLabel)))
-                        .addGap(57, 57, 57)
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(perCourseLabel))
-                            .addComponent(perCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(allCourseLabel))
-                            .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(perInfoLabel))
-                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(stuMainPanelLayout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(247, Short.MAX_VALUE))
+            .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(stuCardPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         stuMainPanelLayout.setVerticalGroup(
             stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(stuMainPanelLayout.createSequentialGroup()
                 .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(stuMainPanelLayout.createSequentialGroup()
-                            .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(selectLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, stuMainPanelLayout.createSequentialGroup()
-                            .addGap(74, 74, 74)
-                            .addComponent(perInfoLabel))
-                        .addComponent(perInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(stuMainPanelLayout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(allCourseLabel))
-                    .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(stuMainPanelLayout.createSequentialGroup()
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(perCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(perCourseLabel)
-                            .addComponent(gradeLabel))))
-                .addGap(18, 18, 18)
-                .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(0, 379, Short.MAX_VALUE))
+            .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stuMainPanelLayout.createSequentialGroup()
+                    .addGap(0, 36, Short.MAX_VALUE)
+                    .addComponent(stuCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
@@ -346,43 +437,57 @@ public class STUmain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_ExitButtonActionPerformed
+
+    private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "selectPanel");
+    }//GEN-LAST:event_selectButtonActionPerformed
+
+    private void gradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeButtonActionPerformed
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "viewGradePanel");
+    }//GEN-LAST:event_gradeButtonActionPerformed
+
+    private void perCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perCourseButtonActionPerformed
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perCoursePanel");
+    }//GEN-LAST:event_perCourseButtonActionPerformed
+
+    private void allCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allCourseButtonActionPerformed
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "allCoursePanel");
+    }//GEN-LAST:event_allCourseButtonActionPerformed
+
+    private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perInfoPanel");
+    }//GEN-LAST:event_perInfoButtonActionPerformed
+
+    private void homeLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabel2MouseClicked
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "card2");
+    }//GEN-LAST:event_homeLabel2MouseClicked
+
+    public void setStudentVO(UserInfoVO userInfoVO) {
+        this.student = userInfoVO;
+    }
 
     /**
      * @param args the command line arguments
      */
-    public  void main(String args[], UserInfoVO userInfoVO) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(STUmain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(STUmain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(STUmain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(STUmain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    public void main(String args[], final UserInfoVO ivo) {
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new STUmain().setVisible(true);
+                // new STUmain().setVisible(true);
+                STUmain sTUmain = new STUmain();
+                sTUmain.setVisible(true);
+                sTUmain.setStudentVO(ivo);
+                sTUmain.initMyConpontent();
             }
         });
     }
+    /**
+     * public void main(String args[],UserInfoVO student) {
+     *
+     * this.student = student; }*
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CSSLabel;
     private javax.swing.JButton ExitButton;
@@ -400,6 +505,7 @@ public class STUmain extends javax.swing.JFrame {
     private javax.swing.JLabel gradeLabel;
     private javax.swing.JLabel homeLabel2;
     private javax.swing.JLabel homeLogo2;
+    private javax.swing.JPanel homePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nameLogo2;
     private javax.swing.JPanel notePanel;
@@ -410,6 +516,7 @@ public class STUmain extends javax.swing.JFrame {
     private javax.swing.JLabel perInfoLabel;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectLabel;
+    private javax.swing.JPanel stuCardPanel;
     private javax.swing.JPanel stuMainPanel;
     private javax.swing.JPanel titelPanel2;
     // End of variables declaration//GEN-END:variables

@@ -11,99 +11,77 @@ import java.util.ArrayList;
  * @author Administrator
  */
 public class CourseVO {
-
-    private String courseName;
-    private String courseID;
-    private String courseProperity;
-    private ArrayList<String> teachers = new ArrayList<String>();
-    private int courseTimePerWeek;
-    private int credit;
-    private ArrayList<String> references = new ArrayList<String>();
-    private ArrayList<String> assistants = new ArrayList<String>();
-    private String courseSummary;
-    private String time;
-    private String institute;//开课院系
-    private boolean isPublic = false;//new
+    
+    private String courseID;//课程号
+    private String courseName;//课程名
+    private String module;//课程模块：通识通修、学科专业、开放选修、毕业论文/设计
+    private String property;//课程性质：必修、指选、选修
+    private String type;//课程类别：
+    private char order;//序列：A,B,C,D,E,F,G,H,I,J,L
+    private String term;//开设学期:1,8
+    private int credit;//学分
+    private int hour;//周学时
+    private String teaName;//授课教师姓名
+    private String time;//授课时间
+    private String institute;//开设院系
     private String learnIns;//修读院系
 
-    //可以兼容所有的课程发布需求
-    public CourseVO(String courseName, String courseID, String courseProperity, ArrayList<String> teachers, int courseTimePerWeek, int credit, String department, String learnIns) {//new 
-        this.courseName = courseName;
-        this.courseID = courseID;
-        this.courseProperity = courseProperity;
-        this.teachers = teachers;
-        this.courseTimePerWeek = courseTimePerWeek;
+    public CourseVO(String id,String name,String module,String property,String type,char order,String term,
+            int credit,int hour,String teacher,String time,String institute,String learnIns) {
+        this.courseID = id;
+        this.courseName = name;
+        this.module = module;
+        this.property = property;
+        this.type = type;
+        this.order = order;
+        this.term  = term;
         this.credit = credit;
-        this.institute = department;//new
+        this.hour = hour;
+        this.teaName = teacher;
+        this.time = time;
+        this.institute = institute;
         this.learnIns = learnIns;
     }
 
-    public CourseVO(String courseName, String courseID, String courseProperity, ArrayList<String> teachers, int courseTimePerWeek,
-            int credit, ArrayList<String> references, ArrayList<String> assistants, String courseSummary, String time, String department) {
-        this.courseName = courseName;
-        this.courseID = courseID;
-        this.courseProperity = courseProperity;
-        this.teachers = teachers;
-        this.courseTimePerWeek = courseTimePerWeek;
-        this.credit = credit;
-        this.references = references;
-        this.assistants = assistants;
-        this.courseSummary = courseSummary;
-        this.time = time;
-        this.institute = department;
-    }
-
-    public CourseVO(String courseName, String courseNum) {
-        this.courseID = courseNum;
-        this.courseName = courseName;
-    }
-
-    public void addTeacher(String teacher) {
-        getTeachers().add(teacher);
-    }
-
-    public void addAssistant(String assis) {
-        getAssistants().add(assis);
-    }
-
-    public void addReferences(String ref) {
-        getReferences().add(ref);
+    /*getter*/
+    public String getCourseID() {
+        return courseID;
     }
 
     public String getCourseName() {
         return courseName;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getModule() {
+        return module;
     }
 
-    public String getCourseProperity() {
-        return courseProperity;
+    public String getProperty() {
+        return property;
     }
 
-    public ArrayList<String> getTeachers() {
-        return teachers;
+    public String getType() {
+        return type;
     }
 
-    public int getCourseTimePerWeek() {
-        return courseTimePerWeek;
+    public char getOrder() {
+        return order;
+    }
+
+    public String getTerm() {
+        return term;
     }
 
     public int getCredit() {
         return credit;
     }
 
-    public ArrayList<String> getReferences() {
-        return references;
+    public int getHour() {
+        return hour;
     }
 
-    public ArrayList<String> getAssistants() {
-        return assistants;
-    }
-
-    public String getCourseSummary() {
-        return courseSummary;
+    public String getTeaName() {
+        return teaName;
     }
 
     public String getTime() {
@@ -114,15 +92,12 @@ public class CourseVO {
         return institute;
     }
 
-    public boolean isIsPublic() {
-        return isPublic;
-    }
-
     public String getLearnIns() {
         return learnIns;
     }
-
-    public boolean isISPublic() {//new
-        return isPublic;
+    
+    public void setTerm(String s) {
+        term =  s;
     }
+    
 }

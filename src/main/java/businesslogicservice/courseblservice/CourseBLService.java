@@ -14,14 +14,19 @@ import vo.coursevo.CourseVO;
  */
 public interface CourseBLService {
     
-    public CourseVO createCourse(String courseName, String courseID,String courseProperity,ArrayList<String> teachers,int courseTimePerWeek,int credit,String department,String learnIns);
+    //创建课程
+    public void createCourse(CourseVO cvo);
     
-    public void release();
+    //修改课程信息
+    public void modifyCourse(CourseVO cvo);
     
+    //查看课程列表
+    public ArrayList<CourseVO> observeList(int field,String value);
+    
+    //查看课程信息
+    public CourseVO observeInfo(String courseID);
+    
+    //删除课程
     public void delete(String courseID);
     
-    //修改：含括课程所有信息
-    public CourseVO modify(String oldCourseID,String newCourseID,String newName,String newProperity,ArrayList<String> teachers,int newTimePerWeek,int newCredit,ArrayList<String> references,ArrayList<String> assistants,String newSummary,String newTime,String newDepartment);
-    
-    public CourseVO observe();
 }

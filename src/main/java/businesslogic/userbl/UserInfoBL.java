@@ -213,6 +213,19 @@ public class UserInfoBL {
         }
         return ResultMessage.FAIL;
     }
+  /**
+     * 
+     * @param v
+     * @return 
+     */
 
+    ResultMessage changeUserInfo(UserInfoVO v)  {
+        try {
+            return userInfo.update(new UserInfoPO(v.getArri()));
+        } catch (RemoteException ex) {
+            Logger.getLogger(UserInfoBL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ResultMessage.FAIL;
+    }
    
 }

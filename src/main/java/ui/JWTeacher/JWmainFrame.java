@@ -6,7 +6,6 @@ package ui.JWTeacher;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import javax.swing.JOptionPane;
 import ui.Library.Navigation;
 import vo.uservo.UserInfoVO;
 
@@ -18,7 +17,7 @@ import vo.uservo.UserInfoVO;
  * @author zili chen
  */
 public class JWmainFrame extends javax.swing.JFrame {
-
+    
     UserInfoVO userInfoVO;
     /**
      * Creates new form JWmainFrame
@@ -534,7 +533,8 @@ public class JWmainFrame extends javax.swing.JFrame {
 
     private void exitLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitLabelMouseClicked
         // TODO add your handling code here:
-
+        this.dispose();
+        
     }//GEN-LAST:event_exitLabelMouseClicked
 
     private void exitLabelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitLabelMouseMoved

@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package  ui.YJWTeacher;
+
+package ui.YJWTeacher;
+
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -11,6 +13,7 @@ import  ui.Library.CheckValue;
 import  ui.Library.FullComboBox;
 import  ui.Library.MyComboBox;
 import  ui.Library.MyTitledBorder;
+import vo.coursevo.CourseVO;
 
 
 /**
@@ -42,6 +45,8 @@ public class CoursePanel extends javax.swing.JPanel {
         //insComboBox.setBounds(0, 0, 72, 25);
         courseInfoPanel.add(learnInsComboBox, gridBagConstraints);
         learnInsComboBox.setVisible(true);
+        /*逻辑处理*/
+        
     }
 
     /**
@@ -536,18 +541,21 @@ public class CoursePanel extends javax.swing.JPanel {
     private FullComboBox insFull;
     private MyComboBox learnInsComboBox;
     private GridBagConstraints gridBagConstraints;
-
-    public FullComboBox getInsFull() {
-        return insFull;
-    }
-
-    /**
-     * Set the value of insFull
-     *
-     * @param insFull new value of insFull
-     */
-    public void setInsFull(FullComboBox insFull) {
-        this.insFull = insFull;
-    }
+    
+    /*逻辑处理*/
+    private CourseVO cvo;
+    private String courseID;//课程号
+    private String courseName;//课程名
+    private String module;//课程模块：通识通修、学科专业、开放选修、毕业论文/设计
+    private String property;//课程性质：必修、指选、选修
+    private String type;//课程类别：
+    private char order;//序列：A,B,C,D,E,F,G,H,I,J,L
+    private String term;//开设学期:1,8
+    private int credit;//学分
+    private int hour;//周学时
+    private String teaName;//授课教师姓名
+    private String time;//授课时间
+    private String institute;//开设院系
+    private String learnIns;//修读院系
 
 }

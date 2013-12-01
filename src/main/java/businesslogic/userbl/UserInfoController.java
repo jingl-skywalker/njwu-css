@@ -81,5 +81,10 @@ public class UserInfoController implements UserBLService{
     public ResultMessage changeMessage(String message) {
         return userInfo.changeMessage(message);
     }
+       @Override
+    public ResultMessage changeUserInfo(UserInfoVO v) {
+        return userInfo.changeUserInfo(v);
+    }
+
 
 }

@@ -2,19 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package  ui.YJWTeacher;
 
+package ui.YJWTeacher;
+
+
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import ui.Library.Navigation;
+import vo.uservo.UserInfoVO;
 
 /**
  *
  * @author zili chen
  */
 public class YJWmain extends javax.swing.JFrame {
-
+ 
     /**
      * Creates new form YJWmain
      */
@@ -22,17 +29,19 @@ public class YJWmain extends javax.swing.JFrame {
         initComponents();
         planPanel = new PlanPanel();
         coursePanel = new CoursePanel();
-        font = new Font("微软雅黑",Font.PLAIN,14);
-        arrowLabel = new JLabel("->");
-        arrowLabel.setFont(font);
-        titelPanel2.add(arrowLabel,0,0);
-        arrowLabel.setBounds(175,7,16,19);
-        arrowLabel.setVisible(false);
-        nowLabel = new JLabel();
-        nowLabel.setFont(font);
-        titelPanel2.add(nowLabel,0,0);
-        nowLabel.setBounds(201,7,84,19);
-        nowLabel.setVisible(false);
+        perInfoPanel = new PerInfoPanel();
+        cardLayout = new CardLayout();//-------------------------卡片面板
+        containPanel.setLayout(cardLayout);
+        containPanel.add(yjwMainPanel,"yjwMainP");
+        containPanel.add(planPanel,"planP");
+        containPanel.add(coursePanel,"courseP");
+        containPanel.add(perInfoPanel,"perInfoP");
+        cardLayout.show(containPanel,"yjwMainP");
+        navigation = new Navigation();//----------------------------导航栏标签
+        titelPanel2.add(navigation.getArrow(),0,0);
+        titelPanel2.add(navigation.getNow(),0,0);
+        navigation.setNowBounds(201, 7, 84, 19);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -49,14 +58,6 @@ public class YJWmain extends javax.swing.JFrame {
         NJWUPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         ExitButton = new javax.swing.JButton();
-        yjwMainPanel = new javax.swing.JPanel();
-        planButton = new javax.swing.JButton();
-        planLabel = new javax.swing.JLabel();
-        courseButton = new javax.swing.JButton();
-        courseLabel = new javax.swing.JLabel();
-        perInfoButton = new javax.swing.JButton();
-        perInfoLabel = new javax.swing.JLabel();
-        notePanel = new javax.swing.JPanel();
         titelPanel2 = new javax.swing.JPanel();
         peopleLogo = new javax.swing.JLabel();
         nameLogo = new javax.swing.JLabel();
@@ -68,9 +69,19 @@ public class YJWmain extends javax.swing.JFrame {
         homeLabel = new javax.swing.JLabel();
         exitLogo = new javax.swing.JLabel();
         exitLabel = new javax.swing.JLabel();
+        containPanel = new javax.swing.JPanel();
+        yjwMainPanel = new javax.swing.JPanel();
+        planButton = new javax.swing.JButton();
+        planLabel = new javax.swing.JLabel();
+        courseButton = new javax.swing.JButton();
+        courseLabel = new javax.swing.JLabel();
+        perInfoButton = new javax.swing.JButton();
+        perInfoLabel = new javax.swing.JLabel();
+        notePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setUndecorated(true);
 
         backPanel.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -111,102 +122,6 @@ public class YJWmain extends javax.swing.JFrame {
                 ExitButtonActionPerformed(evt);
             }
         });
-
-        yjwMainPanel.setBackground(new java.awt.Color(0, 0, 0));
-
-        planButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        planButton.setText("plan");
-        planButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                planButtonActionPerformed(evt);
-            }
-        });
-
-        planLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        planLabel.setForeground(new java.awt.Color(240, 240, 240));
-        planLabel.setText("录入教学计划");
-
-        courseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        courseButton.setText("course");
-        courseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                courseButtonActionPerformed(evt);
-            }
-        });
-
-        courseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        courseLabel.setForeground(new java.awt.Color(240, 240, 240));
-        courseLabel.setText("课程信息");
-
-        perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoButton.setText("perInfo");
-
-        perInfoLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
-        perInfoLabel.setText("个人信息");
-
-        notePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        notePanel.setToolTipText("");
-
-        javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
-        notePanel.setLayout(notePanelLayout);
-        notePanelLayout.setHorizontalGroup(
-            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
-        );
-        notePanelLayout.setVerticalGroup(
-            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout yjwMainPanelLayout = new javax.swing.GroupLayout(yjwMainPanel);
-        yjwMainPanel.setLayout(yjwMainPanelLayout);
-        yjwMainPanelLayout.setHorizontalGroup(
-            yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(planLabel)
-                            .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(courseLabel)))
-                        .addGap(51, 51, 51)
-                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(perInfoLabel)))))
-                .addContainerGap(253, Short.MAX_VALUE))
-        );
-        yjwMainPanelLayout.setVerticalGroup(
-            yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                            .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(planLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, yjwMainPanelLayout.createSequentialGroup()
-                            .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(courseLabel)))
-                    .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                        .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(perInfoLabel)))
-                .addGap(18, 18, 18)
-                .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
 
         titelPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         titelPanel2.setPreferredSize(new java.awt.Dimension(365, 37));
@@ -293,7 +208,7 @@ public class YJWmain extends javax.swing.JFrame {
                 .addComponent(arrowLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(currentLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
                 .addComponent(backLogo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backLabel)
@@ -325,6 +240,124 @@ public class YJWmain extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        containPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        yjwMainPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        planButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        planButton.setText("plan");
+        planButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                planButtonActionPerformed(evt);
+            }
+        });
+
+        planLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        planLabel.setForeground(new java.awt.Color(240, 240, 240));
+        planLabel.setText("录入教学计划");
+
+        courseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        courseButton.setText("course");
+        courseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseButtonActionPerformed(evt);
+            }
+        });
+
+        courseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        courseLabel.setForeground(new java.awt.Color(240, 240, 240));
+        courseLabel.setText("课程信息");
+
+        perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perInfoButton.setText("perInfo");
+        perInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                perInfoButtonActionPerformed(evt);
+            }
+        });
+
+        perInfoLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
+        perInfoLabel.setText("个人信息");
+
+        notePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        notePanel.setToolTipText("");
+
+        javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
+        notePanel.setLayout(notePanelLayout);
+        notePanelLayout.setHorizontalGroup(
+            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 579, Short.MAX_VALUE)
+        );
+        notePanelLayout.setVerticalGroup(
+            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 173, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout yjwMainPanelLayout = new javax.swing.GroupLayout(yjwMainPanel);
+        yjwMainPanel.setLayout(yjwMainPanelLayout);
+        yjwMainPanelLayout.setHorizontalGroup(
+            yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(planLabel)
+                            .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(courseLabel)))
+                        .addGap(51, 51, 51)
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(perInfoLabel)))))
+                .addContainerGap(251, Short.MAX_VALUE))
+        );
+        yjwMainPanelLayout.setVerticalGroup(
+            yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                            .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(planLabel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, yjwMainPanelLayout.createSequentialGroup()
+                            .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(courseLabel)))
+                    .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                        .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(perInfoLabel)))
+                .addGap(18, 18, 18)
+                .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout containPanelLayout = new javax.swing.GroupLayout(containPanel);
+        containPanel.setLayout(containPanelLayout);
+        containPanelLayout.setHorizontalGroup(
+            containPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containPanelLayout.createSequentialGroup()
+                .addComponent(yjwMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+        containPanelLayout.setVerticalGroup(
+            containPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containPanelLayout.createSequentialGroup()
+                .addComponent(yjwMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
         backPanel.setLayout(backPanelLayout);
         backPanelLayout.setHorizontalGroup(
@@ -337,10 +370,10 @@ public class YJWmain extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
             .addComponent(NJWUPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backPanelLayout.createSequentialGroup()
-                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(yjwMainPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(titelPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(containPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backPanelLayout.setVerticalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,20 +385,20 @@ public class YJWmain extends javax.swing.JFrame {
                 .addComponent(NJWUPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(yjwMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(containPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(349, 349, 349))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 889, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(backPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 570, Short.MAX_VALUE)
         );
 
         pack();
@@ -373,40 +406,41 @@ public class YJWmain extends javax.swing.JFrame {
 
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_ExitButtonActionPerformed
 
     private void planButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_planButtonActionPerformed
         // TODO add your handling code here:
-        yjwMainPanel.setVisible(false);
+       /* yjwMainPanel.setVisible(false);
         coursePanel.setVisible(false);
         backPanel.add(planPanel,0,0);
         planPanel.setBounds(0,570-349,889,349);
-        planPanel.setVisible(true);
-        arrowLabel.setVisible(true);
-        nowLabel.setText("录入教学计划");
-        nowLabel.setVisible(true);
+        planPanel.setVisible(true);*/
+        cardLayout.show(containPanel,"planP");
+        navigation.setNowText("录入教学计划");
+        navigation.setVisible(true);
+        
     }//GEN-LAST:event_planButtonActionPerformed
 
     private void courseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseButtonActionPerformed
         // TODO add your handling code here:
-        yjwMainPanel.setVisible(false);
+        /*yjwMainPanel.setVisible(false);
         planPanel.setVisible(false);
         backPanel.add(coursePanel,0,0);
         coursePanel.setBounds(0,570-349,889,349);
-        coursePanel.setVisible(true);
-        arrowLabel.setVisible(true);
-        nowLabel.setText("课程信息");
-        nowLabel.setVisible(true);
-        
+        coursePanel.setVisible(true);*/
+       cardLayout.show(containPanel,"courseP");
+       navigation.setNowText("课程信息");
+       navigation.setVisible(true);
     }//GEN-LAST:event_courseButtonActionPerformed
 
     private void backLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseClicked
         // TODO add your handling code here:
-        yjwMainPanel.setVisible(true);
+        /*yjwMainPanel.setVisible(true);
         planPanel.setVisible(false);
-        coursePanel.setVisible(false);
-        arrowLabel.setVisible(false);
-        nowLabel.setVisible(false);
+        coursePanel.setVisible(false);*/
+        cardLayout.show(containPanel,"yjwMainP");
+        navigation.setVisible(false);
     }//GEN-LAST:event_backLabelMouseClicked
 
     private void backLabelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseMoved
@@ -421,11 +455,11 @@ public class YJWmain extends javax.swing.JFrame {
 
     private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked
         // TODO add your handling code here:
-        yjwMainPanel.setVisible(true);
+        /*yjwMainPanel.setVisible(true);
         planPanel.setVisible(false);
-        coursePanel.setVisible(false);
-        arrowLabel.setVisible(false);
-        nowLabel.setVisible(false);
+        coursePanel.setVisible(false);*/
+        cardLayout.show(containPanel,"yjwMainP");
+        navigation.setVisible(false);
     }//GEN-LAST:event_homeLabelMouseClicked
 
     private void homeLabelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseMoved
@@ -452,10 +486,24 @@ public class YJWmain extends javax.swing.JFrame {
         exitLabel.setForeground(Color.BLACK);
     }//GEN-LAST:event_exitLabelMouseExited
 
+    private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(containPanel,"perInfoP");
+        navigation.setNowText("个人信息");
+    }//GEN-LAST:event_perInfoButtonActionPerformed
+  
+    public void setUserInfoVO(UserInfoVO u) {
+        userInfoVO = u;
+    }
+    
+    public void setIns(String ins){
+        planPanel.setInstitute(ins);
+    }
+   
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public  void main(String args[],final UserInfoVO userInfoVO) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -482,7 +530,10 @@ public class YJWmain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new YJWmain().setVisible(true);
+                YJWmain frame = new YJWmain();
+                frame.setUserInfoVO(userInfoVO);
+                frame.setIns(userInfoVO.getDepart());
+                frame.setVisible(true);
             }
         });
     }
@@ -494,6 +545,7 @@ public class YJWmain extends javax.swing.JFrame {
     private javax.swing.JLabel backLabel;
     private javax.swing.JLabel backLogo;
     private javax.swing.JPanel backPanel;
+    public static javax.swing.JPanel containPanel;
     private javax.swing.JButton courseButton;
     private javax.swing.JLabel courseLabel;
     private javax.swing.JLabel currentLogo;
@@ -514,47 +566,8 @@ public class YJWmain extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private PlanPanel planPanel;
     private CoursePanel coursePanel;
-    private JLabel arrowLabel;
-    private JLabel nowLabel;
-    private Font font;
-  //------------------------------------------------------------------getter和setter
-    public Font getFont() {
-        return font;
-    }
-
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
-    public JLabel getNowLabel() {
-        return nowLabel;
-    }
-
-    public void setNowLabel(String text) {
-        this.nowLabel.setText(text);
-    }
-
-    public JLabel getArrowLabel() {
-        return arrowLabel;
-    }
-
-    public void setArrowLabel(JLabel arrowLabel) {
-        this.arrowLabel = arrowLabel;
-    }
-
-    public CoursePanel getCoursePanel() {
-        return coursePanel;
-    }
-
-    public void setCoursePanel(CoursePanel coursePanel) {
-        this.coursePanel = coursePanel;
-    }
-
-    public PlanPanel getPlanPanel() {
-        return planPanel;
-    }
-
-    public void setPlanPanel(PlanPanel planPanel) {
-        this.planPanel = planPanel;
-    }
+    private  CardLayout cardLayout;
+    private PerInfoPanel perInfoPanel;
+    private Navigation navigation;
+    public UserInfoVO userInfoVO;
 }

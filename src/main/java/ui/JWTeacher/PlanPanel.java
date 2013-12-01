@@ -4,17 +4,34 @@
  */
 package ui.JWTeacher;
 
+import businesslogic.planbl.PlanController;
+import businesslogicservice.planblservice.PlanBLService;
+import businesslogicservice.planblservice.PlanOperationFactory;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import vo.planvo.PlanVO;
+
 /**
  *
  * @author zili chen
  */
 public class PlanPanel extends javax.swing.JPanel {
 
+    PlanBLService planBLService;
+    PlanOperationFactory planOperationFactory = new PlanOperationFactory();
+
     /**
      * Creates new form PlanPanel
      */
     public PlanPanel() {
         initComponents();
+        planBLService = planOperationFactory.getPlanBLService();
+    }
+
+    public void fillTable(JTable table, ArrayList<String> strings) {
+        DefaultTableModel defaultTableModel = (DefaultTableModel) table.getModel();
     }
 
     /**
@@ -129,9 +146,14 @@ public class PlanPanel extends javax.swing.JPanel {
 
         insList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         insList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "文学院", "哲学系", "历史学系", "新闻传播学院", "法学院", "商学院", "经济学院", "管理学院", "外国语学院", "政府管理学院", "社会学院", "信息管理学院", "数学系", "物理学院", "天文与空间科学学院", "化学化工学院", "计算机科学与技术系", "子科学与工程学院", "现代工程与应用科学学院", "环境学院", "地球科学与工程学院", "大气科学学院", "地理与海洋科学学院", "生命科学学院", "生物科学学院", "医学院", "匡亚明学院", "海外教育学院", "软件学院", "工程管理学院建筑与城市规划学院" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        insList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(insList);
 
@@ -223,6 +245,22 @@ public class PlanPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void insListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insListMouseClicked
+        // TODO add your handling code here:
+        String institute = (String) insList.getSelectedValue();
+       // ArrayList<PlanVO> planVOs = planBLService.observePlan(institute, null);
+        DefaultTableModel tableModel=(DefaultTableModel) planTable.getModel();
+        tableModel.setRowCount(0);
+        String[] strings=new String[5];
+        strings[0]="dfsdf";
+        strings[1]="kk";
+        strings[2]="kdjf";
+        strings[3]="kjkj";
+        strings[4]="kjkj";
+        tableModel.addRow(strings);
+        planTable.invalidate();
+    }//GEN-LAST:event_insListMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowLogo;
     private javax.swing.JLabel backLabel;

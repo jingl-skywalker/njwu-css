@@ -4,20 +4,27 @@
  */
 package dataservice.coursedataservice;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import po.coursepo.CoursePO;
 
 /**
  *
  * @author zili chen
  */
-public interface CourseDataService {
+public interface CourseDataService extends Remote{
     
-    public void insert(CoursePO cpo);
+    public void insert(CoursePO cpo) throws RemoteException;
     
-    public void update(CoursePO cpo);
+    public void update(CoursePO cpo) throws RemoteException;
     
-    public void delete(CoursePO cpo);
+    public void delete(String courseID) throws RemoteException;
     
-    public CoursePO find();
+    public CoursePO find(String courseID) throws RemoteException;
+    
+    public ArrayList<CoursePO> finds(int field,String value) throws RemoteException;
+    
+    public void writeCourse(String file,String content) throws RemoteException;
     
 }

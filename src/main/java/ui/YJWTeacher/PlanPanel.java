@@ -2,13 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package  ui.YJWTeacher;
 
+package ui.YJWTeacher;
+
+
+
+import businesslogic.planbl.PlanController;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import  ui.Library.MyTitledBorder;
+import vo.planvo.PlanVO;
 
 /**
  *
@@ -23,8 +30,11 @@ public class PlanPanel extends javax.swing.JPanel {
         initComponents();
         modulePanel.setBorder(new MyTitledBorder("选择模块").getTitledBorder());
         coursePanel.setBorder(new MyTitledBorder("课程列表").getTitledBorder());
-        planInfoPanel = new PlanInfoPanel();
-        planInfoPanel.setVisible(false);
+        /*逻辑处理*/
+        planController = new PlanController();
+        pList  = new ArrayList<PlanVO>();
+        tableModel = (DefaultTableModel)planTable.getModel();
+        tableModel.setRowCount(0);
     }
 
     /**
@@ -36,14 +46,17 @@ public class PlanPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         modulePanel = new javax.swing.JPanel();
         moduleButton1 = new javax.swing.JButton();
         moduleButton2 = new javax.swing.JButton();
         moduleButton3 = new javax.swing.JButton();
         moduleButton4 = new javax.swing.JButton();
         coursePanel = new javax.swing.JPanel();
-        addCourseButton = new javax.swing.JButton();
-        modifyButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        planTable = new javax.swing.JTable();
+        buttonPanel = new javax.swing.JPanel();
+        addButton = new javax.swing.JButton();
         sureButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
@@ -53,23 +66,43 @@ public class PlanPanel extends javax.swing.JPanel {
         modulePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "选择模块", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
 
         moduleButton1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        moduleButton1.setText("模块1");
+        moduleButton1.setText("通识通修模块");
+        moduleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleButton1ActionPerformed(evt);
+            }
+        });
 
         moduleButton2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        moduleButton2.setText("模块2");
+        moduleButton2.setText("学科专业模块");
+        moduleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleButton2ActionPerformed(evt);
+            }
+        });
 
         moduleButton3.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        moduleButton3.setText("模块3");
+        moduleButton3.setText("开放选修模块");
+        moduleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleButton3ActionPerformed(evt);
+            }
+        });
 
         moduleButton4.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        moduleButton4.setText("模块4");
+        moduleButton4.setText("毕业论文/设计模块");
+        moduleButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout modulePanelLayout = new javax.swing.GroupLayout(modulePanel);
         modulePanel.setLayout(modulePanelLayout);
         modulePanelLayout.setHorizontalGroup(
             modulePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modulePanelLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addGroup(modulePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(moduleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(moduleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -77,12 +110,12 @@ public class PlanPanel extends javax.swing.JPanel {
                 .addGroup(modulePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(moduleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(moduleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         modulePanelLayout.setVerticalGroup(
             modulePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(modulePanelLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(36, 36, 36)
                 .addGroup(modulePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(modulePanelLayout.createSequentialGroup()
                         .addComponent(moduleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,45 +125,74 @@ public class PlanPanel extends javax.swing.JPanel {
                         .addComponent(moduleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(moduleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         coursePanel.setBackground(new java.awt.Color(0, 0, 0));
         coursePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "课程列表", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
 
-        addCourseButton.setBackground(new java.awt.Color(0, 0, 0));
-        addCourseButton.setFont(new java.awt.Font("微软雅黑", 1, 48)); // NOI18N
-        addCourseButton.setForeground(new java.awt.Color(204, 204, 204));
-        addCourseButton.setText("+");
-        addCourseButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        addCourseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCourseButtonActionPerformed(evt);
+        planTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        planTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "课程性质", "课程类别", "课程号", "课程名", "学分", "周学时"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        jScrollPane1.setViewportView(planTable);
 
         javax.swing.GroupLayout coursePanelLayout = new javax.swing.GroupLayout(coursePanel);
         coursePanel.setLayout(coursePanelLayout);
         coursePanelLayout.setHorizontalGroup(
             coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(coursePanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(addCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(232, Short.MAX_VALUE))
+            .addGap(0, 402, Short.MAX_VALUE)
+            .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coursePanelLayout.createSequentialGroup()
+                    .addGap(7, 7, 7)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         coursePanelLayout.setVerticalGroup(
             coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(coursePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addCourseButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 294, Short.MAX_VALUE)
+            .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coursePanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
-        modifyButton.setBackground(new java.awt.Color(0, 0, 0));
-        modifyButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        modifyButton.setForeground(new java.awt.Color(204, 204, 204));
-        modifyButton.setText("修改教学计划");
-        modifyButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        buttonPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        addButton.setBackground(new java.awt.Color(0, 0, 0));
+        addButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        addButton.setForeground(new java.awt.Color(204, 204, 204));
+        addButton.setText("添加课程");
+        addButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         sureButton.setBackground(new java.awt.Color(0, 0, 0));
         sureButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -144,6 +206,30 @@ public class PlanPanel extends javax.swing.JPanel {
         cancelButton.setText("取消");
         cancelButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
 
+        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
+        buttonPanel.setLayout(buttonPanelLayout);
+        buttonPanelLayout.setHorizontalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sureButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        buttonPanelLayout.setVerticalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,63 +237,120 @@ public class PlanPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(modulePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(coursePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(modifyButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sureButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(modulePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(coursePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(modulePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(coursePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        add(planInfoPanel,0,0);
-        planInfoPanel.setBounds(100,50,543,259);
-        planInfoPanel.setVisible(true);
-    }//GEN-LAST:event_addCourseButtonActionPerformed
+        planInfoFrame= new PlanInfoFrame();
+        planInfoFrame.setBounds(400,300,543,259);
+        planInfoFrame.setVisible(true);
+        planInfoFrame.setModule(module);
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void moduleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleButton1ActionPerformed
+        // TODO add your handling code here:
+        module  = "通识通修";
+        pList = planController.observePlan(institute, module);
+        for(PlanVO p:pList) {
+            String[] strings = new String[6];
+            strings[0] =  p.getProperty();
+            strings[1] = p.getType();
+            strings[2] = p.getCourseID();
+            strings[3] = p.getCourseName();
+            strings[4] = String.valueOf(p.getCredit());
+            strings[5] = String.valueOf(p.getHour());
+        }
+        
+    }//GEN-LAST:event_moduleButton1ActionPerformed
+
+    private void moduleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleButton2ActionPerformed
+        // TODO add your handling code here:
+        module  = "学科专业";
+        pList = planController.observePlan(institute, module);
+        for(PlanVO p:pList) {
+            String[] strings = new String[6];
+            strings[0] =  p.getProperty();
+            strings[1] = p.getType();
+            strings[2] = p.getCourseID();
+            strings[3] = p.getCourseName();
+            strings[4] = String.valueOf(p.getCredit());
+            strings[5] = String.valueOf(p.getHour());
+        }
+    }//GEN-LAST:event_moduleButton2ActionPerformed
+
+    private void moduleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleButton3ActionPerformed
+        // TODO add your handling code here:
+        module  = "开放选修";
+        pList = planController.observePlan(institute, module);
+        for(PlanVO p:pList) {
+            String[] strings = new String[6];
+            strings[0] =  p.getProperty();
+            strings[1] = p.getType();
+            strings[2] = p.getCourseID();
+            strings[3] = p.getCourseName();
+            strings[4] = String.valueOf(p.getCredit());
+            strings[5] = String.valueOf(p.getHour());
+        }
+    }//GEN-LAST:event_moduleButton3ActionPerformed
+
+    private void moduleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleButton4ActionPerformed
+        // TODO add your handling code here:
+        module  = "毕业论文/设计";
+        pList = planController.observePlan(institute, module);
+        for(PlanVO p:pList) {
+            String[] strings = new String[6];
+            strings[0] =  p.getProperty();
+            strings[1] = p.getType();
+            strings[2] = p.getCourseID();
+            strings[3] = p.getCourseName();
+            strings[4] = String.valueOf(p.getCredit());
+            strings[5] = String.valueOf(p.getHour());
+        }
+    }//GEN-LAST:event_moduleButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addCourseButton;
+    private javax.swing.JButton addButton;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel coursePanel;
-    private javax.swing.JButton modifyButton;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton moduleButton1;
     private javax.swing.JButton moduleButton2;
     private javax.swing.JButton moduleButton3;
     private javax.swing.JButton moduleButton4;
     private javax.swing.JPanel modulePanel;
+    private javax.swing.JTable planTable;
     private javax.swing.JButton sureButton;
     // End of variables declaration//GEN-END:variables
-    private PlanInfoPanel planInfoPanel;
-
-
-    public PlanInfoPanel getPlanInfoPanel() {
-        return planInfoPanel;
+    private PlanInfoFrame planInfoFrame;
+    
+    /*逻辑处理*/
+    private String module;
+    private PlanController planController;
+    private String institute;
+    private ArrayList<PlanVO> pList;
+    private DefaultTableModel tableModel;
+    
+    public void setInstitute(String s) {
+        institute  = s;
     }
-
-    public void setPlanInfoPanel(PlanInfoPanel planInfoPanel) {
-        this.planInfoPanel = planInfoPanel;
-    }
-
+    
 }

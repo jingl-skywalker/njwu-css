@@ -78,4 +78,10 @@ public class UserInfoData extends UnicastRemoteObject implements UserInfoDataSer
         FileutilityImpl.writeToFile("src\\main\\resources\\inform.txt", message);
         return ResultMessage.SUCCESS;
     }
+
+    @Override
+    public ResultMessage update(UserInfoPO p) throws RemoteException {
+        FileUtility file = new FileutilityImpl("src\\main\\resources\\user.txt");
+        return file.changeUser(p.getID(), p.toString());
+    }
 }

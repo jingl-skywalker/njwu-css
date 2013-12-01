@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import vo.processmngvo.NoticeVO;
 

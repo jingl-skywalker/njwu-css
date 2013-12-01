@@ -16,9 +16,9 @@ public class SelectionPO implements Serializable{
     private String courseNum;
     private String stuID;
     private String term;
-    private ArrayList<String> teacher;
+    private String teacher;
 
-    public SelectionPO(String num, String id, String term, ArrayList<String> teacher) {
+    public SelectionPO(String num, String id, String term, String teacher) {
         courseNum = num;
         stuID = id;
         this.term = term;
@@ -41,7 +41,9 @@ public class SelectionPO implements Serializable{
         return term;
     }
     
-    public ArrayList<String> getTeacher(){
+    public String getTeacher(){
         return teacher;
     }
+    
+    
 }
