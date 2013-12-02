@@ -22,6 +22,9 @@ public class DroppingState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
+    public DroppingState() {
+    }
+
     @Override
     public int getStateNum() {
         return 7;

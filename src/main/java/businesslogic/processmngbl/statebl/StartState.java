@@ -26,6 +26,9 @@ public class StartState implements MyState {
         this.stateOperation = new StateOperation(context);
     }
 
+    public StartState() {
+    }
+
     @Override
     public void setBegining(StateTime stm) {
         stateOperation.setBegining(stm);

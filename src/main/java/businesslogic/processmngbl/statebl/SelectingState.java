@@ -25,6 +25,9 @@ public class SelectingState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
+    public SelectingState() {
+    }
+
     @Override
     public int getStateNum() {
         return 5;

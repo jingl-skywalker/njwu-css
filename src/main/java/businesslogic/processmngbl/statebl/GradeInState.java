@@ -21,6 +21,9 @@ public class GradeInState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
+    public GradeInState() {
+    }
+
     @Override
     public int getStateNum() {
         return 8;

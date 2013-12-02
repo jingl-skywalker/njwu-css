@@ -17,6 +17,9 @@ public class CourseLaunchingState implements MyState {
     StateContext context;
     StateTime stm;
     StateOperation stateOperation;
+    public CourseLaunchingState(){
+        
+    }
 
     public CourseLaunchingState(StateContext context) {
         this.context = context;

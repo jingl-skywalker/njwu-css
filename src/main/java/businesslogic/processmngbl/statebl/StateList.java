@@ -26,15 +26,26 @@ public class StateList {
         states[7] = new GradeInState(null);
     }
 
+    public StateList(boolean isRemote) {
+        states = new MyState[8];
+        states[0] = new StartState();
+        states[1] = new FrameLaunchingState();
+        states[2] = new PlanUploadingState();
+        states[3] = new CourseLaunchingState();
+        states[4] = new SelectingState();
+        states[5] = new ReselectingState();
+        states[6] = new DroppingState();
+        states[7] = new GradeInState();
+    }
+
     public MyState getState(int stateNum) {
         return states[stateNum - 1];
     }
 
     public int getStateNum(MyState state) {
         for (int i = 0; i < 8; i++) {
-            if(state.equals(states[i]))
-            {
-                return i+1;
+            if (state.equals(states[i])) {
+                return i + 1;
             }
         }
         return 0;

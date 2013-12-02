@@ -22,6 +22,9 @@ public class ReselectingState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
+    public ReselectingState() {
+    }
+
     @Override
     public int getStateNum() {
         return 6;

@@ -21,6 +21,9 @@ public class PlanUploadingState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
+    public PlanUploadingState() {
+    }
+
     @Override
     public int getStateNum() {
         return 3;

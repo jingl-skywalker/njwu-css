@@ -43,7 +43,7 @@ public class STUmain extends javax.swing.JFrame {
     public void initMyConpontent() {
         gradeFactory = new GradeFactory();
         selectionFactory = new SelectionFactory();
-
+        
         perCoursePanel = new PerCoursePanel(student.getID(), selectionFactory.getSelectionController());
         perInfoPanel = new PerInfoPanel(student);
         allCoursePanel = new AllCoursePanel(selectionFactory.getSelectionController());

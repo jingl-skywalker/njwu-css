@@ -4,14 +4,19 @@
  */
 package dataservice.datafactory;
 
+import data.coursedata.CourseData;
 import data.framedata.FrameData;
+import data.plandata.PlanData;
 import data.processmngdata.noticedata.NoticeData;
 import data.processmngdata.statedata.StateData;
+import data.processmngdata.statedata.SystemTimer;
+import data.selectiondata.SelectionData;
 import dataservice.framedataservice.FrameDataService;
 import dataservice.gradedataservice.GradeDataService;
 import dataservice.plandataservice.PlanDataService;
 import dataservice.processmngdataservice.noticedataservice.NoticeDataService;
 import dataservice.processmngdataservice.statedataservice.StateDataService;
+import dataservice.selectiondataservice.SelectionDataService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -19,8 +24,12 @@ import java.rmi.server.UnicastRemoteObject;
  *
  * @author Administrator
  */
-public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory{
-        public DataFactoryImpl() throws RemoteException {
+public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory {
+    SystemTimer systemTimer;
+    public DataFactoryImpl() throws RemoteException {
+    }
+    public DataFactoryImpl(SystemTimer systemTimer)throws RemoteException{
+        this.systemTimer=systemTimer;
     }
 
     @Override
@@ -30,12 +39,13 @@ public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory{
 
     @Override
     public PlanDataService getPlanData() throws RemoteException {
-        return null;
+        return new PlanData();
     }
 
     @Override
     public StateDataService getStateData() throws RemoteException {
-      return new StateData();
+       // return new StateData();
+        return new StateData(systemTimer);
     }
 
     @Override
@@ -45,6 +55,17 @@ public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory{
 
     @Override
     public GradeDataService getGradeData() throws RemoteException {
-        return null;
+        return new SelectionData();
     }
+
+    @Override
+    public SelectionDataService getSelectionData() throws RemoteException {
+        return new SelectionData();
+    }
+
+    @Override
+    public CourseData getCourseData() throws RemoteException {
+        return new CourseData();
+     }
+    
 }
