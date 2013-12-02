@@ -10,7 +10,6 @@ import businesslogicservice.processmngblservice.state.StateLogicFactory;
 import businesslogicservice.processmngblservice.state.TimeFormat;
 import java.awt.Color;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import vo.processmngvo.StateVO;
 
 /**
@@ -22,7 +21,7 @@ public class SetTimePanel extends javax.swing.JPanel {
 
     StateLogicFactory stateLogicFactory;
     StateBLService stateBLService;
-    int currentStateNum = 1;
+    int currentStateNum=1;
 
     /**
      * Creates new form SetTimePanel
@@ -521,28 +520,23 @@ public class SetTimePanel extends javax.swing.JPanel {
     private void SureButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SureButton1ActionPerformed
         // TODO add your handling code here:
         String secondString = "00";
-        String startYearString = (String) yearComboBox.getSelectedItem();
+        String startYearString = (String)yearComboBox.getSelectedItem();
         //System.out.println("getselected item"+yearComboBox.getSelectedItem());
-        String startMonthString = (String) monthComboBox.getSelectedItem();
-        String startDayString = (String) dayComboBox.getSelectedItem();
-        String startHourString = (String) hourbox.getSelectedItem();
-        String startMinString = (String) minbox.getSelectedItem();
-        System.out.println("hour:" + startHourString + "min" + startMinString);
-        String endYearString = (String) yearComboBox1.getSelectedItem();
-        String endMonthString = (String) monthComboBox1.getSelectedItem();
-        String endDayString = (String) dayComboBox1.getSelectedItem();
-        String endHourString = (String) hourbox1.getSelectedItem();
-        String endMinString = (String) minbox1.getSelectedItem();
+        String startMonthString = (String)monthComboBox.getSelectedItem();
+        String startDayString =(String) dayComboBox.getSelectedItem();
+        String startHourString = (String)hourbox.getSelectedItem();
+        String startMinString = (String)minbox.getSelectedItem();
+        System.out.println("hour:"+startHourString+"min"+startMinString);
+        String endYearString =(String) yearComboBox1.getSelectedItem();
+        String endMonthString =(String) monthComboBox1.getSelectedItem();
+        String endDayString = (String)dayComboBox1.getSelectedItem();
+        String endHourString = (String)hourbox1.getSelectedItem();
+        String endMinString =(String) minbox1.getSelectedItem();
         TimeFormat tf = new TimeFormatImpl();
         Date startDate = tf.getTime(startYearString, startMonthString, startDayString, startHourString, startMinString, secondString);
         Date endDate = tf.getTime(endYearString, endMonthString, endDayString, endHourString, endMinString, secondString);
         StateVO stateVO = new StateVO(startDate, endDate, getCurrentStateNum());
-        boolean isSuccess = stateBLService.recordState(stateVO);
-        if (!isSuccess) {
-            JOptionPane.showMessageDialog(this, "该状态已经设置过了！", null, JOptionPane.INFORMATION_MESSAGE);
-        }else{
-             JOptionPane.showMessageDialog(this, "设置成功！", null, JOptionPane.INFORMATION_MESSAGE);
-        }
+        stateBLService.recordState(stateVO);
     }//GEN-LAST:event_SureButton1ActionPerformed
 
     private void hourboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourboxActionPerformed
@@ -551,58 +545,58 @@ public class SetTimePanel extends javax.swing.JPanel {
 
     private void startStateLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startStateLabelMouseClicked
         // TODO add your handling code here:
-        startStateLabel.setForeground(Color.RED);
+        startStateLabel.setBackground(Color.yellow);
         setCurrentStateNum(1);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_startStateLabelMouseClicked
 
     private void frameStateLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_frameStateLabelMouseClicked
         // TODO add your handling code here:
         frameStateLabel.setForeground(Color.RED);
         setCurrentStateNum(2);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_frameStateLabelMouseClicked
 
     private void planStateLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_planStateLabelMouseClicked
         // TODO add your handling code here:
         planStateLabel.setForeground(Color.RED);
         setCurrentStateNum(3);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_planStateLabelMouseClicked
 
     private void courseLaunchLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseLaunchLabelMouseClicked
         // TODO add your handling code here:
         courseLaunchLabel.setForeground(Color.RED);
         setCurrentStateNum(4);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_courseLaunchLabelMouseClicked
 
     private void SelectCourseLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SelectCourseLabelMouseClicked
         // TODO add your handling code here:
         SelectCourseLabel.setForeground(Color.RED);
         setCurrentStateNum(5);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_SelectCourseLabelMouseClicked
 
     private void ReselectcourseLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReselectcourseLabelMouseClicked
         // TODO add your handling code here:
         ReselectcourseLabel.setForeground(Color.RED);
         setCurrentStateNum(6);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_ReselectcourseLabelMouseClicked
 
     private void DropLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DropLabelMouseClicked
         // TODO add your handling code here:
         DropLabel.setForeground(Color.RED);
         setCurrentStateNum(7);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_DropLabelMouseClicked
 
     private void GradeInLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GradeInLabelMouseClicked
         // TODO add your handling code here:
         GradeInLabel.setForeground(Color.RED);
         setCurrentStateNum(8);
-        System.out.println("change to num " + currentStateNum);
+        System.out.println("change to num "+currentStateNum);
     }//GEN-LAST:event_GradeInLabelMouseClicked
 
     private void startStateLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startStateLabelMouseEntered
@@ -684,6 +678,7 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         GradeInLabel.setForeground(Color.WHITE);
     }//GEN-LAST:event_GradeInLabelMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DropLabel;
     private javax.swing.JLabel GradeInLabel;

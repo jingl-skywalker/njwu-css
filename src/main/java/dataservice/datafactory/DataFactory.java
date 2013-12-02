@@ -4,7 +4,6 @@
  */
 package dataservice.datafactory;
 
-import data.coursedata.CourseData;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import dataservice.framedataservice.FrameDataService;
@@ -12,7 +11,6 @@ import dataservice.gradedataservice.GradeDataService;
 import dataservice.plandataservice.PlanDataService;
 import dataservice.processmngdataservice.noticedataservice.NoticeDataService;
 import dataservice.processmngdataservice.statedataservice.StateDataService;
-import dataservice.selectiondataservice.SelectionDataService;
 
 /**
  *
@@ -29,7 +27,4 @@ public interface DataFactory extends Remote {
     public NoticeDataService getNoticeData() throws RemoteException;
 
     public GradeDataService getGradeData() throws RemoteException;
-
-    public SelectionDataService getSelectionData() throws RemoteException;
-    public CourseData getCourseData()throws  RemoteException;
 }

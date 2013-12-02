@@ -5,9 +5,6 @@
 package businesslogic.processmngbl.statebl;
 
 import businesslogicservice.processmngblservice.state.MyState;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
@@ -39,7 +36,7 @@ public class StateContext {
         state = sts;
     }
 
-    public static StateContext getStateContext()  { //双重加锁保证线程安全
+    public static StateContext getStateContext() { //双重加锁保证线程安全
         if (uniqueContext == null) {
             synchronized (StateContext.class) {
                 if (uniqueContext == null) {

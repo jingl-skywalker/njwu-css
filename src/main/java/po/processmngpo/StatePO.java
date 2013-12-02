@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 import vo.processmngvo.StateVO;
 
-public class StatePO implements Serializable {
+public class StatePO implements  Serializable{
 
     private Date startDate;
     private Date endDate;
@@ -21,17 +21,15 @@ public class StatePO implements Serializable {
         this.endDate = end;
         initDateString();
     }
-
-    public StatePO(String toStoreString) {
-        if (toStoreString != null) {
-            String strings[] = toStoreString.split(SEP);
-            startString = strings[1];
-            endString = strings[2];
-            stateNum = Integer.parseInt(strings[0]);
-            TimeFormat tf = new TimeFormatImpl();
-            startDate = tf.getTime(startString);
-            endDate = tf.getTime(endString);
-        }
+    public StatePO(String toStoreString)
+    {
+        String strings[]=toStoreString.split(SEP);
+        startString=strings[1];
+        endString=strings[2];
+        stateNum=Integer.parseInt(strings[0]);
+         TimeFormat tf=new TimeFormatImpl();
+         startDate=tf.getTime(startString);
+         endDate=tf.getTime(endString);
     }
 
     public StatePO(StateVO svo) {

@@ -4,8 +4,6 @@
  */
 package Entry;
 
-import data.processmngdata.statedata.SystemTimer;
-import data.processmngdata.statedata.TimerThread;
 import dataservice.datafactory.DataFactory;
 import dataservice.datafactory.DataFactoryImpl;
 import dataservice.datafactory.LoginDataFactory;
@@ -32,14 +30,7 @@ public class Server {
     public static void main(String[] args) {
         System.out.println("Server:");
         try {
-            /*------Timer State about---------*/
-            SystemTimer systemTimer = new SystemTimer();
-            TimerThread tThread = new TimerThread(systemTimer);
-            Thread timerThread = new Thread(tThread, "TIMER");
-            timerThread.setDaemon(true);
-            timerThread.start();
-            /*---------------------------------------*/
-            DataFactory factory = new DataFactoryImpl(systemTimer);
+            DataFactory factory = new DataFactoryImpl();
             FrameDataService fds = factory.getFrameData();
             LocateRegistry.createRegistry(1099);
             Naming.rebind("dataFactory", factory);

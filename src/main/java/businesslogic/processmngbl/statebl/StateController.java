@@ -43,17 +43,6 @@ public class StateController implements StateBLService {
     public boolean recordState(StateVO svo) {
         StatePO spo = new StatePO(svo);
         boolean result = true;
-        int thisStateNum=spo.getStateNum();
-        StatePO spoFind = null;
-        try {
-            spoFind = sds.find(thisStateNum);
-        } catch (RemoteException ex) {
-            Logger.getLogger(StateController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(spoFind!=null){
-            System.out.println("state NUM exience");
-            return false;
-        }
         try {
             result = sds.record(spo);
         } catch (RemoteException ex) {

@@ -21,9 +21,6 @@ public class FrameLaunchingState implements MyState {
         stateOperation = new StateOperation(context);
     }
 
-    public FrameLaunchingState() {
-    }
-
     @Override
     public int getStateNum() {
         return 2;
