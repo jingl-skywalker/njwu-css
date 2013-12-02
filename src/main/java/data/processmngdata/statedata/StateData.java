@@ -3,8 +3,6 @@
  * and open the template in the editor.
  */
 package data.processmngdata.statedata;
-
-import businesslogic.processmngbl.statebl.StateList;
 import data.fileutility.FileUtility;
 import data.fileutility.FileutilityImpl;
 import dataservice.processmngdataservice.statedataservice.StateDataService;
