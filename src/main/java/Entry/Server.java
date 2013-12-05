@@ -33,6 +33,7 @@ public class Server {
         System.out.println("Server:");
         try {
             /*------Timer State about---------*/
+            /*建立线程轮询系统时间*/
             SystemTimer systemTimer = new SystemTimer();
             TimerThread tThread = new TimerThread(systemTimer);
             Thread timerThread = new Thread(tThread, "TIMER");

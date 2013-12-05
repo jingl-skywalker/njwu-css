@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import po.processmngpo.StatePO;
 
 /**
- *
+ *使用单件确保状态一致性
  * @author Administrator
  */
 public class StateContext {
