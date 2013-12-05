@@ -7,7 +7,6 @@ package data.fileutility;
 import enumeration.ResultMessage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,10 +19,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.stream.FileImageOutputStream;
 import po.coursepo.CoursePO;
 import po.planpo.PlanPO;
-import sun.font.CreatedFontTracker;
 
 /**
  *
