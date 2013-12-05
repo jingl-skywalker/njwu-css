@@ -5,9 +5,18 @@
 package businesslogic.processmngbl.statebl;
 
 import businesslogicservice.processmngblservice.state.MyState;
+import dataservice.datafactory.DataFactory;
+import dataservice.datafactory.DataFactoryImpl;
+import dataservice.processmngdataservice.statedataservice.StateDataService;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import po.processmngpo.StatePO;
 
 /**
  *
@@ -15,6 +24,8 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class StateContext {
 
+    DataFactory dataFactory;
+    StateDataService stateDataService;
     CourseLaunchingState cls;
     DroppingState ds;
     FrameLaunchingState fls;
@@ -26,8 +37,21 @@ public class StateContext {
     MyState state;
     int count = 0;
     private volatile static StateContext uniqueContext;
+    StatePO spo;
 
     private StateContext() {
+
+        try {
+            dataFactory = (DataFactory) Naming.lookup("dataFactory");
+            stateDataService = dataFactory.getStateData();
+            spo=stateDataService.getCurrentState();
+        } catch (RemoteException ex) {
+            Logger.getLogger(StateContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(StateContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(StateContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
         cls = new CourseLaunchingState(this);
         ds = new DroppingState(this);
         fls = new FrameLaunchingState(this);
@@ -36,10 +60,11 @@ public class StateContext {
         rss = new ReselectingState(this);
         sls = new SelectingState(this);
         sts = new StartState(this);
-        state = sts;
+        StateList stateList=new StateList(true);
+        state = stateList.getState(spo.getStateNum());
     }
 
-    public static StateContext getStateContext()  { //双重加锁保证线程安全
+    public static StateContext getStateContext() { //双重加锁保证线程安全
         if (uniqueContext == null) {
             synchronized (StateContext.class) {
                 if (uniqueContext == null) {

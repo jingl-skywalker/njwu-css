@@ -14,7 +14,7 @@ import java.util.Iterator;
  */
 public class TestNoticeRecirver {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         NoticeReceiverFactory noticeReceiverFactory = new NoticeReceiverFactory();
         NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.ALL);
         NoticeList nl = nrs.getNoticeList();

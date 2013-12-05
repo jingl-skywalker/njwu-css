@@ -23,6 +23,8 @@ public class SetTimePanel extends javax.swing.JPanel {
     StateLogicFactory stateLogicFactory;
     StateBLService stateBLService;
     int currentStateNum = 1;
+    String startNoteString="开始时间";
+    String endNoteString="截止时间";
 
     /**
      * Creates new form SetTimePanel
@@ -213,7 +215,7 @@ public class SetTimePanel extends javax.swing.JPanel {
 
         startStateLabel.setBackground(new java.awt.Color(255, 255, 255));
         startStateLabel.setForeground(new java.awt.Color(255, 255, 255));
-        startStateLabel.setText("学期开始");
+        startStateLabel.setText("学期");
         startStateLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 startStateLabelMouseClicked(evt);
@@ -426,49 +428,47 @@ public class SetTimePanel extends javax.swing.JPanel {
                 .addGap(33, 33, 33)
                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(timePanelLayout.createSequentialGroup()
-                        .addComponent(startLabel)
+                        .addComponent(startLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, timePanelLayout.createSequentialGroup()
+                    .addGroup(timePanelLayout.createSequentialGroup()
                         .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(timePanelLayout.createSequentialGroup()
-                                .addComponent(endLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cancelButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(SureButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addComponent(hourbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(minbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addGap(186, 186, 186)
+                                        .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(timePanelLayout.createSequentialGroup()
-                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(timePanelLayout.createSequentialGroup()
-                                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(timePanelLayout.createSequentialGroup()
-                                                .addComponent(hourbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(minbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(timePanelLayout.createSequentialGroup()
-                                                .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(timePanelLayout.createSequentialGroup()
-                                        .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                                        .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(22, 22, 22)))
-                                .addGap(21, 21, 21)
-                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(151, 151, 151)))
-                        .addGap(75, 75, 75))))
+                                .addComponent(endLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(SureButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(41, 41, 41))))
         );
         timePanelLayout.setVerticalGroup(
             timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(timePanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(startLabel)
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
+                .addComponent(startLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,24 +476,26 @@ public class SetTimePanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(timePanelLayout.createSequentialGroup()
+                        .addComponent(cancelButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(SureButton1)
+                        .addGap(68, 68, 68)
+                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(24, Short.MAX_VALUE))
+                    .addGroup(timePanelLayout.createSequentialGroup()
                         .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hourbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(endLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(endLabel)
-                            .addComponent(SureButton1)))
-                    .addComponent(cancelButton1))
-                .addGap(8, 8, 8)
-                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -553,6 +555,12 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         startStateLabel.setForeground(Color.RED);
         setCurrentStateNum(1);
+        startLabel.setText(startStateLabel.getText()+startNoteString);
+        endLabel.setText(startStateLabel.getText()+endNoteString);
+        StateVO svo=stateBLService.lookStateInfo(1);
+        if(svo!=null){
+    
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_startStateLabelMouseClicked
 
@@ -560,6 +568,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         frameStateLabel.setForeground(Color.RED);
         setCurrentStateNum(2);
+         startLabel.setText(frameStateLabel.getText()+startNoteString);
+         endLabel.setText((frameStateLabel.getText()+endNoteString));
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_frameStateLabelMouseClicked
 
@@ -567,6 +577,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         planStateLabel.setForeground(Color.RED);
         setCurrentStateNum(3);
+         startLabel.setText(planStateLabel.getText()+startNoteString);
+         endLabel.setText(planStateLabel.getText()+endNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_planStateLabelMouseClicked
 
@@ -574,6 +586,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         courseLaunchLabel.setForeground(Color.RED);
         setCurrentStateNum(4);
+         startLabel.setText(courseLaunchLabel.getText()+startNoteString);
+         endLabel.setText(courseLaunchLabel.getText()+endNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_courseLaunchLabelMouseClicked
 
@@ -581,6 +595,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         SelectCourseLabel.setForeground(Color.RED);
         setCurrentStateNum(5);
+         startLabel.setText(SelectCourseLabel.getText()+startNoteString);
+         endLabel.setText(SelectCourseLabel.getText()+endNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_SelectCourseLabelMouseClicked
 
@@ -588,6 +604,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         ReselectcourseLabel.setForeground(Color.RED);
         setCurrentStateNum(6);
+         startLabel.setText(ReselectcourseLabel.getText()+startNoteString);
+         endLabel.setText(ReselectcourseLabel.getText()+endNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_ReselectcourseLabelMouseClicked
 
@@ -595,6 +613,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         DropLabel.setForeground(Color.RED);
         setCurrentStateNum(7);
+         startLabel.setText(DropLabel.getText()+startNoteString);
+         endLabel.setText(DropLabel.getText()+endNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_DropLabelMouseClicked
 
@@ -602,6 +622,7 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         GradeInLabel.setForeground(Color.RED);
         setCurrentStateNum(8);
+         startLabel.setText(GradeInLabel.getText()+startNoteString);
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_GradeInLabelMouseClicked
 
