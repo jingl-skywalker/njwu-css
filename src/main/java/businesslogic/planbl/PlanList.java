@@ -4,8 +4,9 @@
  */
 package businesslogic.planbl;
 
-import dataservice.datafactory.PlanDataFactory;
+import dataservice.datafactory.DataFactory;
 import dataservice.plandataservice.PlanDataService;
+
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -13,6 +14,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import po.planpo.PlanPO;
 import vo.planvo.PlanVO;
 
@@ -23,16 +25,14 @@ import vo.planvo.PlanVO;
 public class PlanList {/*教学计划列表类：对计划的具体操作、链接数据层*/
     
     private PlanDataService pds;
-    private PlanDataFactory pdf;
-    private Plan plan;
-    private ArrayList<Plan> pList;
+    private DataFactory dataFactory;
+    private int sumOfCredit;
     
     public PlanList() {
-        pList  = new ArrayList<Plan>();
         try{
-            pdf = (PlanDataFactory)Naming.lookup("courseDataFactory");
-            System.out.println(pdf == null);
-            pds = pdf.getPlanData();
+            dataFactory = (DataFactory)Naming.lookup("courseDataFactory");
+            System.out.println(dataFactory == null);
+            pds = dataFactory.getPlanData();
         }catch(NotBoundException ex) {
             Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE,null,ex);
         }catch (MalformedURLException ex) {
@@ -44,42 +44,38 @@ public class PlanList {/*教学计划列表类：对计划的具体操作、链�
     
     /*添加教学计划*/
     public void addPlan(Plan p) {
-        for(int i = 0;i<pList.size();i++) {//检查有无相同课程号
-             if(pList.get(i).getInstitute().equals(p.getInstitute())) {
-                 System.out.println("该院教学计划已存在");
-             }
-             else{
-                 pList.add(p);
-             }
-         }
+        try{
+        	pds.insert(p.toPO());
+        }catch(RemoteException ex) {
+     		Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE, null, ex);
+     	}
     }
     
     /*修改教学计划*/                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     public void modifyPlan(Plan p) {
-        for(int i = 0;i<pList.size();i++) {//删除原计划
-             if(pList.get(i).getInstitute() .equals(p.getInstitute())) {
-                 pList.remove(i);
-             }
-         }
-         pList.add(p);
+        try{
+        	pds.update(p.toPO());
+        }catch(RemoteException ex) {
+     		Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE, null, ex);
+     	}
     }
     
     /*删除教学计划*/
-    public void deletePlan(String institute,String courseID) {
+    public void deletePlan(String courseID,String institute) {
         try{
-            pds.delete(institute,courseID);
+            pds.delete(courseID, institute);
         }catch(RemoteException ex) {
             Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
     
     /*查看教学计划*/
-    public ArrayList<PlanVO> observePlan(String institute, String module) {
+    public ArrayList<PlanVO> observePlan(String field, String value) {
         ArrayList<PlanVO> pv = new ArrayList<PlanVO>();
         try{
-            ArrayList<PlanPO> pp = pds.finds(institute, module);
-            for(int i=0;i<pp.size();i++) {
-                pv.add(pp.get(i).toVO());
+            ArrayList<PlanPO> pp = pds.finds(field, value);
+            for(PlanPO p:pp) {
+                pv.add(p.toVO());
             }
         }catch(RemoteException ex) {
             Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE,null,ex);
@@ -87,16 +83,25 @@ public class PlanList {/*教学计划列表类：对计划的具体操作、链�
         return pv;
     }
     
-    /*查看某模块教学计划总学分*/
-    public int observeCredit(String institute, String module) {
+    /*查看某模块或者某院系教学计划总学分*/
+    public int observeCredit(String field, String value) {
         int c = 0;
         try{
-           for(PlanPO p:pds.finds(institute,module)) {
-               c = c+p.getCredit();
+           for(PlanPO p:pds.finds(field, value)) {
+               c = c+Integer.parseInt(p.getCredit());
            }
         }catch(RemoteException ex) {
             Logger.getLogger(PlanList.class.getName()).log(Level.SEVERE,null,ex);
         }
         return c;
     }
+    
+    /*getter 和 setter*/
+	public int getSumOfCredit() {
+		return sumOfCredit;
+	}
+
+	public void setSumOfCredit(int sumOfCredit) {
+		this.sumOfCredit = sumOfCredit;
+	}
 }

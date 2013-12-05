@@ -4,6 +4,8 @@
  */
 package businesslogicservice.staticblservice;
 
+import businesslogic.staticbl.CourseStatic;
+import vo.coursevo.CourseVO;
 import vo.staticvo.CourseStaticVO;
 
 /**
@@ -12,8 +14,8 @@ import vo.staticvo.CourseStaticVO;
  */
 public interface CourseStaticBLService {
     
-    public CourseStaticVO show();
+    public CourseVO find(String id);
     
-    public CourseStaticVO show(String department);
+    public CourseStatic show(String department);
     
 }

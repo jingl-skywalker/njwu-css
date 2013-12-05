@@ -20,9 +20,8 @@ public interface PlanDataService extends Remote{
 
     public void update(PlanPO ppo)throws RemoteException;
 
-    public ArrayList<PlanPO> finds(String institute,String module) throws RemoteException;
+    public ArrayList<PlanPO> finds(String field,String value) throws RemoteException;
     
-    public void delete(String institute,String courseID) throws RemoteException;
+    public void delete(String courseID,String institute) throws RemoteException;
     
-    public void writeCourse(String file,String content) throws RemoteException;
 }

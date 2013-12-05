@@ -5,7 +5,6 @@
 package businesslogicservice.planblservice;
 
 import java.util.ArrayList;
-import vo.coursevo.CourseVO;
 import vo.planvo.PlanVO;
 
 /**
@@ -21,12 +20,12 @@ public interface PlanBLService {
     public void modify(PlanVO pvo);
     
     //删除课程
-    public void delete(String institete,String courseID);
+    public void delete(String courseID,String institute);
     
     //查看教学计划
-    public ArrayList<PlanVO> observePlan(String institute,String module);
+    public ArrayList<PlanVO> observePlan(String field,String value);
     
-    //查看某模块的总学分
-    public int observeCredit(String institute,String module);
+    //查看某模块或者某院系的总学分
+    public int observeCredit(String field,String value);
     
 }

@@ -4,12 +4,12 @@
  */
 package data.coursedata;
 
-import data.fileutility.FileUtility;
-import data.fileutility.FileutilityImpl;
 import dataservice.coursedataservice.CourseDataService;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+
 import po.coursepo.CoursePO;
 
 /**
@@ -17,109 +17,112 @@ import po.coursepo.CoursePO;
  * @author zili chen
  */
 public class CourseData extends UnicastRemoteObject implements CourseDataService {
-    
-/*三个与utility相关的方法没实现*/
-    
-    FileUtility utility;
-    ArrayList<CoursePO> cList;
-    
+
+    CourseIOHelper io;
+    static ArrayList<CoursePO> cList;
+
     public CourseData() throws RemoteException {
-        utility = new FileutilityImpl("src/main/resources/course.txt");
+        io = new CourseIOHelper();
         cList = new ArrayList<CoursePO>();
-        cList = utility.readCourseInfo();
+        readData();
     }
-    
-    @Override
+
+    /*将course.txt中数据全部读入cList*/
+    public void readData() {
+        cList.clear();
+        ArrayList<String> list = io.readOut();
+        String str[] = null;
+        for (String s : list) {
+            str = s.split(";");
+            cList.add(new CoursePO(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10], str[11], str[12], str[13], str[14], str[15]));
+        }
+    }
+
+    /*将cList中的数据全部写入course.txt*/
+    public void writeData() {
+        ArrayList<String> list = new ArrayList<String>();
+        for (CoursePO p : cList) {
+            list.add(p.toStoreString());
+        }
+        io.writeIn(list);
+    }
+
+    @Override/*添加课程记录*/
+
     public void insert(CoursePO cpo) throws RemoteException {
-        cList.add(cpo);
+        for (int i = 0; i < cList.size(); i++) {
+            if (cList.get(i).equal(cpo)) {
+                System.out.println("该课程记录已存在");
+            } else {
+                cList.add(cpo);
+            }
+        }
+        writeData();
     }
 
-    @Override
+    @Override/*修改课程记录：仅可修改教师、授课时间、课程大纲、教材、参考文献*/
+
     public void update(CoursePO cpo) throws RemoteException {
-        for(int i=0;i<cList.size();i++) {
-            if(cList.get(i).getCourseID().equals(cpo.getCourseID())) {
-                cList.remove(i);
+        for (int i = 0; i < cList.size(); i++) {
+            if (cList.get(i).equalA(cpo)) {
+                cList.get(i).setPO(cpo);
+                break;
             }
         }
-        cList.add(cpo);
+        //cList.add(cpo);
+        writeData();
     }
 
-    @Override
+    @Override/*删除课程记录*/
+
     public void delete(String courseID) throws RemoteException {
-        for(int i=0;i<cList.size();i++) {
-            if(cList.get(i).getCourseID().equals(courseID)) {
+        for (int i = 0; i < cList.size(); i++) {
+            if (cList.get(i).getCourseID().equals(courseID)) {
                 cList.remove(i);
             }
         }
+        writeData();
     }
 
-    @Override
+    @Override/*根据课程号查找某个课程*/
+
     public CoursePO find(String courseID) throws RemoteException {
-        for(int i=0;i<cList.size();i++) {
-            if(cList.get(i).getCourseID().equals(courseID)) {
+        readData();
+        for (int i = 0; i < cList.size(); i++) {
+            if (cList.get(i).getCourseID().equals(courseID)) {
                 return cList.get(i);
             }
         }
         return null;
     }
-    
-    @Override
-    public ArrayList<CoursePO> finds(int field,String value) throws RemoteException{
+
+    @Override/*根据某一属性返回对应值的课程记录列表：module，institute*/
+
+    public ArrayList<CoursePO> finds(String field, String value) throws RemoteException {
+        readData();
         ArrayList<CoursePO> cpolist = new ArrayList<CoursePO>();
-        switch(field) {
-             case 0:for(CoursePO c:cList) {
-                 if(c.getModule().equals(value)){
-                     cpolist.add(c);
-                 }
-             }
-             break;//课程模块
-             case 1:for(CoursePO c:cList) {
-                 if(c.getProperty().equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//课程性质
-             case 2:for(CoursePO c:cList) {
-                 if(c.getType().equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//课程类别
-             case 3:for(CoursePO c:cList) {
-                 if(String.valueOf(c.getOrder()).equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//序列
-             case 4:for(CoursePO c:cList) {
-                 if(c.getTerm().equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//开设学期
-             case 5:for(CoursePO c:cList) {
-                 if(String.valueOf(c.getCredit()).equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//学分
-             case 6:for(CoursePO c:cList) {
-                 if(String.valueOf(c.getHour()).equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//周学时
-             case 7:for(CoursePO c:cList) {
-                 if(c.getTime().equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//授课时间
-             case 8:for(CoursePO c:cList) {
-                 if(c.getLearnIns().equals(value)){
-                     cpolist.add(c);
-                 }
-             }break;//修读院系
-             case 9:cpolist = cList;break;//全校
-         }
+        if (field.equals("module")) {//根据模块属性查找记录
+            for (CoursePO c : cList) {
+                if (c.getModule().equals(value)) {
+                    cpolist.add(c);
+                }
+            }
+        } else if (field.equals("institute")) {//根据院系属性查找记录
+            if (value.equals("All")) {//返回所有课程记录
+                return cList;
+            }
+            for (CoursePO c : cList) {
+                if (c.getInstitute().equals(value)) {
+                    cpolist.add(c);
+                }
+            }
+        } else if (field.equals("teaName")) { //根据老师姓名查找老师所教授的课
+            for (CoursePO c : cList) {
+                if (c.getTeaName().equals(value)) {
+                    cpolist.add(c);
+                }
+            }
+        }
         return cpolist;
     }
-    
-    public void writeCourse(String file,String content) {
-       FileutilityImpl.writeToFile(file, content);
-    }
-
 }

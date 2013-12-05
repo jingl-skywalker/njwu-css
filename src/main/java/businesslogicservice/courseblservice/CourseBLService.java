@@ -20,8 +20,8 @@ public interface CourseBLService {
     //修改课程信息
     public void modifyCourse(CourseVO cvo);
     
-    //查看课程列表
-    public ArrayList<CourseVO> observeList(int field,String value);
+    //查看课程列表field：property -“指选”“必修”“选修”;institute-“商学院”“All”
+    public ArrayList<CourseVO> observeList(String field,String value);
     
     //查看课程信息
     public CourseVO observeInfo(String courseID);

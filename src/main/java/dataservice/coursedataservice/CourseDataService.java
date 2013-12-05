@@ -13,18 +13,19 @@ import po.coursepo.CoursePO;
  *
  * @author zili chen
  */
-public interface CourseDataService extends Remote{
-    
+public interface CourseDataService extends Remote {
+
     public void insert(CoursePO cpo) throws RemoteException;
-    
+
     public void update(CoursePO cpo) throws RemoteException;
-    
+
     public void delete(String courseID) throws RemoteException;
-    
+
     public CoursePO find(String courseID) throws RemoteException;
-    
-    public ArrayList<CoursePO> finds(int field,String value) throws RemoteException;
-    
-    public void writeCourse(String file,String content) throws RemoteException;
-    
+
+    public ArrayList<CoursePO> finds(String field, String value) throws RemoteException;
+
+    public void readData() throws RemoteException;
+
+    public void writeData() throws RemoteException;
 }

@@ -84,4 +84,58 @@ public class UserInfoData extends UnicastRemoteObject implements UserInfoDataSer
         FileUtility file = new FileutilityImpl("src\\main\\resources\\user.txt");
         return file.changeUser(p.getID(), p.toString());
     }
+
+    @Override
+    public ArrayList<UserInfoPO> getTea(String ins) throws RemoteException {
+        ArrayList<UserInfoPO> pos = find();
+        ArrayList<UserInfoPO> target = new ArrayList<UserInfoPO>();
+        if(!ins.equals("All")){
+        for(UserInfoPO p:pos){
+            if(p.getType().equals("任课老师")&&p.getDepart().equals(ins)){
+                target.add(p);
+            }
+        }
+        }
+        else{
+             for(UserInfoPO p:pos){
+            if(p.getType().equals("任课老师")){
+                target.add(p);
+            }
+        }
+        }
+        return target;
+    }
+
+    @Override
+    public ArrayList<UserInfoPO> getStu(String ins) throws RemoteException {
+        ArrayList<UserInfoPO> pos = find();
+        ArrayList<UserInfoPO> target = new ArrayList<UserInfoPO>();
+        if(!ins.equals("All")){
+        for(UserInfoPO p:pos){
+            if(p.getType().equals("学生")&&p.getDepart().equals(ins)){
+                target.add(p);
+            }
+        }
+        }
+        else{
+             for(UserInfoPO p:pos){
+            if(p.getType().equals("学生")){
+                target.add(p);
+            }
+        }
+        }
+        return target;
+    }
+
+    @Override
+    public ArrayList<UserInfoPO> getStu(String ins, String year) throws RemoteException {
+         ArrayList<UserInfoPO> pos = find();
+        ArrayList<UserInfoPO> target = new ArrayList<UserInfoPO>();
+        for(UserInfoPO p:pos){
+            if(p.getDepart().equals(ins)&&p.getYearIn().equals(year)){
+                target.add(p);
+            }
+        }
+        return target;
+    }
 }

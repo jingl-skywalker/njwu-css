@@ -11,6 +11,7 @@ import data.processmngdata.noticedata.NoticeData;
 import data.processmngdata.statedata.StateData;
 import data.processmngdata.statedata.SystemTimer;
 import data.selectiondata.SelectionData;
+import dataservice.coursedataservice.CourseDataService;
 import dataservice.framedataservice.FrameDataService;
 import dataservice.gradedataservice.GradeDataService;
 import dataservice.plandataservice.PlanDataService;
@@ -25,11 +26,14 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Administrator
  */
 public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory {
+
     SystemTimer systemTimer;
+
     public DataFactoryImpl() throws RemoteException {
     }
-    public DataFactoryImpl(SystemTimer systemTimer)throws RemoteException{
-        this.systemTimer=systemTimer;
+
+    public DataFactoryImpl(SystemTimer systemTimer) throws RemoteException {
+        this.systemTimer = systemTimer;
     }
 
     @Override
@@ -44,7 +48,7 @@ public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory 
 
     @Override
     public StateDataService getStateData() throws RemoteException {
-       // return new StateData();
+        // return new StateData();
         return new StateData(systemTimer);
     }
 
@@ -64,8 +68,7 @@ public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory 
     }
 
     @Override
-    public CourseData getCourseData() throws RemoteException {
+    public CourseDataService getCourseData() throws RemoteException {
         return new CourseData();
-     }
-    
+    }
 }

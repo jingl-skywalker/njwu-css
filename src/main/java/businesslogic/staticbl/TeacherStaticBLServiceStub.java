@@ -17,7 +17,9 @@ public class TeacherStaticBLServiceStub implements TeacherStaticBLService{
         return new TeacherStaticVO();
     }
     
-    public TeacherStaticVO show(String department){
-        return new TeacherStaticVO(department);
+    
+    @Override
+    public TeacherStatic show(String department) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

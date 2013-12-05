@@ -85,7 +85,8 @@ public class SelectPanel extends javax.swing.JPanel {
         iterator = showCourseList.iterator();
         if(creditIndex > 0){
             while(iterator.hasNext()){
-                if(iterator.next().getCredit() != credit[creditIndex]){
+                int c1=Integer.parseInt(iterator.next().getCredit());
+                if(c1!= credit[creditIndex]){
                     iterator.remove();
                 }
             }

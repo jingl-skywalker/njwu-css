@@ -4,46 +4,55 @@
  */
 package vo.planvo;
 
-import java.util.ArrayList;
-
-import vo.coursevo.CourseVO;
-
 /**
  *
  * @author Administrator
  */
 public class PlanVO {
-    
-    private String institute;//院系
+
+    private String courseID;//课程号
+    private String courseName;//课程名
     private String term;//学期：2012-1,2012-2
+    private String period;//修读年届：2012
     private String module;//课程模块：通识通修
     private String property;//课程性质：指选、必修、选修
     private String type;//课程类别：通识教育
-    private String courseID;//课程号
-    private String courseName;//课程名
-    private int credit;//学分
-    private int hour;//周学时
-    
-    public PlanVO(String institute,String term,String module,String property,String type,String courseID,
-            String courseName,int credit,int hour) {
-        this.institute  = institute;
-        this.term  = term;
+    private String credit;//学分
+    private String hour;//周学时
+    private String learnIns;//开设院系
+
+    public PlanVO(String id, String name, String term, String period, String module, String property, String type, String credit, String hour, String learnIns) {
+        this.courseID = id;
+        this.courseName = name;
+        this.term = term;
+        this.period = period;
         this.module = module;
         this.property = property;
         this.type = type;
-        this.courseID  = courseID;
-        this.courseName = courseName;
-        this.credit  = credit;
-        this.hour  = hour;
+        this.credit = credit;
+        this.hour = hour;
+        this.learnIns = learnIns;
     }
-    
+
+    public PlanVO(String institute, String term, String module, String property, String type, String courseID, String courseName, int credit, int hour) {
+        System.out.println("@PlanVO.java constructor unimplement");
+    }
+
     /*getter*/
-    public String getInstitute() {
-        return institute;
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public String getCourseName() {
+        return courseName;
     }
 
     public String getTerm() {
         return term;
+    }
+
+    public String getPeriod() {
+        return period;
     }
 
     public String getModule() {
@@ -58,20 +67,15 @@ public class PlanVO {
         return type;
     }
 
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public int getCredit() {
+    public String getCredit() {
         return credit;
     }
 
-    public int getHour() {
+    public String getHour() {
         return hour;
     }
-    
+
+    public String getLearnIns() {
+        return learnIns;
+    }
 }

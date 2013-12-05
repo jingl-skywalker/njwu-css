@@ -86,5 +86,10 @@ public class UserInfoController implements UserBLService{
         return userInfo.changeUserInfo(v);
     }
 
+    @Override
+    public ArrayList<String> getStu(String ins, String year) {
+        return userInfo.getStu(ins,year);
+    }
+
 
 }

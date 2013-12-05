@@ -227,5 +227,18 @@ public class UserInfoBL {
         }
         return ResultMessage.FAIL;
     }
+
+    ArrayList<String> getStu(String ins, String year) {
+        ArrayList<String> ids = new ArrayList<String>();
+        try {
+            ArrayList<UserInfoPO> pos = userInfo.getStu(ins, year);
+            for(UserInfoPO p:pos){
+                ids.add(p.getID());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(UserInfoBL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ids;
+    }
    
 }

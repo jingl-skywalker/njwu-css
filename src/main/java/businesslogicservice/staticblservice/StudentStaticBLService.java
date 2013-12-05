@@ -15,6 +15,6 @@ public interface StudentStaticBLService {
     
     public StudentStaticVO show();
     
-    public StudentStaticVO show(String term,String department);
+    public StudentStaticVO show(String department);
     
 }

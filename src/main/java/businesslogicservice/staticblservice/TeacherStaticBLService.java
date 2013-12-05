@@ -4,6 +4,7 @@
  */
 package businesslogicservice.staticblservice;
 
+import businesslogic.staticbl.TeacherStatic;
 import vo.staticvo.TeacherStaticVO;
 
 /**
@@ -14,5 +15,5 @@ public interface TeacherStaticBLService {
     
     public TeacherStaticVO show();
     
-    public TeacherStaticVO show(String department);
+    public TeacherStatic show(String department);
 }

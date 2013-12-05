@@ -30,4 +30,9 @@ public class MyTitledBorder {/*设置panel带标题的边框*/
         font = new Font("微软雅黑",Font.BOLD,14);
         titledBorder = new TitledBorder(lineBorder,title,TitledBorder.LEFT,TitledBorder.TOP,font,color);
     }
+    
+    public TitledBorder getTitledBorder(Color c) {
+        titledBorder.setTitleColor(c);
+        return titledBorder;
+    }
 }

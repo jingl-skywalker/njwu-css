@@ -57,4 +57,29 @@ public interface UserInfoDataService extends Remote {
      * @return 
      */
     public ResultMessage changeMessage(String message) throws RemoteException;
+
+    /**
+     * 得到某院系的所有教师
+     * @param ins 所要的院系，All代表全校
+     * @return 返回所有买足的PO
+     * @throws RemoteException 
+     */
+    public ArrayList<UserInfoPO> getTea(String ins) throws RemoteException;
+    
+    /**
+     * 得到某院系的所有教师
+     * @param ins所要求的院系，All代表全校
+     * @return
+     * @throws RemoteException 
+     */
+    public ArrayList<UserInfoPO> getStu(String ins) throws RemoteException;
+    
+    /**
+     * 返回符合院系和入学年份的所用学生po
+     * @param ins
+     * @param year
+     * @return
+     * @throws RemoteException 
+     */
+    public ArrayList<UserInfoPO> getStu(String ins,String year) throws RemoteException;
 }

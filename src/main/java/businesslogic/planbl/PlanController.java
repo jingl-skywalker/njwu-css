@@ -5,7 +5,9 @@
 package businesslogic.planbl;
 
 import businesslogicservice.planblservice.PlanBLService;
+
 import java.util.ArrayList;
+
 import vo.planvo.PlanVO;
 
 /**
@@ -15,30 +17,33 @@ import vo.planvo.PlanVO;
 public class PlanController implements PlanBLService {
 
     private PlanList planList;
+    private Plan plan;
     
     @Override
     public void add(PlanVO pvo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	plan = new Plan(pvo);
+    	planList.addPlan(plan);
     }
 
     @Override
     public void modify(PlanVO pvo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	plan = new Plan(pvo);
+    	planList.modifyPlan(plan);
     }
 
     @Override
-    public void delete(String institute,String courseID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(String courseID,String institute) {
+        planList.deletePlan(courseID, institute);
     }
 
     @Override
-    public ArrayList<PlanVO> observePlan(String institute, String module) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<PlanVO> observePlan(String field, String value) {
+       return  planList.observePlan(field,value);
     }
 
     @Override
-    public int observeCredit(String institute, String module) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int observeCredit(String field,String value) {
+        return planList.observeCredit(field,value);
     }
     
 }

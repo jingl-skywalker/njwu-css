@@ -20,4 +20,9 @@ public class StudentStaticBLServiceStub implements StudentStaticBLService{
         public StudentStaticVO show() {
             return new StudentStaticVO();
         }
+
+    @Override
+    public StudentStaticVO show(String department) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

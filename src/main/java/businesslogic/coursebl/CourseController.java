@@ -14,7 +14,7 @@ import vo.coursevo.CourseVO;
  */
 public class CourseController implements CourseBLService {
 
-    private CourseList courseList;
+    private CourseList courseList =new CourseList();
     private Course course;
     
     @Override/*创建课程*/
@@ -24,13 +24,13 @@ public class CourseController implements CourseBLService {
     }
 
     @Override/*修改课程信息*/
-    public void modifyCourse(CourseVO cvo) {
+    public void modifyCourse(CourseVO cvo) {//任课老师完善课程信息通过cvo.set方法
         course = new Course(cvo);
         courseList.modifyCourse(course);
     }
 
     @Override/*查看课程列表*/
-    public ArrayList<CourseVO> observeList(int field, String value) {
+    public ArrayList<CourseVO> observeList(String field, String value) {
         return courseList.observeList(field, value);
     }
 

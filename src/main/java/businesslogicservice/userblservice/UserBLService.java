@@ -65,6 +65,11 @@ public interface UserBLService {
      * @return 
      */
     public ArrayList<UserInfoVO> getUser(String beginID);
+    
+    /**
+     * 返回符合ins院系，入学年份为year的所有学生的ID，
+     */
+    public ArrayList<String> getStu(String ins,String year);
 
     /**
      * 删除该用户

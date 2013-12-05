@@ -4,111 +4,160 @@
  */
 package po.planpo;
 
-import java.util.ArrayList;
 
-import po.coursepo.CoursePO;
+import java.io.Serializable;
+
 import vo.planvo.PlanVO;
 
 /**
  *
- * @author Administrator
+ * @author zili chen
  */
-public class PlanPO {
+public class PlanPO implements Serializable{
     
-    private String institute;//院系
+    private String courseID;//课程号
+    private String courseName;//课程名
     private String term;//学期：2012-1,2012-2
+    private String period;//修读年届：2012
     private String module;//课程模块：通识通修
     private String property;//课程性质：指选、必修、选修
     private String type;//课程类别：通识教育
-    private String courseID;//课程号
-    private String courseName;//课程名
-    private int credit;//学分
-    private int hour;//周学时
+    private String credit;//学分
+    private String hour;//周学时
+    private String learnIns;//开设院系
     
+    public PlanPO(String id,String name,String term,String period,String module,String property,String type,String credit,String hour,String learnIns) {
+    	this.courseID = id;
+    	this.courseName = name;
+    	this.term = term;
+    	this.period =period;
+    	this.module = module;
+    	this.property = property;
+    	this.type  = type;
+    	this.credit  = credit;
+    	this.hour = hour;
+    	this.learnIns  = learnIns;
+    }
+
+    public PlanPO() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /*比较courseID和learnIns*/
+    public boolean equal(PlanPO ppo) {
+    	if(ppo.getCourseID().equals(courseID)&&ppo.getLearnIns().equals(learnIns)) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
     /*转为存储信息*/
     public String toStoreString() {
         StringBuffer sbf = new StringBuffer();
-        sbf.append(institute+";"+term+";"+module+";"+property+";"+type+";"+courseID+";" +courseName+";"+credit+";" +hour);
+        sbf.append(courseID+";"+courseName+";"+term+";"+period+";"+module+";"+property+";"+type+";"+credit+";"+hour+";"+learnIns);
         sbf.append("\r\n");
         return sbf.toString();
     }
     
     /*取PlanVO*/
     public PlanVO toVO() {
-        return new PlanVO(institute,term,module,property,type,courseID,courseName,credit,hour);
+        return new PlanVO(courseID,courseName,term,period,module,property,type,credit,hour,learnIns);
+    }
+
+    /*getter 和 setter*/
+	public String getCourseID() {
+		return courseID;
+	}
+
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getTerm() {
+		return term;
+	}
+
+	public void setTerm(String term) {
+		this.term = term;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
+	public String getProperty() {
+		return property;
+	}
+
+	public void setProperty(String property) {
+		this.property = property;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getCredit() {
+		return credit;
+	}
+
+	public void setCredit(String credit) {
+		this.credit = credit;
+	}
+
+	public String getHour() {
+		return hour;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
+	}
+
+	public String getLearnIns() {
+		return learnIns;
+	}
+
+	public void setLearnIns(String learnIns) {
+		this.learnIns = learnIns;
+	}
+
+    public void setCredit(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setHour(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setInstitute(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    /*getter 和 setter*/
-    public String getInstitute() {
-        return institute;
-    }
 
-    public void setInstitute(String institute) {
-        this.institute = institute;
-    }
-
-    public String getTerm() {
-        return term;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
-    }
-
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public int getCredit() {
-        return credit;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
     
 }
