@@ -39,7 +39,10 @@ public class FileutilityImpl implements FileUtility {
     public FileutilityImpl(String fileName) {
         this.fileName = fileName;
     }
-
+    /**
+     * 
+     * @return  bufferedReader using UTF-8
+     */
     private BufferedReader createReader() {
         //FileReader fr = new FileReader(this.fileName);
 
@@ -59,6 +62,11 @@ public class FileutilityImpl implements FileUtility {
 
         return bf;
     }
+    /**
+     * 
+     * @return PrintWriter to file using UTF-8
+     * @throws FileNotFoundException 
+     */
 
     private PrintWriter createPrintWriter() throws FileNotFoundException {
         FileOutputStream fout = new FileOutputStream(fileName);
