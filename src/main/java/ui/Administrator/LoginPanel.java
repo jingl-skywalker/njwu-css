@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ui.Student.STUmain;
 import ui.JWTeacher.JWmainFrame;
+import ui.Library.Dialog1;
 import ui.Library.PictureGetter;
 import ui.Teacher.TEAmain;
 import ui.YJWTeacher.YJWmain;
@@ -493,6 +494,10 @@ public class LoginPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         ImageIcon icon = new ImageIcon(PictureGetter.getInfo1Path());
         JOptionPane.showMessageDialog(null, "谢谢使用 O(∩_∩)O~", "Thanks", JOptionPane.INFORMATION_MESSAGE, icon);
+        System.exit(0);
+        //Dialog1 dialog1=new Dialog1();
+        // dialog1.setText("谢谢使用");
+        //dialog1.setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
     public static void main(String[] arg) {
         JFrame loginFrame = new JFrame("css-login");

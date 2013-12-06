@@ -30,7 +30,7 @@ import vo.processmngvo.StateVO;
  */
 public class SystemTimer implements Serializable {
 
-    int currentStateNum;
+    int currentStateNum=1;
     MyState state;
     CourseLaunchingState cls;
     DroppingState ds;
@@ -72,6 +72,9 @@ public class SystemTimer implements Serializable {
         currentStateNum = 1;
         statePO = null;
         for (StatePO spo : statePOs) {
+            if (spo.getStateNum() == 1) {
+                continue;
+            }
             if (date.after(spo.getStartDate()) && spo.getEndDate().after(date)) {
                 currentStateNum = spo.getStateNum();
                 statePO = spo;

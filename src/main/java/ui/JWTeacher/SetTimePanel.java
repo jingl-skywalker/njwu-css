@@ -23,8 +23,9 @@ public class SetTimePanel extends javax.swing.JPanel {
     StateLogicFactory stateLogicFactory;
     StateBLService stateBLService;
     int currentStateNum = 1;
-    String startNoteString="开始时间";
-    String endNoteString="截止时间";
+    String startNoteString = "开始时间";
+    String endNoteString = "截止时间";
+    TimeFormat tf = new TimeFormatImpl();
 
     /**
      * Creates new form SetTimePanel
@@ -41,6 +42,21 @@ public class SetTimePanel extends javax.swing.JPanel {
 
     private void setCurrentStateNum(int num) {
         this.currentStateNum = num;
+    }
+
+    private void refreshTimePanelByStorage(Date startDate, Date endDate) {
+        yearComboBox.setSelectedItem("" + (startDate.getYear()+1900));
+        System.out.println("startDate.getYear"+startDate.getYear());
+        monthComboBox.setSelectedItem("" + startDate.getMonth());
+        dayComboBox.setSelectedItem("" + startDate.getDay());
+        hourbox.setSelectedItem("" + startDate.getHours());
+        minbox.setSelectedItem("" + startDate.getMinutes());
+         yearComboBox1.setSelectedItem("" + (endDate.getYear()+1900));
+        monthComboBox1.setSelectedItem("" + endDate.getMonth());
+        dayComboBox1.setSelectedItem("" + endDate.getDay());
+        hourbox1.setSelectedItem("" + endDate.getHours());
+        minbox1.setSelectedItem("" + endDate.getMinutes());
+        
     }
 
     /**
@@ -91,6 +107,12 @@ public class SetTimePanel extends javax.swing.JPanel {
         minbox = new javax.swing.JComboBox();
         hourbox1 = new javax.swing.JComboBox();
         minbox1 = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         titelPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         titelPanel1.setPreferredSize(new java.awt.Dimension(365, 37));
@@ -138,7 +160,7 @@ public class SetTimePanel extends javax.swing.JPanel {
                 .addComponent(arrowLogo1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(currentLogo1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backLogo1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backLabel1)
@@ -214,6 +236,7 @@ public class SetTimePanel extends javax.swing.JPanel {
         eventPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "事件列表", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
 
         startStateLabel.setBackground(new java.awt.Color(255, 255, 255));
+        startStateLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         startStateLabel.setForeground(new java.awt.Color(255, 255, 255));
         startStateLabel.setText("学期");
         startStateLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -228,6 +251,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        frameStateLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         frameStateLabel.setForeground(new java.awt.Color(255, 255, 255));
         frameStateLabel.setText("教学框架制定");
         frameStateLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -242,6 +266,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        planStateLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         planStateLabel.setForeground(new java.awt.Color(255, 255, 255));
         planStateLabel.setText("教学计划制定");
         planStateLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -256,6 +281,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        courseLaunchLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         courseLaunchLabel.setForeground(new java.awt.Color(255, 255, 255));
         courseLaunchLabel.setText("课程发布");
         courseLaunchLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -270,6 +296,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        SelectCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         SelectCourseLabel.setForeground(new java.awt.Color(255, 255, 255));
         SelectCourseLabel.setText("选课");
         SelectCourseLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -284,6 +311,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        DropLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         DropLabel.setForeground(new java.awt.Color(255, 255, 255));
         DropLabel.setText("退选");
         DropLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -298,6 +326,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        ReselectcourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         ReselectcourseLabel.setForeground(new java.awt.Color(255, 255, 255));
         ReselectcourseLabel.setText("补选");
         ReselectcourseLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -312,6 +341,7 @@ public class SetTimePanel extends javax.swing.JPanel {
             }
         });
 
+        GradeInLabel.setFont(new java.awt.Font("微软雅黑", 0, 18)); // NOI18N
         GradeInLabel.setForeground(new java.awt.Color(255, 255, 255));
         GradeInLabel.setText("成绩录入");
         GradeInLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -341,28 +371,28 @@ public class SetTimePanel extends javax.swing.JPanel {
                     .addComponent(frameStateLabel)
                     .addComponent(startStateLabel)
                     .addComponent(DropLabel))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         eventPanelLayout.setVerticalGroup(
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(eventPanelLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(startStateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(frameStateLabel)
-                .addGap(7, 7, 7)
+                .addGap(0, 0, 0)
                 .addComponent(planStateLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addComponent(courseLaunchLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addComponent(SelectCourseLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(ReselectcourseLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addComponent(DropLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addComponent(GradeInLabel)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         timePanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -377,7 +407,7 @@ public class SetTimePanel extends javax.swing.JPanel {
         endLabel.setText("截止时间");
 
         yearComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2013", "2012", " " }));
+        yearComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2013", "2012", "2011", "2010", " ", " " }));
         yearComboBox.setName(""); // NOI18N
 
         monthComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -387,7 +417,7 @@ public class SetTimePanel extends javax.swing.JPanel {
         dayComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", " " }));
 
         yearComboBox1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        yearComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2013", "2012", " " }));
+        yearComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2013", "2012", "2011", "2010", " " }));
         yearComboBox1.setName(""); // NOI18N
 
         monthComboBox1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -420,6 +450,30 @@ public class SetTimePanel extends javax.swing.JPanel {
 
         minbox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { ":00", ":15", ":30", ":45" }));
 
+        jLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("年");
+
+        jLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("月");
+
+        jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("日");
+
+        jLabel4.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("年");
+
+        jLabel5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("月");
+
+        jLabel6.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("日");
+
         javax.swing.GroupLayout timePanelLayout = new javax.swing.GroupLayout(timePanel);
         timePanel.setLayout(timePanelLayout);
         timePanelLayout.setHorizontalGroup(
@@ -434,26 +488,46 @@ public class SetTimePanel extends javax.swing.JPanel {
                         .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(timePanelLayout.createSequentialGroup()
                                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(timePanelLayout.createSequentialGroup()
-                                        .addComponent(hourbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(minbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel1))
                                     .addGroup(timePanelLayout.createSequentialGroup()
-                                        .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel4)))
+                                .addGap(14, 14, 14)
                                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(hourbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(minbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2)))
+                                    .addGroup(timePanelLayout.createSequentialGroup()
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(hourbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(minbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(timePanelLayout.createSequentialGroup()
                                         .addGap(21, 21, 21)
-                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(timePanelLayout.createSequentialGroup()
+                                                .addComponent(dayComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel3)
+                                                .addGap(193, 193, 193))
+                                            .addGroup(timePanelLayout.createSequentialGroup()
+                                                .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel6)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(timePanelLayout.createSequentialGroup()
                                         .addGap(186, 186, 186)
                                         .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -469,10 +543,15 @@ public class SetTimePanel extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addComponent(startLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(yearComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel3))
+                    .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(monthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)))
                 .addGap(18, 18, 18)
                 .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(timePanelLayout.createSequentialGroup()
@@ -494,7 +573,10 @@ public class SetTimePanel extends javax.swing.JPanel {
                         .addGroup(timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(yearComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(monthComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dayComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addGap(59, 59, 59))))
         );
 
@@ -503,11 +585,11 @@ public class SetTimePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(20, 20, 20)
                 .addComponent(eventPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(15, 15, 15)
                 .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,8 +597,8 @@ public class SetTimePanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(eventPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(timePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -542,8 +624,8 @@ public class SetTimePanel extends javax.swing.JPanel {
         boolean isSuccess = stateBLService.recordState(stateVO);
         if (!isSuccess) {
             JOptionPane.showMessageDialog(this, "该状态已经设置过了！", null, JOptionPane.INFORMATION_MESSAGE);
-        }else{
-             JOptionPane.showMessageDialog(this, "设置成功！", null, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "设置成功！", null, JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_SureButton1ActionPerformed
 
@@ -555,11 +637,13 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         startStateLabel.setForeground(Color.RED);
         setCurrentStateNum(1);
-        startLabel.setText(startStateLabel.getText()+startNoteString);
-        endLabel.setText(startStateLabel.getText()+endNoteString);
-        StateVO svo=stateBLService.lookStateInfo(1);
-        if(svo!=null){
-    
+        startLabel.setText(startStateLabel.getText() + startNoteString);
+        endLabel.setText(startStateLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(1);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
         }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_startStateLabelMouseClicked
@@ -568,8 +652,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         frameStateLabel.setForeground(Color.RED);
         setCurrentStateNum(2);
-         startLabel.setText(frameStateLabel.getText()+startNoteString);
-         endLabel.setText((frameStateLabel.getText()+endNoteString));
+        startLabel.setText(frameStateLabel.getText() + startNoteString);
+        endLabel.setText((frameStateLabel.getText() + endNoteString));
+        StateVO svo = stateBLService.lookStateInfo(2);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_frameStateLabelMouseClicked
 
@@ -577,8 +667,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         planStateLabel.setForeground(Color.RED);
         setCurrentStateNum(3);
-         startLabel.setText(planStateLabel.getText()+startNoteString);
-         endLabel.setText(planStateLabel.getText()+endNoteString);
+        startLabel.setText(planStateLabel.getText() + startNoteString);
+        endLabel.setText(planStateLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(3);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_planStateLabelMouseClicked
 
@@ -586,8 +682,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         courseLaunchLabel.setForeground(Color.RED);
         setCurrentStateNum(4);
-         startLabel.setText(courseLaunchLabel.getText()+startNoteString);
-         endLabel.setText(courseLaunchLabel.getText()+endNoteString);
+        startLabel.setText(courseLaunchLabel.getText() + startNoteString);
+        endLabel.setText(courseLaunchLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(4);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_courseLaunchLabelMouseClicked
 
@@ -595,8 +697,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         SelectCourseLabel.setForeground(Color.RED);
         setCurrentStateNum(5);
-         startLabel.setText(SelectCourseLabel.getText()+startNoteString);
-         endLabel.setText(SelectCourseLabel.getText()+endNoteString);
+        startLabel.setText(SelectCourseLabel.getText() + startNoteString);
+        endLabel.setText(SelectCourseLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(5);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_SelectCourseLabelMouseClicked
 
@@ -604,8 +712,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         ReselectcourseLabel.setForeground(Color.RED);
         setCurrentStateNum(6);
-         startLabel.setText(ReselectcourseLabel.getText()+startNoteString);
-         endLabel.setText(ReselectcourseLabel.getText()+endNoteString);
+        startLabel.setText(ReselectcourseLabel.getText() + startNoteString);
+        endLabel.setText(ReselectcourseLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(6);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_ReselectcourseLabelMouseClicked
 
@@ -613,8 +727,14 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         DropLabel.setForeground(Color.RED);
         setCurrentStateNum(7);
-         startLabel.setText(DropLabel.getText()+startNoteString);
-         endLabel.setText(DropLabel.getText()+endNoteString);
+        startLabel.setText(DropLabel.getText() + startNoteString);
+        endLabel.setText(DropLabel.getText() + endNoteString);
+        StateVO svo = stateBLService.lookStateInfo(7);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_DropLabelMouseClicked
 
@@ -622,7 +742,13 @@ public class SetTimePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         GradeInLabel.setForeground(Color.RED);
         setCurrentStateNum(8);
-         startLabel.setText(GradeInLabel.getText()+startNoteString);
+        startLabel.setText(GradeInLabel.getText() + startNoteString);
+        StateVO svo = stateBLService.lookStateInfo(8);
+        if (svo != null) {
+            Date startDate = svo.getStartDate();
+            Date endDate = svo.getEndDate();
+            refreshTimePanelByStorage(startDate, endDate);
+        }
         System.out.println("change to num " + currentStateNum);
     }//GEN-LAST:event_GradeInLabelMouseClicked
 
@@ -729,6 +855,12 @@ public class SetTimePanel extends javax.swing.JPanel {
     private javax.swing.JLabel homeLogo1;
     private javax.swing.JComboBox hourbox;
     private javax.swing.JComboBox hourbox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox minbox;
     private javax.swing.JComboBox minbox1;
