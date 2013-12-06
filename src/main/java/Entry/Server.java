@@ -40,6 +40,9 @@ public class Server {
             timerThread.setDaemon(true);
             timerThread.start();
             /*---------------------------------------*/
+            /*---------------Arrangement Observer-------------------*/
+            // ArrangementController arrangementController=new ArrangementController(systemTimer);
+            /*---------------------------------------*/
             DataFactory factory = new DataFactoryImpl(systemTimer);
             FrameDataService fds = factory.getFrameData();
             LocateRegistry.createRegistry(1099);

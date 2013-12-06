@@ -4,6 +4,7 @@
  */
 package data.processmngdata.statedata;
 
+import businesslogic.coursearrangementbl.ArrangementController;
 import businesslogic.processmngbl.statebl.CourseLaunchingState;
 import businesslogic.processmngbl.statebl.DroppingState;
 import businesslogic.processmngbl.statebl.FrameLaunchingState;
@@ -42,6 +43,8 @@ public class SystemTimer implements Serializable {
     FileUtility fileUtility = new FileutilityImpl("src/main/resources/state.txt");
     ArrayList<StatePO> statePOs = new ArrayList<StatePO>();
     StatePO statePO;
+    MyState preState;
+    ArrangementController arrangementController;
 
     public SystemTimer() throws RemoteException {
         cls = new CourseLaunchingState();
@@ -54,6 +57,10 @@ public class SystemTimer implements Serializable {
         sts = new StartState();
         state = sts;
         updateState();
+    }
+
+    public void addObserver(ArrangementController ac) {
+        this.arrangementController = ac;
     }
 
     public void updateState() {
@@ -72,12 +79,19 @@ public class SystemTimer implements Serializable {
             }
         }
         StateList stateList = new StateList(true);
+        preState = this.state;
+        this.state = stateList.getState(currentStateNum);
+        if (preState.canSelectCourse() && !state.canSelectCourse()) {
+            this.arrangementController.reachState();
+            arrangementController.setHasArrangement(true);
+        }
     }
 
     public int getCurrentStateNum() {
         return this.currentStateNum;
     }
-    public StatePO getCurrentStatePO(){
+
+    public StatePO getCurrentStatePO() {
         return this.statePO;
     }
 }

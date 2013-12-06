@@ -9,6 +9,6 @@ public interface StateDataService extends Remote {
     public StatePO find(int stateNum) throws RemoteException;
 
     public boolean record(StatePO spo) throws RemoteException;
-    
-    public StatePO getCurrentState()throws RemoteException;
+
+    public StatePO getCurrentState() throws RemoteException;
 }
