@@ -22,10 +22,10 @@ import vo.processmngvo.NoticeVO;
 
 /**
  *
- * @author Administrator
+ * @author ljing12
  */
 public class NoticeController implements NoticeBLService {
-
+    
     DataFactory dataFactory;
     NoticeDataService noticeDataService;
     NoticeList nList;
@@ -111,7 +111,7 @@ public class NoticeController implements NoticeBLService {
     public NoticeVO getNoice(int num) {
         return new NoticeVO(nList.getX(num));
     }
-
+    
     @Override
     public void initNotices() {
         initNoticeList();

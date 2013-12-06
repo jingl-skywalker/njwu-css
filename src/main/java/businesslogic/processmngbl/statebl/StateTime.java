@@ -5,7 +5,6 @@
 package businesslogic.processmngbl.statebl;
 
 import java.util.Date;
-import businesslogicservice.processmngblservice.state.MyState;
 
 /**
  *

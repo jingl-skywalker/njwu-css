@@ -9,7 +9,8 @@ import java.util.Iterator;
 
 /**
  *
- * @author Administrator
+ * @author Ljing12 obey the rule of information hiding to encapsulate the
+ * structure of result of the arragement
  */
 public class ArrangementResult {
 
@@ -21,6 +22,7 @@ public class ArrangementResult {
         this.courseNum = courseNum;
     }
 
+    /*getters*/
     public String getCourseNum() {
         return this.courseNum;
     }

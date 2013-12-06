@@ -5,21 +5,21 @@
 package businesslogic.coursearrangementbl;
 
 import data.processmngdata.statedata.SystemTimer;
-import data.processmngdata.statedata.TimerThread;
 
 /**
  *
- * @author Administrator
+ * @author ljing12
+ * use observor pattern to ensure the strategy to be informed by the change of state
  */
 public class ArrangementController {
     //  FileUtility fileUtility=new FileutilityImpl("tbd");
 
     static boolean has_arrangement = false;
     SystemTimer timerThread;
-
+    
     public ArrangementController(SystemTimer systemTimer) {
         this.timerThread = systemTimer;
-        systemTimer.addObserver(this);
+        systemTimer.addObserver(this);//to registe this to system timer,and keep in state
     }
 
     public static void setHasArrangement(boolean has) {
@@ -27,6 +27,7 @@ public class ArrangementController {
     }
 
     protected void arrangement() {
+        
     }
 
     public void reachState() {

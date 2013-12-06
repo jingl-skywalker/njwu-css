@@ -37,7 +37,9 @@ public class AssignmentCourseImpl implements AssignmentCourse {
         this.sort();
         this.fillter();
     }
-
+/**
+ * add a random number to make the process more equal
+ */
     private void addKey() {
         Random random = new Random();
         for (Priority priority : priorities) {
@@ -50,7 +52,6 @@ public class AssignmentCourseImpl implements AssignmentCourse {
     private void sort() {
         Collections.sort(priorities);
     }
-
     private void fillter() {
         System.out.println(bounds);
         for (int i = 0; i < bounds && !priorities.isEmpty(); i++) {

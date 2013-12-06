@@ -9,7 +9,9 @@ import businesslogicservice.processmngblservice.notice.ROLE;
 
 /**
  *
- * @author Administrator
+ * @author ljing12
+ * performance the role to control the logic of users including teacher,student,instructors to
+ * receive the notice
  */
 public class NoticeReciever implements NoticeReceiverService{
     private NoticeController controller;
