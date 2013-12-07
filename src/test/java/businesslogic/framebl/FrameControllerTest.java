@@ -4,10 +4,15 @@
  */
 package businesslogic.framebl;
 
-
-import businesslogic.framebl.FrameController;
+import dataservice.framedataservice.FrameDataService;
+import dataservice.framedataservice.FrameDataServiceStub;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
+import po.framepo.FramePO;
+import vo.framevo.BlockVO;
 import vo.framevo.FrameVO;
 
 /**
@@ -15,9 +20,10 @@ import vo.framevo.FrameVO;
  * @author Administrator
  */
 public class FrameControllerTest extends TestCase {
-
-    FrameController instance;
+    
+    FrameDataService instance;
     FrameUIDriver fuid;
+    
     public FrameControllerTest(String testName) {
         super(testName);
     }
@@ -25,8 +31,8 @@ public class FrameControllerTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        instance=new FrameController();
-        fuid=new FrameUIDriver(instance);
+        instance = new FrameDataServiceStub();
+        fuid = new FrameUIDriver();
     }
     
     @Override
@@ -41,13 +47,13 @@ public class FrameControllerTest extends TestCase {
         System.out.println("createFrame");
         int total = 0;
         String description = "";
-    //    FrameController instance = new FrameController();
-        FrameVO expResult = null;
-     //   FrameVO result = instance.createFrame(total, description);
-        assertEquals(true, true);
-    //    assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-    //    fail("The test case is a prototype.");
+        FrameVO expResult = new FrameVO(description, total);
+        try {
+            instance.insert(new FramePO(total, description));
+        } catch (RemoteException ex) {
+            Logger.getLogger(FrameControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(expResult != null);
     }
 
     /**
@@ -56,16 +62,14 @@ public class FrameControllerTest extends TestCase {
     public void testCreateBlock() {
         System.out.println("createBlock");
         String name = "";
-        int lower = 0;
-        int upper = 0;
-        String description = "";
-  //      FrameController instance = new FrameController();
-        FrameVO expResult = null;
-    //    FrameVO result = instance.createBlock(name, lower, upper, description);
- //       assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-  //      fail("The test case is a prototype.");
+        int lower = 2;
+        int upper = 4;
+        String description = "block";
+        BlockVO blockVO = new BlockVO(name, lower, upper, description);
+        BlockList bl = new BlockList();
+        bl.add(new Block(blockVO));
+        FrameVO expResult = new FrameVO(description, 100, bl);
+        assertTrue(expResult != null);
     }
 
     /**
@@ -73,13 +77,18 @@ public class FrameControllerTest extends TestCase {
      */
     public void testRelease() {
         System.out.println("release");
-   //     FrameController instance = new FrameController();
-        boolean expResult = false;
-   //     boolean result = instance.release();
- //       assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-     //   fail("The test case is a prototype.");
+        //     FrameController instance = new FrameController();
+        boolean expResult = true;
+        FramePO fpo = null;
+        try {
+            fpo = instance.find();
+            if (fpo != null) {
+                expResult = true;
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(FrameControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(expResult);
     }
 
     /**
@@ -89,13 +98,14 @@ public class FrameControllerTest extends TestCase {
         System.out.println("modifyBase");
         int total = 0;
         String description = "";
-   //     FrameController instance = new FrameController();
+        //     FrameController instance = new FrameController();
         FrameVO expResult = null;
- //       FrameVO result = instance.modifyBase(total, description);
-         assertEquals(true, true);
-//        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-    //    fail("The test case is a prototype.");
+        try {
+            expResult = new FrameVO(instance.find());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FrameControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(expResult != null);
     }
 
     /**
@@ -108,13 +118,13 @@ public class FrameControllerTest extends TestCase {
         int lower = 0;
         int upper = 0;
         String description = "";
- //       FrameController instance = new FrameController();
+        //       FrameController instance = new FrameController();
         FrameVO expResult = null;
-  //      FrameVO result = instance.modifyBlock(ID, name, lower, upper, description);
- //       assertEquals(expResult, result);
-         assertEquals(true, true);
+        //      FrameVO result = instance.modifyBlock(ID, name, lower, upper, description);
+        //       assertEquals(expResult, result);
+        assertEquals(true, true);
         // TODO review the generated test code and remove the default call to fail.
-   //     fail("The test case is a prototype.");
+        //     fail("The test case is a prototype.");
     }
 
     /**
@@ -122,13 +132,13 @@ public class FrameControllerTest extends TestCase {
      */
     public void testLook() {
         System.out.println("look");
-    //    FrameController instance = new FrameController();
+        //    FrameController instance = new FrameController();
         FrameVO expResult = null;
-      //  FrameVO result = instance.look();
-   //     assertEquals(expResult, null);
-         assertEquals(true, true);
-   //     assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-   //     fail("The test case is a prototype.");
+        try {
+            expResult = new FrameVO(instance.find());
+        } catch (RemoteException ex) {
+            Logger.getLogger(FrameControllerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(expResult.getTotal() == 100);
     }
 }

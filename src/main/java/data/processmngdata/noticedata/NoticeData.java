@@ -36,11 +36,16 @@ public class NoticeData extends UnicastRemoteObject implements NoticeDataService
         System.out.println("find notice @noticedata.java");
         ArrayList<NoticePO> list = new ArrayList<NoticePO>();
         ArrayList<String> strings = fileUtility.find();
-        System.out.println("@noticedata.java  string.size:"+strings.size()+strings.isEmpty());
+        System.out.println("@noticedata.java  string.size:" + strings.size() + strings.isEmpty());
         System.out.println(strings.size());
         for (String s : strings) {
             list.add(new NoticePO(s));
         }
         return list;
+    }
+
+    public void setFileUtility(FileUtility fileUtility1) {
+        this.fileUtility = fileUtility1;
+
     }
 }

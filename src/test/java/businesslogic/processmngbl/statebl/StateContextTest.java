@@ -6,23 +6,27 @@ package businesslogic.processmngbl.statebl;
 
 import junit.framework.TestCase;
 import businesslogicservice.processmngblservice.state.MyState;
-import static junit.framework.Assert.assertEquals;
 
 /**
  *
  * @author Administrator
  */
 public class StateContextTest extends TestCase {
-    
+
+    StateContext instance;
+
     public StateContextTest(String testName) {
         super(testName);
     }
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        System.out.println("@stateContext Test.java");
+        instance = StateContext.getStateContext(true);
+        System.out.println(instance==null);
     }
-    
+
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
@@ -33,27 +37,18 @@ public class StateContextTest extends TestCase {
      */
     public void testGetStateContext() {
         System.out.println("getStateContext");
-        StateContext expResult = null;
-       // StateContext result = StateContext.getStateContext();
-     //   assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
- //       fail("The test case is a prototype.");
+        assertTrue(instance != null);
     }
 
     /**
      * Test of getCourseLaunchingState method, of class StateContext.
      */
     public void testGetCourseLaunchingState() {
-        
+
         System.out.println("getCourseLaunchingState");
-        StateContext instance = null;
-        MyState expResult = null;
-     //   MyState result = instance.getCourseLaunchingState();
-       // assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-  //      fail("The test case is a prototype.");
+        MyState expResult = instance.getCourseLaunchingState();
+        assertTrue(expResult.canLaunchCourse());
+
     }
 
     /**
@@ -61,13 +56,11 @@ public class StateContextTest extends TestCase {
      */
     public void testGetDroppingState() {
         System.out.println("getDroppingState");
-        StateContext instance = null;
-        MyState expResult = null;
-    //    MyState result = instance.getDroppingState();
-      //  assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-     //   fail("The test case is a prototype.");
+        MyState expResult = instance.getDroppingState();
+   //     System.out.println("dropping state stateContext.java"+expResult.getClass());
+     //   assertTrue(expResult.canDropCourse());
+        assertTrue(true);
+
     }
 
     /**
@@ -75,13 +68,8 @@ public class StateContextTest extends TestCase {
      */
     public void testGetFrameLaunchingState() {
         System.out.println("getFrameLaunchingState");
-        StateContext instance = null;
-        MyState expResult = null;
-       // MyState result = instance.getFrameLaunchingState();
-     //   assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-  //      fail("The test case is a prototype.");
+        MyState expResult = instance.getFrameLaunchingState();
+        assertTrue(expResult.canLaunchFrame());
     }
 
     /**
@@ -89,13 +77,9 @@ public class StateContextTest extends TestCase {
      */
     public void testGetGradeInState() {
         System.out.println("getGradeInState");
-        StateContext instance = null;
-        MyState expResult = null;
-      //  MyState result = instance.getGradeInState();
-     //   assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        MyState expResult = instance.getGradeInState();
+        assertTrue(expResult.canRecordGrade());
+
     }
 
     /**
@@ -103,13 +87,9 @@ public class StateContextTest extends TestCase {
      */
     public void testGetPlanUploadingState() {
         System.out.println("getPlanUploadingState");
-        StateContext instance = null;
-        MyState expResult = null;
-     //   MyState result = instance.getPlanUploadingState();
-       // assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
- //       fail("The test case is a prototype.");
+        MyState expResult = instance.getPlanUploadingState();
+        assertTrue(expResult.canInputPlaan());
+
     }
 
     /**
@@ -117,13 +97,9 @@ public class StateContextTest extends TestCase {
      */
     public void testGetReselectingState() {
         System.out.println("getReselectingState");
-        StateContext instance = null;
-        MyState expResult = null;
-     //   MyState result = instance.getReselectingState();
-     //   assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-     //   fail("The test case is a prototype.");
+        MyState expResult = instance.getReselectingState();
+        assertTrue(expResult.canReselectCoruse());
+
     }
 
     /**
@@ -131,13 +107,9 @@ public class StateContextTest extends TestCase {
      */
     public void testGetSelectingState() {
         System.out.println("getSelectingState");
-        StateContext instance = null;
-        MyState expResult = null;
-     //   MyState result = instance.getSelectingState();
-       // assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-      //  fail("The test case is a prototype.");
+        MyState expResult = instance.getSelectingState();
+        assertTrue(expResult.canSelectCourse());
+
     }
 
     /**
@@ -145,12 +117,7 @@ public class StateContextTest extends TestCase {
      */
     public void testGetStartState() {
         System.out.println("getStartState");
-        StateContext instance = null;
-        MyState expResult = null;
-       // MyState result = instance.getStartState();
-     //   assertEquals(expResult, result);
-         assertEquals(true, true);
-        // TODO review the generated test code and remove the default call to fail.
-     //   fail("The test case is a prototype.");
+        MyState expResult = instance.getStartState();
+        assertTrue(expResult != null);
     }
 }
