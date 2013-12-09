@@ -510,7 +510,7 @@ public class LoginPanel extends javax.swing.JPanel {
 
         System.out.println("________test notice receiver____________________");
         NoticeReceiverFactory noticeReceiverFactory = new NoticeReceiverFactory();
-        NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.ALL);
+        NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.STUDENT);
         NoticeList nl = nrs.getNoticeList();
         nl.printNoticeList();
         System.out.println("test_________notice ___receiver_end");

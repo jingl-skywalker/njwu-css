@@ -101,16 +101,20 @@ public class NoticeController implements NoticeBLService {
     public NoticeList getNoticeList() {
         return nList;
     }
-    public void setNoticeList(NoticeList nl){
-        this.nList=nl;
+
+    public void setNoticeList(NoticeList nl) {
+        this.nList = nl;
     }
 
     @Override
     public NoticeList getNoticeList(ROLE role) {
         NoticeList roleList = new NoticeList();
         Iterator<Notice> iterator = nList.getIterator();
+        Notice notice;
         while (iterator.hasNext()) {
-            if (iterator.next().getRole().equals(role)) {
+            //     if ((notice=(iterator.next()).getRole().equals(role)) {
+            notice = iterator.next();
+            if (notice.getRole().equals(role)) {
                 roleList.add(iterator.next());
             }
         }

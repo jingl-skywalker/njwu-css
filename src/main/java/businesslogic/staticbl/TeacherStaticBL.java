@@ -56,7 +56,8 @@ public class TeacherStaticBL {
             int currentYear = ca.get(Calendar.YEAR);
             TeacherStatic teaStatic = new TeacherStatic();
             for (UserInfoPO p : pos) {
-                int birthYear = Integer.parseInt(p.getGrade());
+              int birthYear = Integer.parseInt(p.getYearIn());
+     //          int birthYear=Integer.parseInt(p.getGrade());
                 int old = currentYear - birthYear;
                 if (old <= 40) {
                     teaStatic.addYoung();
