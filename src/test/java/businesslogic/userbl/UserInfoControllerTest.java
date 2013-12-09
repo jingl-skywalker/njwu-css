@@ -6,7 +6,6 @@ package businesslogic.userbl;
 
 import enumeration.ResultMessage;
 import java.util.ArrayList;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import junit.framework.TestCase;
 import vo.uservo.UserInfoVO;
 
