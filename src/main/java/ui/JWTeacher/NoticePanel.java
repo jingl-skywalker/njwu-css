@@ -4,126 +4,98 @@
  */
 package ui.JWTeacher;
 
+import ui.Library.LogoButton;
 import ui.Library.MyFont;
+import ui.Library.TextLabel;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import ui.Library.ImageIconFactory;
-import ui.Library.LogoButton;
 import ui.Library.Navigation;
-import ui.Library.TextLabel;
+import ui.Library.RadioButton;
+import ui.Library.TextArea;
+import ui.Library.TextField;
 
 /**
  *
  * @author zili Chen
  */
-public class FramePanel extends javax.swing.JPanel {
+public class NoticePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FramePanel
+     * Creates new form NoticePanel
      */
-    public FramePanel() {
+    public NoticePanel() {
         initComponents();
         /*GUI-主panel*/
         setOpaque(false);
         navPanel.setOpaque(false);
-        font = new MyFont();
         /*GUI-导航*/
         navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
-        /*GUI-左侧按钮*/
+        navigation.setTOP("processP");
+        /*GUI-左侧面板*/
         image = new ImageIconFactory();
-        createButton = new LogoButton(30,90).getLDiaplusButton();
-        publishButton = new LogoButton(30,190).getLShareButton();
-        checkButton = new LogoButton(30,290).getLSearchButton();
-        createLabel = new TextLabel(image.getPCreateModelIcon(),30,140).getLabel();
-        publishLabel = new TextLabel(image.getPPublishModelIcon(),30,240).getLabel();
-        checkLabel = new TextLabel(image.getPCheckIcon(),30,640).getLabel();
-        //createButton.addMouseListener();//创建按钮
-        add(createButton);
-        add(createLabel);
-        //publishButton.addMouseListener();//发布按钮
-        add(publishButton);
-        add(publishLabel);
-        //checkButton.addMouseListener();//查看按钮
-        add(checkButton);
-        add(checkLabel);
-        /*GUI-描述框架*/
         leftPanel.setOpaque(false);
-        creditLabel = new TextLabel(image.getPCreditIcon(),10,30).getLabel();
-        describeLabel = new TextLabel(image.getPDescribeIcon(),10,90).getLabel();
-        sureButton = new LogoButton(172,280).getLYesButton();
-        sureLabel = new TextLabel(image.getPSureIcon(),170,290).getLabel();
-        creditTextField = new JTextField();
-        describeTextArea = new JTextArea();
-        leftPanel.add(creditLabel);
-        leftPanel.add(describeLabel);
-        leftPanel.add(creditTextField);
-        leftPanel.add(describeTextArea);
-        leftPanel.add(sureButton);
-        leftPanel.add(sureLabel);
-        creditTextField.setBounds(110,30,280,30);
-        creditTextField.setFont(font.getFont());
-        describeTextArea.setBounds(110,90,280,180);
-        describeTextArea.setFont(font.getFont());
-        //sureButton.addMouseListener();//确定按钮
-        /*GUI-创建模块*/
-        rightPanel.setOpaque(false);
-        newMButton = new LogoButton(50,275).getLPlusButton();
-        cancelButton = new LogoButton(190,280).getLCancelButton();
-        newMLabel = new TextLabel(image.getPNewMIcon(),90,290).getLabel();
-        cancelLabel = new TextLabel(image.getPCancelIcon(),230,290).getLabel();
-        moduleList = new JList();
-        rightPanel.add(newMButton);
-        rightPanel.add(cancelButton);
-        rightPanel.add(moduleList);
-        //newMButton.addMouseListener();//新建模块按钮
-        //cancelButton.addMouseListener();//取消按钮
-        moduleList.setBounds(20,32,300,235);
-        moduleList.setFont(font.getFont());
+        font = new MyFont();
+        addButton = new LogoButton(70,300).getLPlusButton();
+        addLabel = new JLabel();//?
+        noticeList = new JList();//通知列表
         listModel = new DefaultListModel();
-        listModel.addElement("模块1");
-        moduleList.setModel(listModel);
+        listModel.addElement("不要迟到");
+        noticeList.setModel(listModel);
+        leftPanel.add(noticeList,0,0);
+        noticeList.setBounds(10,10,180,280);
+        noticeList.setFont(font.getFont());
+        //addButton.addMouseListener();//添加通知按钮
+        leftPanel.add(addButton);
+        leftPanel.add(addLabel);
+        /*GUI-右侧面板*/
+        rightPanel.setOpaque(false);
+        titleLabel = new JLabel();//?
+        contentLabel = new JLabel();//?
+        objectLabel = new JLabel();//?
+        sureButton = new LogoButton(170,305).getLYesButton();
+        cancelButton = new LogoButton(300,305).getLCancelButton();
+        rightPanel.add(titleLabel);
+        rightPanel.add(contentLabel);
+        rightPanel.add(objectLabel);
+        rightPanel.add(sureButton);
+        rightPanel.add(cancelButton);
+        titleTextField = new TextField(120,10,550,30).getTextField();
+        contentTextArea = new TextArea(120,60,550,200).getTextArea();
+        rightPanel.add(titleTextField);
+        rightPanel.add(contentTextArea);
+        /*GUI-按钮组*/
+        buttonGroup = new ButtonGroup();
+        yjwButton = new RadioButton("院系教务员",120,270,100,26).getButton();
+        teaButton = new RadioButton("任课老师",250,270,100,26).getButton();
+        stuButton = new RadioButton("学生",380,270,100,26).getButton();
+        allButton = new RadioButton("所有用户",490,270,100,26).getButton();
+        buttonGroup.add(yjwButton);
+        buttonGroup.add(teaButton);
+        buttonGroup.add(stuButton);
+        buttonGroup.add(allButton);
+        yjwButton.setSelected(true);
+        rightPanel.add(yjwButton);
+        rightPanel.add(teaButton);
+        rightPanel.add(stuButton);
+        rightPanel.add(allButton);
         
     }
-    
-    /*事件-新建模块*/
-    class NewMListener implements MouseListener {
 
-        public void mouseClicked(MouseEvent e) {
-            
-        }
-
-        public void mousePressed(MouseEvent e) {
-            newMButton.setContentAreaFilled(true);
-            newMButton.setOpaque(false);
-            newMButton.setBackground(Color.black);
-        }
-
-        public void mouseReleased(MouseEvent e) {
-            newMButton.setContentAreaFilled(false);
-        }
-
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        public void mouseExited(MouseEvent e) {
-        }
-        
-    }
-    
     public void update() {
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,33 +115,33 @@ public class FramePanel extends javax.swing.JPanel {
         navPanel.setLayout(navPanelLayout);
         navPanelLayout.setHorizontalGroup(
             navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1014, Short.MAX_VALUE)
         );
         navPanelLayout.setVerticalGroup(
             navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 51, Short.MAX_VALUE)
         );
 
-        leftPanel.setBackground(new java.awt.Color(255, 51, 102));
+        leftPanel.setBackground(new java.awt.Color(255, 51, 204));
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 238, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 359, Short.MAX_VALUE)
         );
 
-        rightPanel.setBackground(new java.awt.Color(102, 102, 255));
+        rightPanel.setBackground(new java.awt.Color(153, 0, 153));
 
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,13 +151,13 @@ public class FramePanel extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(navPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addContainerGap()
                 .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,28 +176,27 @@ public class FramePanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     /*GUI-导航*/
     private Navigation navigation;
-    /*GUI-左侧按钮*/
+    /*GUI-左侧面板*/
     private ImageIconFactory image;
-    private JButton createButton;
-    private JButton publishButton;
-    private JButton checkButton;
-    private JLabel createLabel;
-    private JLabel publishLabel;
-    private JLabel checkLabel;
-    /*GUI-描述框架*/
     private MyFont font;
-    private JLabel creditLabel;
-    private JLabel describeLabel;
-    private JTextField creditTextField;
-    private JTextArea describeTextArea;
-    private JButton sureButton;
-    private JLabel sureLabel;
-    /*GUI-创建模块*/
-    private JList moduleList;
-    private JButton newMButton;
-    private JButton cancelButton;
-    private JLabel newMLabel;
-    private JLabel cancelLabel;
-    /*逻辑*/
+    private JButton addButton;
+    private JLabel addLabel;
+    private JList noticeList;
     private DefaultListModel listModel;
+    /*GUI-右侧面板*/
+    private JLabel titleLabel;
+    private JLabel contentLabel;
+    private JLabel objectLabel;
+    private JLabel sureLabel;
+    private JLabel cancelLabel;
+    private JButton sureButton;
+    private JButton cancelButton;
+    private JTextField titleTextField;
+    private JTextArea contentTextArea;
+    /*GUI-按钮组*/
+    private ButtonGroup buttonGroup;
+    private JRadioButton yjwButton;
+    private JRadioButton teaButton;
+    private JRadioButton stuButton;
+    private JRadioButton allButton;
 }

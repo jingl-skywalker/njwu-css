@@ -14,12 +14,12 @@ import javax.swing.JButton;
  *
  * @author zili Chen
  */
-public class PerInfoPanel extends javax.swing.JPanel {
+public class MyCoursePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form PerInfoPanel
+     * Creates new form MyCoursePanel
      */
-    public PerInfoPanel() {
+    public MyCoursePanel() {
         initComponents();
         /*GUI-主panel*/
         setOpaque(false);

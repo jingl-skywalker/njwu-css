@@ -4,36 +4,38 @@
  */
 package ui.JWTeacher;
 
-import businesslogic.planbl.PlanController;
-import businesslogicservice.planblservice.PlanBLService;
-import businesslogicservice.planblservice.PlanOperationFactory;
-import java.util.ArrayList;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import vo.planvo.PlanVO;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import ui.Library.Navigation;
 
 /**
  *
- * @author zili chen
+ * @author zili Chen
  */
 public class PlanPanel extends javax.swing.JPanel {
-
-    PlanBLService planBLService;
-    PlanOperationFactory planOperationFactory = new PlanOperationFactory();
 
     /**
      * Creates new form PlanPanel
      */
     public PlanPanel() {
         initComponents();
-        planBLService = planOperationFactory.getPlanBLService();
+        /*GUI-主panel*/
+        setOpaque(false);
+        navPanel.setOpaque(false);
+        /*GUI-导航*/
+        navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
+        
+     
     }
-
-    public void fillTable(JTable table, ArrayList<String> strings) {
-        DefaultTableModel defaultTableModel = (DefaultTableModel) table.getModel();
+    
+    public void update() {
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,241 +45,38 @@ public class PlanPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        titelPanel = new javax.swing.JPanel();
-        peopleLogo = new javax.swing.JLabel();
-        nameLogo = new javax.swing.JLabel();
-        arrowLogo = new javax.swing.JLabel();
-        currentLogo = new javax.swing.JLabel();
-        backLogo = new javax.swing.JLabel();
-        backLabel = new javax.swing.JLabel();
-        homeLogo = new javax.swing.JLabel();
-        homeLabel = new javax.swing.JLabel();
-        exitLogo = new javax.swing.JLabel();
-        exitLabel = new javax.swing.JLabel();
-        insPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        insList = new javax.swing.JList();
-        planInfoPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        planTable = new javax.swing.JTable();
+        navPanel = new javax.swing.JPanel();
 
-        titelPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        titelPanel.setPreferredSize(new java.awt.Dimension(365, 37));
+        navPanel.setBackground(new java.awt.Color(51, 255, 102));
 
-        peopleLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        peopleLogo.setText("Logo");
-
-        nameLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLogo.setText("name");
-
-        arrowLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        arrowLogo.setText("->");
-
-        currentLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        currentLogo.setText("current");
-
-        backLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLogo.setText("Logo");
-
-        backLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLabel.setText("back");
-
-        homeLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLogo.setText("Logo");
-
-        homeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLabel.setText("home");
-
-        exitLogo.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLogo.setText("Logo");
-
-        exitLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLabel.setText("exit");
-
-        javax.swing.GroupLayout titelPanelLayout = new javax.swing.GroupLayout(titelPanel);
-        titelPanel.setLayout(titelPanelLayout);
-        titelPanelLayout.setHorizontalGroup(
-            titelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(peopleLogo)
-                .addGap(18, 18, 18)
-                .addComponent(nameLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(arrowLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(currentLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
-                .addComponent(backLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backLabel)
-                .addGap(18, 18, 18)
-                .addComponent(homeLogo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(homeLabel)
-                .addGap(18, 18, 18)
-                .addComponent(exitLogo)
-                .addGap(5, 5, 5)
-                .addComponent(exitLabel)
-                .addContainerGap())
+        javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
+        navPanel.setLayout(navPanelLayout);
+        navPanelLayout.setHorizontalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1014, Short.MAX_VALUE)
         );
-        titelPanelLayout.setVerticalGroup(
-            titelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(titelPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(peopleLogo)
-                    .addComponent(nameLogo)
-                    .addComponent(arrowLogo)
-                    .addComponent(currentLogo)
-                    .addComponent(backLogo)
-                    .addComponent(backLabel)
-                    .addComponent(homeLogo)
-                    .addComponent(homeLabel)
-                    .addComponent(exitLogo)
-                    .addComponent(exitLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        setBackground(new java.awt.Color(0, 0, 0));
-
-        insPanel.setBackground(new java.awt.Color(0, 0, 0));
-        insPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "院系", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
-
-        insList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "文学院", "哲学系", "历史学系", "新闻传播学院", "法学院", "商学院", "经济学院", "管理学院", "外国语学院", "政府管理学院", "社会学院", "信息管理学院", "数学系", "物理学院", "天文与空间科学学院", "化学化工学院", "计算机科学与技术系", "子科学与工程学院", "现代工程与应用科学学院", "环境学院", "地球科学与工程学院", "大气科学学院", "地理与海洋科学学院", "生命科学学院", "生物科学学院", "医学院", "匡亚明学院", "海外教育学院", "软件学院", "工程管理学院建筑与城市规划学院" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        insList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                insListMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(insList);
-
-        javax.swing.GroupLayout insPanelLayout = new javax.swing.GroupLayout(insPanel);
-        insPanel.setLayout(insPanelLayout);
-        insPanelLayout.setHorizontalGroup(
-            insPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(insPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        insPanelLayout.setVerticalGroup(
-            insPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(insPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        planInfoPanel.setBackground(new java.awt.Color(0, 0, 0));
-        planInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "教学计划", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
-
-        planTable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        planTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        planTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "所属模块", "课程名", "课程号", "学分", "周学时"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        planTable.setGridColor(new java.awt.Color(204, 204, 204));
-        jScrollPane2.setViewportView(planTable);
-
-        javax.swing.GroupLayout planInfoPanelLayout = new javax.swing.GroupLayout(planInfoPanel);
-        planInfoPanel.setLayout(planInfoPanelLayout);
-        planInfoPanelLayout.setHorizontalGroup(
-            planInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(planInfoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        planInfoPanelLayout.setVerticalGroup(
-            planInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(planInfoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+        navPanelLayout.setVerticalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(insPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(planInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+            .addComponent(navPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(insPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(planInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 365, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void insListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insListMouseClicked
-        // TODO add your handling code here:
-        String institute = (String) insList.getSelectedValue();
-       // ArrayList<PlanVO> planVOs = planBLService.observePlan(institute, null);
-        DefaultTableModel tableModel=(DefaultTableModel) planTable.getModel();
-        tableModel.setRowCount(0);
-        String[] strings=new String[5];
-        strings[0]="dfsdf";
-        strings[1]="kk";
-        strings[2]="kdjf";
-        strings[3]="kjkj";
-        strings[4]="kjkj";
-        tableModel.addRow(strings);
-        planTable.invalidate();
-    }//GEN-LAST:event_insListMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel arrowLogo;
-    private javax.swing.JLabel backLabel;
-    private javax.swing.JLabel backLogo;
-    private javax.swing.JLabel currentLogo;
-    private javax.swing.JLabel exitLabel;
-    private javax.swing.JLabel exitLogo;
-    private javax.swing.JLabel homeLabel;
-    private javax.swing.JLabel homeLogo;
-    private javax.swing.JList insList;
-    private javax.swing.JPanel insPanel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel nameLogo;
-    private javax.swing.JLabel peopleLogo;
-    private javax.swing.JPanel planInfoPanel;
-    private javax.swing.JTable planTable;
-    private javax.swing.JPanel titelPanel;
+    private javax.swing.JPanel navPanel;
     // End of variables declaration//GEN-END:variables
+    /*GUI-导航*/
+    private Navigation navigation;
+    
 }

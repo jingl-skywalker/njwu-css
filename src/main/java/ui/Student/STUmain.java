@@ -4,78 +4,426 @@
  */
 package ui.Student;
 
-import businesslogic.gradebl.GradeBLServiceStub;
-import businesslogic.selectionbl.SelectionBLServiceStub;
-import businesslogicservice.gradeblservice.GradeBLService;
-import businesslogicservice.gradeblservice.GradeFactory;
-import businesslogicservice.selectionblservice.SelectionBLService;
-import businesslogicservice.selectionblservice.SelectionFactory;
+import businesslogicservice.userblservice.UserBLService;
+import businesslogicservice.userblservice.UserInfoFactory;
 import java.awt.CardLayout;
-import ui.Student.PerInfoPanel;
-import ui.Student.AllCoursePanel;
-import ui.Student.PerCoursePanel;
-import ui.Student.SelectPanel;
-import ui.Student.ViewGradePanel;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import vo.uservo.UserInfoVO;
 
 /**
  *
- * @author zili chen
+ * @author zili Chen
  */
-public class STUmain extends javax.swing.JFrame {
+public class StuMain extends javax.swing.JFrame {
 
     /**
-     * Creates new form STUmain
+     * Creates new form StuMain
      */
-    private PerCoursePanel perCoursePanel;
-    private PerInfoPanel perInfoPanel;
-    private AllCoursePanel allCoursePanel;
-    private SelectPanel selectPanel;
-    private ReSelectPanel reSelectPanel;
-    private ViewGradePanel viewGradePanel;
-    private GradeFactory gradeFactory;
-    private SelectionFactory selectionFactory;
-    private UserInfoVO student;
-
-    public STUmain() {
+    public StuMain(UserInfoVO v,String ip,int port) {
         initComponents();
-        
-        setLocationRelativeTo(null);
-//        setUndecorated(true);
-
+         /*逻辑-任天*/
+        UserInfoFactory factory = new UserInfoFactory();
+        userBL = factory.getUserBLService(ip, port);
+        userInfoVO = v;
+        /*GUI-frame背景*/
+        backP = new ImageIcon("src/Picture/backround.gif");
+        backLabel = new JLabel(backP);
+        backLabel.setBounds(0, 0, 1024, 625);
+        getLayeredPane().add(backLabel,new Integer(Integer.MIN_VALUE));
+        backPanel = (JPanel)getContentPane();
+        backPanel.setOpaque(false);//设置透明
+        exitP = new ImageIcon("src/Picture/close.gif");//退出系统按钮
+        exitButton = new JButton(exitP);
+        exitButton.addMouseListener(new ExitListener());
+        add(exitButton,0,0);
+        exitButton.setBounds(965,7,exitP.getIconWidth(),exitP.getIconHeight());
+        exitButton.setContentAreaFilled(false);
+        /*GUI-主界面*/
+        card = new CardLayout();
+        contain.setLayout(card);
+        contain.add(mainPanel,"mainP");
+        contain.setOpaque(false);
+        mainPanel.setOpaque(false);
+        navPanel.setOpaque(false);
+        /*GUI-导航*/
+        backtoP = new ImageIcon("src/Picture/backto.gif");
+        homeP = new ImageIcon("src/Picture/home.gif");
+        closeP = new ImageIcon("src/Picture/exit.gif");
+        backButton = new JButton(backtoP);//返回按钮
+        backButton.addMouseListener(new BackListener());
+        navPanel.add(backButton,0,0);
+        backButton.setBounds(718,10,backtoP.getIconWidth(),backtoP.getIconHeight());
+        backButton.setContentAreaFilled(false);
+        homeButton = new JButton(homeP);//主页按钮
+        homeButton.addMouseListener(new HomeListener());
+        navPanel.add(homeButton,0,0);
+        homeButton.setBounds(826,9,homeP.getIconWidth(),homeP.getIconHeight());
+        homeButton.setContentAreaFilled(false);
+        closeButton = new JButton(closeP);//退出按钮
+        closeButton.addMouseListener(new CloseListener());
+        navPanel.add(closeButton,0,0);
+        closeButton.setBounds(930,7,closeP.getIconWidth(),closeP.getIconHeight());
+        closeButton.setContentAreaFilled(false);
+        /*GUI-通知面板*/
+        notePanel.setOpaque(false);
+        noteP = new ImageIcon("src/Picture/note.gif");
+        noteTP = new ImageIcon("src/Picture/noteT.gif");
+        noteButton = new JButton(noteP);
+        noteLabel = new JLabel(noteTP);
+        notePanel.add(noteButton,0,0);
+        notePanel.add(noteLabel,0,0);
+        noteButton.setBounds(30,20,noteP.getIconWidth(),noteP.getIconHeight());
+        noteButton.setContentAreaFilled(false);
+        noteLabel.setBounds(90,30,noteTP.getIconWidth(),noteTP.getIconHeight());
+        info1 = new JLabel("> 2013-2014选课通知");
+        notePanel.add(info1,0,0);
+        info1.setBounds(95,80,350, 30);
+        info1.setFont(new Font("迷你简少儿",0,18));
+        info1.setForeground(Color.white);
+        /*GUI-菜单面板*/
+        menuPanel.setOpaque(false);
+        selectP = new ImageIcon("src/Picture/elective_speciality.png");
+        gradeP = new ImageIcon("src/Picture/dissertation.png");
+        myCourseP = new ImageIcon("src/Picture/current_term_course.png");
+        allCourseP = new ImageIcon("src/Picture/elective_public_renew.png");
+        perInfoP = new ImageIcon("src/Picture/personal.png");
+        selectTP = new ImageIcon("src/Picture/select.gif");
+        gradeTP = new ImageIcon("src/Picture/grade.gif");
+        myCourseTP = new ImageIcon("src/Picture/myCourse.gif");
+        allCourseTP = new ImageIcon("src/Picture/allCourse.gif");
+        perInfoTP = new ImageIcon("src/Picture/perInfo.gif");
+        selectButton = new JButton(selectP);
+        gradeButton = new JButton(gradeP);
+        myCourseButton = new JButton(myCourseP);
+        allCourseButton = new JButton(allCourseP);
+        perInfoButton = new JButton(perInfoP);
+        selectLabel = new JLabel(selectTP);
+        gradeLabel = new JLabel(gradeTP);
+        myCourseLabel = new JLabel(myCourseTP);
+        allCourseLabel = new JLabel(allCourseTP);
+        perInfoLabel = new JLabel(perInfoTP);
+        selectButton.addMouseListener(new SelectListener());//选课/补选
+        menuPanel.add(selectButton,0,0);
+        menuPanel.add(selectLabel,0,0);
+        selectButton.setBounds(114,44,selectP.getIconWidth(),selectP.getIconHeight());
+        selectButton.setContentAreaFilled(false);
+        selectLabel.setBounds(110,110,selectTP.getIconWidth(),selectTP.getIconHeight());
+        gradeButton.addMouseListener(new GradeListener());//查看成绩
+        menuPanel.add(gradeButton,0,0);
+        menuPanel.add(gradeLabel,0,0);
+        gradeButton.setBounds(220,44,gradeP.getIconWidth(),gradeP.getIconHeight());
+        gradeButton.setContentAreaFilled(false);
+        gradeLabel.setBounds(220,109,gradeTP.getIconWidth(),gradeTP.getIconHeight());
+        myCourseButton.addMouseListener(new MyCourseListener());//我的课程
+        menuPanel.add(myCourseButton,0,0);
+        menuPanel.add(myCourseLabel,0,0);
+        myCourseButton.setBounds(330,43,myCourseP.getIconWidth(),myCourseP.getIconHeight());
+        myCourseButton.setContentAreaFilled(false);
+        myCourseLabel.setBounds(330,111,myCourseTP.getIconWidth(),myCourseTP.getIconHeight());
+        allCourseButton.addMouseListener(new AllCourseListener());//全校课程
+        menuPanel.add(allCourseButton,0,0);
+        menuPanel.add(allCourseLabel,0,0);
+        allCourseButton.setBounds(115,170,allCourseP.getIconWidth(),allCourseP.getIconHeight());
+        allCourseButton.setContentAreaFilled(false);
+        allCourseLabel.setBounds(110,238,allCourseTP.getIconWidth(),allCourseTP.getIconHeight());
+        perInfoButton.addMouseListener(new PerInfoListener());//个人信息
+        menuPanel.add(perInfoButton,0,0);
+        menuPanel.add(perInfoLabel,0,0);
+        perInfoButton.setBounds(220,172,perInfoP.getIconWidth(),perInfoP.getIconHeight());
+        perInfoButton.setContentAreaFilled(false);
+        perInfoLabel.setBounds(220,238,perInfoTP.getIconWidth(),perInfoTP.getIconHeight());
+        /*逻辑-切换面板*/
+        selectPanel = new SelectPanel();
+        gradePanel = new GradePanel();
+        myCoursePanel = new MyCoursePanel();
+        allCoursePanel = new AllCoursePanel();
+        perInfoPanel = new PerInfoPanel();
+        contain.add(selectPanel,"selectP");
+        contain.add(gradePanel,"gradeP");
+        contain.add(myCoursePanel,"myCourseP");
+        contain.add(allCoursePanel,"allCourseP");
+        contain.add(perInfoPanel,"perInfoP");
     }
 
-    public void initMyConpontent() {
-        gradeFactory = new GradeFactory();
-        selectionFactory = new SelectionFactory();
+    /*事件-exit*/
+    class ExitListener implements MouseListener {
 
-        perCoursePanel = new PerCoursePanel(student.getID(), selectionFactory.getSelectionController());
-        perInfoPanel = new PerInfoPanel(student);
-        allCoursePanel = new AllCoursePanel(selectionFactory.getSelectionController());
-        selectPanel = new SelectPanel(student.getID(), selectionFactory.getSelectionController());
-        reSelectPanel = new ReSelectPanel(student.getID(), selectionFactory.getSelectionController());
-        viewGradePanel = new ViewGradePanel(student.getID(), gradeFactory.getGradeController());
-        
-        /*
-        SelectionBLService selectionbl = new SelectionBLServiceStub();
-        GradeBLService gradebl = new GradeBLServiceStub();
-        perCoursePanel = new PerCoursePanel(student.getID(), selectionbl);
-        perInfoPanel = new PerInfoPanel(student);
-        allCoursePanel = new AllCoursePanel(selectionbl);
-        selectPanel = new SelectPanel(student.getID(), selectionbl);
-        viewGradePanel = new ViewGradePanel(student.getID(), gradebl);
-        */
-        
-        stuCardPanel.add(perCoursePanel, "perCoursePanel");
-        stuCardPanel.add(perInfoPanel, "perInfoPanel");
-        stuCardPanel.add(allCoursePanel, "allCoursePanel");
-        stuCardPanel.add(selectPanel, "selectPanel");
-        stuCardPanel.add(reSelectPanel, "reSelectPanel");
-        stuCardPanel.add(viewGradePanel, "viewGradePanel");
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //System.exit(1);
+        }
 
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "selectPanel");
+        @Override
+        public void mousePressed(MouseEvent e) {
+            exitButton.setContentAreaFilled(true);
+            exitButton.setOpaque(false);
+            exitButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            exitButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
     }
+    
+    /*事件-back*/
+    class BackListener implements MouseListener {
 
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            backButton.setContentAreaFilled(true);
+            backButton.setOpaque(false);
+            backButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            backButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-home*/
+    class HomeListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            homeButton.setContentAreaFilled(true);
+            homeButton.setOpaque(false);
+            homeButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            homeButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-close*/
+    class CloseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            closeButton.setContentAreaFilled(true);
+            closeButton.setOpaque(false);
+            closeButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            closeButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-选课/补选*/
+    class SelectListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"selectP");
+            selectPanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            selectButton.setContentAreaFilled(true);
+            selectButton.setBackground(Color.black);
+            selectButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            selectButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-查看成绩*/
+    class GradeListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"gradeP");
+            gradePanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            gradeButton.setContentAreaFilled(true);
+            gradeButton.setBackground(Color.black);
+            gradeButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            gradeButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-我的课程*/
+    class MyCourseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"myCourseP");
+            myCoursePanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            myCourseButton.setContentAreaFilled(true);
+            myCourseButton.setBackground(Color.black);
+            myCourseButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            myCourseButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-全校课程*/
+    class AllCourseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"allCourseP");
+            allCoursePanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            allCourseButton.setContentAreaFilled(true);
+            allCourseButton.setBackground(Color.black);
+            allCourseButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            allCourseButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-个人信息*/
+    class PerInfoListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"perInfoP");
+            perInfoPanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            perInfoButton.setContentAreaFilled(true);
+            perInfoButton.setBackground(Color.black);
+            perInfoButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            perInfoButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,491 +433,194 @@ public class STUmain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        backPanel = new javax.swing.JPanel();
-        CSSLabel = new javax.swing.JLabel();
-        NJWUPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        ExitButton = new javax.swing.JButton();
-        stuMainPanel = new javax.swing.JPanel();
-        titelPanel2 = new javax.swing.JPanel();
-        peopleLogo2 = new javax.swing.JLabel();
-        nameLogo2 = new javax.swing.JLabel();
-        arrowLogo2 = new javax.swing.JLabel();
-        currentLogo2 = new javax.swing.JLabel();
-        backLogo2 = new javax.swing.JLabel();
-        backLabel2 = new javax.swing.JLabel();
-        homeLogo2 = new javax.swing.JLabel();
-        homeLabel2 = new javax.swing.JLabel();
-        exitLogo2 = new javax.swing.JLabel();
-        exitLabel2 = new javax.swing.JLabel();
-        stuCardPanel = new javax.swing.JPanel();
-        homePanel = new javax.swing.JPanel();
+        contain = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
+        navPanel = new javax.swing.JPanel();
+        menuPanel = new javax.swing.JPanel();
         notePanel = new javax.swing.JPanel();
-        selectButton = new javax.swing.JButton();
-        selectLabel = new javax.swing.JLabel();
-        gradeButton = new javax.swing.JButton();
-        gradeLabel = new javax.swing.JLabel();
-        perCourseButton = new javax.swing.JButton();
-        perCourseLabel = new javax.swing.JLabel();
-        allCourseButton = new javax.swing.JButton();
-        allCourseLabel = new javax.swing.JLabel();
-        perInfoButton = new javax.swing.JButton();
-        perInfoLabel = new javax.swing.JLabel();
-        reSelectButton = new javax.swing.JButton();
-        reSelectLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        backPanel.setBackground(new java.awt.Color(0, 0, 0));
+        navPanel.setBackground(new java.awt.Color(51, 255, 102));
 
-        CSSLabel.setFont(new java.awt.Font("微软雅黑", 1, 24)); // NOI18N
-        CSSLabel.setForeground(new java.awt.Color(255, 255, 255));
-        CSSLabel.setText("CSS");
-
-        NJWUPanel.setBackground(new java.awt.Color(233, 233, 237));
-        NJWUPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel1.setFont(new java.awt.Font("微软雅黑", 1, 48)); // NOI18N
-        jLabel1.setText("NJWU选课系统");
-
-        javax.swing.GroupLayout NJWUPanelLayout = new javax.swing.GroupLayout(NJWUPanel);
-        NJWUPanel.setLayout(NJWUPanelLayout);
-        NJWUPanelLayout.setHorizontalGroup(
-            NJWUPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NJWUPanelLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
+        navPanel.setLayout(navPanelLayout);
+        navPanelLayout.setHorizontalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        NJWUPanelLayout.setVerticalGroup(
-            NJWUPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NJWUPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addContainerGap(41, Short.MAX_VALUE))
+        navPanelLayout.setVerticalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
 
-        ExitButton.setBackground(new java.awt.Color(0, 0, 0));
-        ExitButton.setFont(new java.awt.Font("微软雅黑", 1, 24)); // NOI18N
-        ExitButton.setForeground(new java.awt.Color(255, 255, 255));
-        ExitButton.setText("X");
-        ExitButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        ExitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitButtonActionPerformed(evt);
-            }
-        });
+        menuPanel.setBackground(new java.awt.Color(153, 204, 0));
 
-        stuMainPanel.setBackground(new java.awt.Color(0, 0, 0));
-
-        titelPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        titelPanel2.setPreferredSize(new java.awt.Dimension(365, 37));
-
-        peopleLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        peopleLogo2.setText("Logo");
-
-        nameLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLogo2.setText("name");
-
-        arrowLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        arrowLogo2.setText("->");
-
-        currentLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        currentLogo2.setText("current");
-
-        backLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLogo2.setText("Logo");
-
-        backLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        backLabel2.setText("back");
-
-        homeLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLogo2.setText("Logo");
-
-        homeLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        homeLabel2.setText("home");
-        homeLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeLabel2MouseClicked(evt);
-            }
-        });
-
-        exitLogo2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLogo2.setText("Logo");
-
-        exitLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        exitLabel2.setText("exit");
-
-        javax.swing.GroupLayout titelPanel2Layout = new javax.swing.GroupLayout(titelPanel2);
-        titelPanel2.setLayout(titelPanel2Layout);
-        titelPanel2Layout.setHorizontalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(peopleLogo2)
-                .addGap(18, 18, 18)
-                .addComponent(nameLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(arrowLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(currentLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
-                .addComponent(backLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(homeLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(homeLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(exitLogo2)
-                .addGap(5, 5, 5)
-                .addComponent(exitLabel2)
-                .addContainerGap())
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
-        titelPanel2Layout.setVerticalGroup(
-            titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(titelPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(titelPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(peopleLogo2)
-                    .addComponent(nameLogo2)
-                    .addComponent(arrowLogo2)
-                    .addComponent(currentLogo2)
-                    .addComponent(backLogo2)
-                    .addComponent(backLabel2)
-                    .addComponent(homeLogo2)
-                    .addComponent(homeLabel2)
-                    .addComponent(exitLogo2)
-                    .addComponent(exitLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
         );
 
-        stuCardPanel.setLayout(new java.awt.CardLayout());
-
-        homePanel.setBackground(new java.awt.Color(1, 1, 1));
-
-        notePanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        notePanel.setToolTipText("");
+        notePanel.setBackground(new java.awt.Color(204, 0, 153));
 
         javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
         notePanel.setLayout(notePanelLayout);
         notePanelLayout.setHorizontalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 489, Short.MAX_VALUE)
         );
         notePanelLayout.setVerticalGroup(
             notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 173, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        selectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        selectButton.setText("select");
-        selectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                selectButtonActionPerformed(evt);
-            }
-        });
-
-        selectLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        selectLabel.setForeground(new java.awt.Color(240, 240, 240));
-        selectLabel.setText("选课");
-
-        gradeButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradeButton.setText("grade");
-        gradeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeButtonActionPerformed(evt);
-            }
-        });
-
-        gradeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradeLabel.setForeground(new java.awt.Color(240, 240, 240));
-        gradeLabel.setText("查看成绩");
-
-        perCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perCourseButton.setText("perCourse");
-        perCourseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perCourseButtonActionPerformed(evt);
-            }
-        });
-
-        perCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
-        perCourseLabel.setText("我的课程");
-
-        allCourseButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        allCourseButton.setText("allCourse");
-        allCourseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                allCourseButtonActionPerformed(evt);
-            }
-        });
-
-        allCourseLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        allCourseLabel.setForeground(new java.awt.Color(240, 240, 240));
-        allCourseLabel.setText("全校课程");
-
-        perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoButton.setText("perInfo");
-        perInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                perInfoButtonActionPerformed(evt);
-            }
-        });
-
-        perInfoLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
-        perInfoLabel.setText("个人信息");
-
-        reSelectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        reSelectButton.setText("reSelect");
-        reSelectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reSelectButtonActionPerformed(evt);
-            }
-        });
-
-        reSelectLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        reSelectLabel.setForeground(new java.awt.Color(240, 240, 240));
-        reSelectLabel.setText("补选");
-
-        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
-        homePanel.setLayout(homePanelLayout);
-        homePanelLayout.setHorizontalGroup(
-            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanelLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(reSelectLabel)
-                                .addGap(46, 46, 46))
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                                .addComponent(reSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)))
-                        .addGap(17, 17, 17)
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                                .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31))
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(gradeLabel)
-                                .addGap(39, 39, 39)))
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(perCourseLabel))
-                            .addComponent(perCourseButton))
-                        .addGap(28, 28, 28)
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(allCourseLabel)))
-                        .addGap(26, 26, 26)
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(homePanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(perInfoLabel))
-                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(260, Short.MAX_VALUE))
-            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(homePanelLayout.createSequentialGroup()
-                    .addGap(28, 28, 28)
-                    .addComponent(selectLabel)
-                    .addContainerGap(833, Short.MAX_VALUE)))
-        );
-        homePanelLayout.setVerticalGroup(
-            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(perCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(navPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(gradeLabel)
-                    .addComponent(perInfoLabel)
-                    .addComponent(allCourseLabel)
-                    .addComponent(perCourseLabel)
-                    .addComponent(reSelectLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(homePanelLayout.createSequentialGroup()
-                    .addGap(128, 128, 128)
-                    .addComponent(selectLabel)
-                    .addContainerGap(223, Short.MAX_VALUE)))
+                .addComponent(notePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(notePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        stuCardPanel.add(homePanel, "card2");
-
-        javax.swing.GroupLayout stuMainPanelLayout = new javax.swing.GroupLayout(stuMainPanel);
-        stuMainPanel.setLayout(stuMainPanelLayout);
-        stuMainPanelLayout.setHorizontalGroup(
-            stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
-            .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(stuCardPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout containLayout = new javax.swing.GroupLayout(contain);
+        contain.setLayout(containLayout);
+        containLayout.setHorizontalGroup(
+            containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        stuMainPanelLayout.setVerticalGroup(
-            stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stuMainPanelLayout.createSequentialGroup()
-                .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 379, Short.MAX_VALUE))
-            .addGroup(stuMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stuMainPanelLayout.createSequentialGroup()
-                    .addGap(0, 36, Short.MAX_VALUE)
-                    .addComponent(stuCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
-        backPanel.setLayout(backPanelLayout);
-        backPanelLayout.setHorizontalGroup(
-            backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(CSSLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ExitButton)
-                .addGap(21, 21, 21))
-            .addComponent(NJWUPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(stuMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        backPanelLayout.setVerticalGroup(
-            backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backPanelLayout.createSequentialGroup()
-                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CSSLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ExitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addComponent(NJWUPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(stuMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        containLayout.setVerticalGroup(
+            containLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(contain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(177, 177, 177)
+                .addComponent(contain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_ExitButtonActionPerformed
-
-    private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
-        System.out.println("selectbutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "selectPanel");
-    }//GEN-LAST:event_selectButtonActionPerformed
-
-    private void gradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeButtonActionPerformed
-        System.out.println("gradebutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "viewGradePanel");
-    }//GEN-LAST:event_gradeButtonActionPerformed
-
-    private void perCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perCourseButtonActionPerformed
-        System.out.println("percoursebutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perCoursePanel");
-    }//GEN-LAST:event_perCourseButtonActionPerformed
-
-    private void allCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allCourseButtonActionPerformed
-        System.out.println("allcoursebutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "allCoursePanel");
-    }//GEN-LAST:event_allCourseButtonActionPerformed
-
-    private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
-        System.out.println("perinfobutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perInfoPanel");
-    }//GEN-LAST:event_perInfoButtonActionPerformed
-
-    private void homeLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabel2MouseClicked
-        System.out.println("homebutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "card2");
-    }//GEN-LAST:event_homeLabel2MouseClicked
-
-    private void reSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reSelectButtonActionPerformed
-        System.out.println("reselectbutton");
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "reSelectPanel");
-    }//GEN-LAST:event_reSelectButtonActionPerformed
-
-    public void setStudentVO(UserInfoVO userInfoVO) {
-        this.student = userInfoVO;
-    }
-
     /**
      * @param args the command line arguments
      */
-    public void main(String args[], final UserInfoVO ivo) {
+    public static void main(final UserInfoVO v,final String ip,final int port) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(StuMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(StuMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(StuMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(StuMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                // new STUmain().setVisible(true);
-                STUmain sTUmain = new STUmain();
-                sTUmain.setVisible(true);
-                sTUmain.setStudentVO(ivo);
-                sTUmain.initMyConpontent();
+                new StuMain(v,ip,port).setVisible(true);
             }
         });
     }
-    /**
-     * public void main(String args[],UserInfoVO student) {
-     *
-     * this.student = student; }*
-     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CSSLabel;
-    private javax.swing.JButton ExitButton;
-    private javax.swing.JPanel NJWUPanel;
-    private javax.swing.JButton allCourseButton;
-    private javax.swing.JLabel allCourseLabel;
-    private javax.swing.JLabel arrowLogo2;
-    private javax.swing.JLabel backLabel2;
-    private javax.swing.JLabel backLogo2;
-    private javax.swing.JPanel backPanel;
-    private javax.swing.JLabel currentLogo2;
-    private javax.swing.JLabel exitLabel2;
-    private javax.swing.JLabel exitLogo2;
-    private javax.swing.JButton gradeButton;
-    private javax.swing.JLabel gradeLabel;
-    private javax.swing.JLabel homeLabel2;
-    private javax.swing.JLabel homeLogo2;
-    private javax.swing.JPanel homePanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel nameLogo2;
+    static javax.swing.JPanel contain;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel menuPanel;
+    private javax.swing.JPanel navPanel;
     private javax.swing.JPanel notePanel;
-    private javax.swing.JLabel peopleLogo2;
-    private javax.swing.JButton perCourseButton;
-    private javax.swing.JLabel perCourseLabel;
-    private javax.swing.JButton perInfoButton;
-    private javax.swing.JLabel perInfoLabel;
-    private javax.swing.JButton reSelectButton;
-    private javax.swing.JLabel reSelectLabel;
-    private javax.swing.JButton selectButton;
-    private javax.swing.JLabel selectLabel;
-    private javax.swing.JPanel stuCardPanel;
-    private javax.swing.JPanel stuMainPanel;
-    private javax.swing.JPanel titelPanel2;
     // End of variables declaration//GEN-END:variables
+    /*GUI-frame背景*/
+    private ImageIcon backP;//背景图片
+    private JLabel backLabel;//背景label
+    private JPanel backPanel;//frame最上层面板
+    private JButton exitButton;//退出系统
+    private ImageIcon exitP;
+    /*GUI-主面板（含导航）*/
+    static CardLayout card;//卡片式布局
+    /*GUI-导航*/
+    private ImageIcon backtoP;
+    private ImageIcon homeP;
+    private ImageIcon closeP;
+    private JButton backButton;
+    private JButton homeButton;
+    private JButton closeButton;
+    /*GUI-通知面板*/
+    private ImageIcon noteP;
+    private ImageIcon noteTP;
+    private JButton noteButton;
+    private JLabel noteLabel;
+    private JLabel info1;//具体消息
+    private JLabel info2;
+    /*GUI-菜单面板*/
+    private ImageIcon selectP;
+    private ImageIcon gradeP;
+    private ImageIcon myCourseP;
+    private ImageIcon allCourseP;
+    private ImageIcon perInfoP;
+    private ImageIcon selectTP;
+    private ImageIcon gradeTP;
+    private ImageIcon myCourseTP;
+    private ImageIcon allCourseTP;
+    private ImageIcon perInfoTP;
+    private JButton selectButton;
+    private JButton gradeButton;
+    private JButton myCourseButton;
+    private JButton allCourseButton;
+    private JButton perInfoButton;
+    private JLabel selectLabel;
+    private JLabel gradeLabel;
+    private JLabel myCourseLabel;
+    private JLabel allCourseLabel;
+    private JLabel perInfoLabel;
+    /*逻辑-切换面板*/
+    private SelectPanel selectPanel;
+    private GradePanel gradePanel;
+    private MyCoursePanel myCoursePanel;
+    private AllCoursePanel allCoursePanel;
+    private PerInfoPanel perInfoPanel;
+    /*逻辑-任天*/
+    private UserBLService userBL;
+    private UserInfoVO userInfoVO;
 }

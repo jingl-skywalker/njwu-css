@@ -2,24 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui.Student;
+package ui.Teacher;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import vo.uservo.UserInfoVO;
 
 /**
  *
  * @author zili Chen
  */
-public class PerInfoPanel extends javax.swing.JPanel {
+public class ViewCoursePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form PerInfoPanel
+     * Creates new form ViewCoursePanel
      */
-    public PerInfoPanel() {
+    public ViewCoursePanel(UserInfoVO v,String ip,int port) {
         initComponents();
         /*GUI-主panel*/
         setOpaque(false);
@@ -50,7 +51,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            TeaMain.card.show(TeaMain.contain,"mainP");
         }
 
         @Override
@@ -80,7 +81,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            TeaMain.card.show(TeaMain.contain,"mainP");
         }
 
         @Override

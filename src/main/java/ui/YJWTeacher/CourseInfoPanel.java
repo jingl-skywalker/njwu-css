@@ -2,24 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui.Student;
+package ui.YJWTeacher;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import vo.uservo.UserInfoVO;
 
 /**
  *
  * @author zili Chen
  */
-public class PerInfoPanel extends javax.swing.JPanel {
+public class CourseInfoPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form PerInfoPanel
+     * Creates new form CourseInfoPanel
      */
-    public PerInfoPanel() {
+    public CourseInfoPanel(UserInfoVO v,String ip,int port) {
         initComponents();
         /*GUI-主panel*/
         setOpaque(false);
@@ -43,6 +44,10 @@ public class PerInfoPanel extends javax.swing.JPanel {
         navPanel.add(closeButton,0,0);
         closeButton.setBounds(930,7,closeP.getIconWidth(),closeP.getIconHeight());
         closeButton.setContentAreaFilled(false);
+        /*逻辑-任天*/
+        userInfo = v;
+        this.ip = ip;
+        this.port = port;
     }
     
     /*事件-back*/
@@ -50,7 +55,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            YJWMain.card.show(YJWMain.contain,"mainP");
         }
 
         @Override
@@ -80,7 +85,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            YJWMain.card.show(YJWMain.contain,"mainP");
         }
 
         @Override
@@ -172,7 +177,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 365, Short.MAX_VALUE))
+                .addGap(0, 363, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -185,4 +190,8 @@ public class PerInfoPanel extends javax.swing.JPanel {
     private JButton backButton;
     private JButton homeButton;
     private JButton closeButton;
+    /*逻辑-任天*/
+    String ip;
+    int port;
+    private UserInfoVO userInfo;
 }

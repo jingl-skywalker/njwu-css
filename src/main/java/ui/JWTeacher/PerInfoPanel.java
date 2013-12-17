@@ -4,39 +4,36 @@
  */
 package ui.JWTeacher;
 
-import businesslogicservice.userblservice.UserBLService;
-import businesslogicservice.userblservice.UserInfoFactory;
-import enumeration.ResultMessage;
 import java.awt.Color;
-import javax.swing.JOptionPane;
-import vo.uservo.UserInfoVO;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import ui.Library.Navigation;
 
 /**
  *
- * @author Administrator
+ * @author zili Chen
  */
 public class PerInfoPanel extends javax.swing.JPanel {
-    UserInfoVO v;
-    UserBLService userbl;
-    UserInfoFactory userInfoFactory=new UserInfoFactory();
+
     /**
      * Creates new form PerInfoPanel
      */
-    JWmainFrame frame;
     public PerInfoPanel() {
         initComponents();
-        userbl=userInfoFactory.getUserBLService(null, 1099);
-    }
-    public PerInfoPanel(JWmainFrame frame){
-        this();
-        this.frame=frame;
-        System.out.println("v is null:"+(v==null));
-   //     System.out.println("@perinfopanel.java::"+v.getID());
-    }
-    public void setUserInfoVO(UserInfoVO userInfoVO){
-        this.v=userInfoVO;
+        /*GUI-主panel*/
+        setOpaque(false);
+        navPanel.setOpaque(false);
+        /*GUI-导航*/
+        navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
+        
     }
 
+    public void update() {
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,195 +43,38 @@ public class PerInfoPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        modifyPanel = new javax.swing.JPanel();
-        newKeyLabel = new javax.swing.JLabel();
-        newKeyLabel2 = new javax.swing.JLabel();
-        setKeyButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        newPasswordField1 = new javax.swing.JPasswordField();
-        newPasswordField2 = new javax.swing.JPasswordField();
-        oldPasswordField = new javax.swing.JPasswordField();
-        newKeyLabel1 = new javax.swing.JLabel();
-        tipLabel = new javax.swing.JLabel();
+        navPanel = new javax.swing.JPanel();
 
-        modifyPanel.setBackground(new java.awt.Color(0, 0, 0));
+        navPanel.setBackground(new java.awt.Color(51, 255, 102));
 
-        newKeyLabel.setBackground(new java.awt.Color(0, 0, 0));
-        newKeyLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        newKeyLabel.setForeground(new java.awt.Color(204, 204, 204));
-        newKeyLabel.setText("新密码");
-
-        newKeyLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        newKeyLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        newKeyLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        newKeyLabel2.setText("新密码确认");
-
-        setKeyButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        setKeyButton.setText("确认");
-        setKeyButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setKeyButtonActionPerformed(evt);
-            }
-        });
-
-        cancelButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        cancelButton.setText("取消");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-
-        newPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPasswordField1ActionPerformed(evt);
-            }
-        });
-
-        newPasswordField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPasswordField2ActionPerformed(evt);
-            }
-        });
-
-        oldPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                oldPasswordFieldActionPerformed(evt);
-            }
-        });
-
-        newKeyLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        newKeyLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        newKeyLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        newKeyLabel1.setText("原密码");
-
-        tipLabel.setForeground(new java.awt.Color(255, 0, 51));
-        tipLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout modifyPanelLayout = new javax.swing.GroupLayout(modifyPanel);
-        modifyPanel.setLayout(modifyPanelLayout);
-        modifyPanelLayout.setHorizontalGroup(
-            modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(modifyPanelLayout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(modifyPanelLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(setKeyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
-                    .addGroup(modifyPanelLayout.createSequentialGroup()
-                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(newKeyLabel1)
-                            .addComponent(newKeyLabel2)
-                            .addComponent(newKeyLabel))
-                        .addGap(51, 51, 51)
-                        .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(newPasswordField1)
-                            .addComponent(newPasswordField2)
-                            .addComponent(oldPasswordField))))
-                .addGap(18, 18, 18)
-                .addComponent(tipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(282, 282, 282))
+        javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
+        navPanel.setLayout(navPanelLayout);
+        navPanelLayout.setHorizontalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1014, Short.MAX_VALUE)
         );
-        modifyPanelLayout.setVerticalGroup(
-            modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(modifyPanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(oldPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(newKeyLabel1))
-                    .addComponent(tipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newKeyLabel)
-                    .addComponent(newPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(newPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(newKeyLabel2))
-                .addGap(53, 53, 53)
-                .addGroup(modifyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(setKeyButton)
-                    .addComponent(cancelButton))
-                .addContainerGap(72, Short.MAX_VALUE))
+        navPanelLayout.setVerticalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(modifyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(navPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(modifyPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 365, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void setKeyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setKeyButtonActionPerformed
-        // TODO add your handling code here:
-        String s1 = new String(oldPasswordField.getPassword());
-        if(!v.getPsw().equals(s1)){
-            tipLabel.setText("原密码不对");
-            return;
-        }
-        String s2 = new String(newPasswordField1.getPassword());
-        String s3 = new String(newPasswordField2.getPassword());
-        if(!s2.equals(s3)){
-            tipLabel.setText("两次密码不一致");
-            return;
-        }
-        v.setPsw(s3);
-        if(userbl.changeUserInfo(v)==ResultMessage.SUCCESS){
-            JOptionPane.showConfirmDialog(this, "修改成功！", null, JOptionPane.OK_OPTION);
-            tipLabel.setText("");
-            oldPasswordField.setText("");
-            newPasswordField1.setText("");
-            newPasswordField2.setText("");
-            
-        }
-        else{
-            JOptionPane.showConfirmDialog(this, "修改失败", null, JOptionPane.OK_OPTION);
-        }
-    }//GEN-LAST:event_setKeyButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-        oldPasswordField.setText("");
-        newPasswordField2.setText("");
-        newPasswordField1.setText("");
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void newPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPasswordField1ActionPerformed
-        // TODO add your handling code here:
-        setKeyButtonActionPerformed(evt);
-    }//GEN-LAST:event_newPasswordField1ActionPerformed
-
-    private void newPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPasswordField2ActionPerformed
-        // TODO add your handling code here:
-        setKeyButtonActionPerformed(evt);
-    }//GEN-LAST:event_newPasswordField2ActionPerformed
-
-    private void oldPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oldPasswordFieldActionPerformed
-        // TODO add your handling code here:
-        setKeyButtonActionPerformed(evt);
-    }//GEN-LAST:event_oldPasswordFieldActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JPanel modifyPanel;
-    private javax.swing.JLabel newKeyLabel;
-    private javax.swing.JLabel newKeyLabel1;
-    private javax.swing.JLabel newKeyLabel2;
-    private javax.swing.JPasswordField newPasswordField1;
-    private javax.swing.JPasswordField newPasswordField2;
-    private javax.swing.JPasswordField oldPasswordField;
-    private javax.swing.JButton setKeyButton;
-    private javax.swing.JLabel tipLabel;
+    private javax.swing.JPanel navPanel;
     // End of variables declaration//GEN-END:variables
+    /*GUI-导航*/
+    private Navigation navigation;
+    
 }

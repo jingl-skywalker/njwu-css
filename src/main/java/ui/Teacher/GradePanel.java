@@ -4,52 +4,141 @@
  */
 package ui.Teacher;
 
-import businesslogicservice.courseblservice.CourseBLService;
-import businesslogicservice.courseblservice.CourseOperationFactory;
-import java.util.ArrayList;
-import java.util.Calendar;
-import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import ui.Library.MyTitledBorder;
-import vo.coursevo.CourseVO;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import vo.uservo.UserInfoVO;
 
 /**
  *
- * @author zili chen
+ * @author zili Chen
  */
 public class GradePanel extends javax.swing.JPanel {
-UserInfoVO userInfo;
-String ip;
-int port;
-CourseBLService courseBL;
-ArrayList<CourseVO> vos =new ArrayList<CourseVO>();
-DefaultListModel listModel = new DefaultListModel();
-boolean isEdit =false;
- CourseOperationFactory factory = new CourseOperationFactory();
+
     /**
      * Creates new form GradePanel
      */
     public GradePanel(UserInfoVO v,String ip,int port) {
-        this.userInfo = v;
-        this.ip = ip;
-        this.port = port;
-       
         initComponents();
-        coursePanel.setBorder(new MyTitledBorder("授课列表").getTitledBorder());
-        stuPanel.setBorder(new MyTitledBorder("学生列表").getTitledBorder());
-        
-        courseBL = factory.createCourseBL();
-         String[] s=courseBL.getAllTerms();
-        for(String str:s){
-            listModel.addElement(str);
-        }
-        termList.setModel(listModel);
-       
+        /*GUI-主panel*/
+        setOpaque(false);
+        navPanel.setOpaque(false);
+        /*GUI-导航*/
+        backtoP = new ImageIcon("src/Picture/backto.gif");
+        homeP = new ImageIcon("src/Picture/home.gif");
+        closeP = new ImageIcon("src/Picture/exit.gif");
+        backButton = new JButton(backtoP);//返回按钮
+        backButton.addMouseListener(new BackListener());
+        navPanel.add(backButton,0,0);
+        backButton.setBounds(718,10,backtoP.getIconWidth(),backtoP.getIconHeight());
+        backButton.setContentAreaFilled(false);
+        homeButton = new JButton(homeP);//主页按钮
+        homeButton.addMouseListener(new HomeListener());
+        navPanel.add(homeButton,0,0);
+        homeButton.setBounds(826,9,homeP.getIconWidth(),homeP.getIconHeight());
+        homeButton.setContentAreaFilled(false);
+        closeButton = new JButton(closeP);//退出按钮
+        closeButton.addMouseListener(new CloseListener());
+        navPanel.add(closeButton,0,0);
+        closeButton.setBounds(930,7,closeP.getIconWidth(),closeP.getIconHeight());
+        closeButton.setContentAreaFilled(false);
     }
 
+    /*事件-back*/
+    class BackListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            TeaMain.card.show(TeaMain.contain,"mainP");
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            backButton.setContentAreaFilled(true);
+            backButton.setOpaque(false);
+            backButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            backButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-home*/
+    class HomeListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            TeaMain.card.show(TeaMain.contain,"mainP");
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            homeButton.setContentAreaFilled(true);
+            homeButton.setOpaque(false);
+            homeButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            homeButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-close*/
+    class CloseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            closeButton.setContentAreaFilled(true);
+            closeButton.setOpaque(false);
+            closeButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            closeButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    public void update() {//组件清空
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,423 +148,42 @@ boolean isEdit =false;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        coursePanel = new javax.swing.JPanel();
-        idLabel = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        courseTable = new javax.swing.JTable();
-        idTextField = new javax.swing.JTextField();
-        nameTextField = new javax.swing.JTextField();
-        stuPanel = new javax.swing.JPanel();
-        stuIdLabel = new javax.swing.JLabel();
-        stuNameLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        stuTable = new javax.swing.JTable();
-        stuIdTextField = new javax.swing.JTextField();
-        stuNameTextField = new javax.swing.JTextField();
-        gradesButton = new javax.swing.JButton();
-        gradeButton = new javax.swing.JButton();
-        sureButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        termList = new javax.swing.JList();
+        navPanel = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(0, 0, 0));
+        navPanel.setBackground(new java.awt.Color(51, 255, 102));
 
-        coursePanel.setBackground(new java.awt.Color(0, 0, 0));
-        coursePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "授课列表", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
-
-        idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idLabel.setForeground(new java.awt.Color(240, 240, 240));
-        idLabel.setText("课程号");
-
-        nameLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameLabel.setForeground(new java.awt.Color(240, 240, 240));
-        nameLabel.setText("课程名");
-
-        courseTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        courseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent e) {
-                int s[] = courseTable.getSelectedRows();
-                if(s.length<1)
-                return;
-                if(s[0]>=0){
-                    TableValueChanged(s[0]);
-
-                }
-            }
-        });
-        courseTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "课程号", "课程名", "学分"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(courseTable);
-
-        idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        idTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextFieldActionPerformed(evt);
-            }
-        });
-
-        nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        nameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        nameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextFieldActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout coursePanelLayout = new javax.swing.GroupLayout(coursePanel);
-        coursePanel.setLayout(coursePanelLayout);
-        coursePanelLayout.setHorizontalGroup(
-            coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(coursePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(coursePanelLayout.createSequentialGroup()
-                        .addComponent(idLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(nameLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
-                .addContainerGap())
+        javax.swing.GroupLayout navPanelLayout = new javax.swing.GroupLayout(navPanel);
+        navPanel.setLayout(navPanelLayout);
+        navPanelLayout.setHorizontalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1014, Short.MAX_VALUE)
         );
-        coursePanelLayout.setVerticalGroup(
-            coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(coursePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idLabel)
-                    .addComponent(nameLabel)
-                    .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+        navPanelLayout.setVerticalGroup(
+            navPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 51, Short.MAX_VALUE)
         );
-
-        stuPanel.setBackground(new java.awt.Color(0, 0, 0));
-        stuPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "学生列表", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
-
-        stuIdLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        stuIdLabel.setForeground(new java.awt.Color(240, 240, 240));
-        stuIdLabel.setText("学号");
-
-        stuNameLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        stuNameLabel.setForeground(new java.awt.Color(240, 240, 240));
-        stuNameLabel.setText("姓名");
-
-        stuTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        stuTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "院系", "学号", "姓名", "成绩"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(stuTable);
-
-        stuIdTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        stuIdTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        stuNameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        stuNameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        javax.swing.GroupLayout stuPanelLayout = new javax.swing.GroupLayout(stuPanel);
-        stuPanel.setLayout(stuPanelLayout);
-        stuPanelLayout.setHorizontalGroup(
-            stuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(stuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(stuPanelLayout.createSequentialGroup()
-                        .addComponent(stuIdLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stuIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(stuNameLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stuNameTextField))
-                    .addGroup(stuPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        stuPanelLayout.setVerticalGroup(
-            stuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(stuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stuIdLabel)
-                    .addComponent(stuNameLabel)
-                    .addComponent(stuIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stuNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        gradesButton.setBackground(new java.awt.Color(0, 0, 0));
-        gradesButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradesButton.setForeground(new java.awt.Color(204, 204, 204));
-        gradesButton.setText("批量录入成绩");
-        gradesButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        gradesButton.setEnabled(false);
-
-        gradeButton.setBackground(new java.awt.Color(0, 0, 0));
-        gradeButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        gradeButton.setForeground(new java.awt.Color(204, 204, 204));
-        gradeButton.setText("修改成绩");
-        gradeButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        gradeButton.setEnabled(false);
-        gradeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gradeButtonActionPerformed(evt);
-            }
-        });
-
-        sureButton.setBackground(new java.awt.Color(0, 0, 0));
-        sureButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        sureButton.setForeground(new java.awt.Color(204, 204, 204));
-        sureButton.setText("确认");
-        sureButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        sureButton.setEnabled(false);
-
-        cancelButton.setBackground(new java.awt.Color(0, 0, 0));
-        cancelButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        cancelButton.setForeground(new java.awt.Color(204, 204, 204));
-        cancelButton.setText("取消");
-        cancelButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        cancelButton.setEnabled(false);
-
-        termList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        termList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                termListValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(termList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(coursePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(stuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(gradesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(gradeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(sureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
-                .addContainerGap(28, Short.MAX_VALUE))
+            .addComponent(navPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 12, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(gradesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(stuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(navPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 365, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void gradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_gradeButtonActionPerformed
-
-    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
-        // TODO add your handling code here:
-        nameTextField.setText("");
-         vos = courseBL.findCourseID(idTextField.getText());
-        String[][] content = new String[vos.size()][3];
-        for (int i = 0; i < vos.size(); i++) {
-
-            //初始化table
-
-            content[i][0] = vos.get(i).getCourseID();
-            content[i][1] = vos.get(i).getCourseName();
-            content[i][2] = vos.get(i).getCredit();
-        }
-        String[] head = {"课程号","课程名","学分"};
-        DefaultTableModel model = new DefaultTableModel(content, head) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        courseTable.setModel(model);
-    }//GEN-LAST:event_idTextFieldActionPerformed
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        // TODO add your handling code here:
-         idTextField.setText("");
-         vos = courseBL.findCourseName(nameTextField.getText());
-        String[][] content = new String[vos.size()][3];
-        for (int i = 0; i < vos.size(); i++) {
-
-            //初始化table
-
-            content[i][0] = vos.get(i).getCourseID();
-            content[i][1] = vos.get(i).getCourseName();
-            content[i][2] = vos.get(i).getCredit();
-        }
-        String[] head = {"课程号","课程名","学分"};
-        DefaultTableModel model = new DefaultTableModel(content, head) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        courseTable.setModel(model);
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
-    private void termListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_termListValueChanged
-        // TODO add your handling code here:
-         String term=(String) termList.getSelectedValue();
-        if(term==null){
-            return;
-        }
-        if(term.equals((String)listModel.lastElement())){
-            isEdit = true;
-            gradesButton.setEnabled(true);
-            gradeButton.setEnabled(true);
-            sureButton.setEnabled(true);
-            cancelButton.setEnabled(true);
-        }
-        else{
-            isEdit = false;
-             gradesButton.setEnabled(false);
-            gradeButton.setEnabled(false);
-            sureButton.setEnabled(false);
-            cancelButton.setEnabled(false);
-            sureButton.setEnabled(false);
-        }
-        courseBL = factory.createCourseBL(term);
-       vos = courseBL.observeList("teaID", userInfo.getID());
-       updateTable();
-    }//GEN-LAST:event_termListValueChanged
-
-    public void TableValueChanged(int i){
-        
-    }
-    
-    public void updateTable(){
-        
-        String[][] content = new String[vos.size()][3];
-        for (int i = 0; i < vos.size(); i++) {
-
-            //初始化table
-
-            content[i][0] = vos.get(i).getCourseID();
-            content[i][1] = vos.get(i).getCourseName();
-            content[i][2] = vos.get(i).getCredit();
-        }
-        String[] head = {"课程号","课程名","学分"};
-        DefaultTableModel model = new DefaultTableModel(content, head) {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        courseTable.setModel(model);
-    }
-    
-    public void update(){
-         listModel.removeAllElements();
-        String[] s=courseBL.getAllTerms();
-        for(String str:s){
-            listModel.addElement(str);
-        }
-        termList.repaint();
-        
-        vos.clear();
-        updateTable();
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JPanel coursePanel;
-    private javax.swing.JTable courseTable;
-    private javax.swing.JButton gradeButton;
-    private javax.swing.JButton gradesButton;
-    private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField idTextField;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JLabel nameLabel;
-    private javax.swing.JTextField nameTextField;
-    private javax.swing.JLabel stuIdLabel;
-    private javax.swing.JTextField stuIdTextField;
-    private javax.swing.JLabel stuNameLabel;
-    private javax.swing.JTextField stuNameTextField;
-    private javax.swing.JPanel stuPanel;
-    private javax.swing.JTable stuTable;
-    private javax.swing.JButton sureButton;
-    private javax.swing.JList termList;
+    private javax.swing.JPanel navPanel;
     // End of variables declaration//GEN-END:variables
+    /*GUI-导航*/
+    private ImageIcon backtoP;
+    private ImageIcon homeP;
+    private ImageIcon closeP;
+    private JButton backButton;
+    private JButton homeButton;
+    private JButton closeButton;
 }

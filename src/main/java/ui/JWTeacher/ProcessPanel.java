@@ -2,67 +2,67 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui.Student;
+package ui.JWTeacher;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import ui.Library.ImageIconFactory;
+import ui.Library.LogoButton;
+import ui.Library.Navigation;
+import ui.Library.TextLabel;
 
 /**
  *
  * @author zili Chen
  */
-public class PerInfoPanel extends javax.swing.JPanel {
+public class ProcessPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form PerInfoPanel
+     * Creates new form ProcessPanel
      */
-    public PerInfoPanel() {
+    public ProcessPanel() {
         initComponents();
         /*GUI-主panel*/
         setOpaque(false);
         navPanel.setOpaque(false);
         /*GUI-导航*/
-        backtoP = new ImageIcon("src/Picture/backto.gif");
-        homeP = new ImageIcon("src/Picture/home.gif");
-        closeP = new ImageIcon("src/Picture/exit.gif");
-        backButton = new JButton(backtoP);//返回按钮
-        backButton.addMouseListener(new BackListener());
-        navPanel.add(backButton,0,0);
-        backButton.setBounds(718,10,backtoP.getIconWidth(),backtoP.getIconHeight());
-        backButton.setContentAreaFilled(false);
-        homeButton = new JButton(homeP);//主页按钮
-        homeButton.addMouseListener(new HomeListener());
-        navPanel.add(homeButton,0,0);
-        homeButton.setBounds(826,9,homeP.getIconWidth(),homeP.getIconHeight());
-        homeButton.setContentAreaFilled(false);
-        closeButton = new JButton(closeP);//退出按钮
-        closeButton.addMouseListener(new CloseListener());
-        navPanel.add(closeButton,0,0);
-        closeButton.setBounds(930,7,closeP.getIconWidth(),closeP.getIconHeight());
-        closeButton.setContentAreaFilled(false);
+        image = new ImageIconFactory();
+        navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
+        /*GUI-进程管理*/
+        timeButton = new LogoButton(80,100).getJModifyrButton();
+        timeLabel = new TextLabel(image.getPTimeIcon(),80,120).getLabel();
+        noticeButton = new LogoButton(200,100).getJTwoDocButton();
+        noticeLabel = new TextLabel(image.getPNoticeIcon(),200,120).getLabel();
+        timeButton.addMouseListener(new TimeListener());//时间安排按钮
+        add(timeButton);
+        add(timeLabel);
+        noticeButton.addMouseListener(new NoticeListener());//通知公告按钮
+        add(noticeButton);
+        add(noticeLabel);
     }
     
-    /*事件-back*/
-    class BackListener implements MouseListener {
+    /*事件-时间安排*/
+    class TimeListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            JWMain.card.show(JWMain.contain,"timeP");
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            backButton.setContentAreaFilled(true);
-            backButton.setOpaque(false);
-            backButton.setBackground(Color.black);
+            timeButton.setContentAreaFilled(true);
+            timeButton.setOpaque(false);
+            timeButton.setBackground(Color.black);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            backButton.setContentAreaFilled(false);
+            timeButton.setContentAreaFilled(false);
         }
 
         @Override
@@ -75,24 +75,24 @@ public class PerInfoPanel extends javax.swing.JPanel {
         
     }
     
-    /*事件-home*/
-    class HomeListener implements MouseListener {
+    /*事件-通知通告*/
+    class NoticeListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            StuMain.card.show(StuMain.contain,"mainP");
+            JWMain.card.show(JWMain.contain,"noticeP");
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-            homeButton.setContentAreaFilled(true);
-            homeButton.setOpaque(false);
-            homeButton.setBackground(Color.black);
+            noticeButton.setContentAreaFilled(true);
+            noticeButton.setOpaque(false);
+            noticeButton.setBackground(Color.black);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            homeButton.setContentAreaFilled(false);
+            noticeButton.setContentAreaFilled(false);
         }
 
         @Override
@@ -104,40 +104,11 @@ public class PerInfoPanel extends javax.swing.JPanel {
         }
         
     }
-    
-    /*事件-close*/
-    class CloseListener implements MouseListener {
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            closeButton.setContentAreaFilled(true);
-            closeButton.setOpaque(false);
-            closeButton.setBackground(Color.black);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            closeButton.setContentAreaFilled(false);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-        }
-        
-    }
-    
     public void update() {
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,10 +150,11 @@ public class PerInfoPanel extends javax.swing.JPanel {
     private javax.swing.JPanel navPanel;
     // End of variables declaration//GEN-END:variables
     /*GUI-导航*/
-    private ImageIcon backtoP;
-    private ImageIcon homeP;
-    private ImageIcon closeP;
-    private JButton backButton;
-    private JButton homeButton;
-    private JButton closeButton;
+    private ImageIconFactory image;
+    private Navigation navigation;
+    /*GUI-进程管理*/
+    private JButton timeButton;
+    private JButton noticeButton;
+    private JLabel timeLabel;
+    private JLabel noticeLabel;
 }
