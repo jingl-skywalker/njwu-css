@@ -130,6 +130,8 @@ public class PerInfoPanel extends javax.swing.JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            keyFrame = new KeyFrame();
+            keyFrame.setVisible(true);
         }
 
         @Override
@@ -215,5 +217,7 @@ public class PerInfoPanel extends javax.swing.JPanel {
     private JButton modifyButton;
     private JButton saveButton;
     private JButton keyButton;
+    /*逻辑*/
+    private KeyFrame keyFrame;
     
 }
