@@ -20,6 +20,8 @@ import javax.swing.ListModel;
 import ui.Library.ImageIconFactory;
 import ui.Library.LogoButton;
 import ui.Library.Navigation;
+import ui.Library.TextArea;
+import ui.Library.TextField;
 import ui.Library.TextLabel;
 
 /**
@@ -44,49 +46,47 @@ public class FramePanel extends javax.swing.JPanel {
         createButton = new LogoButton(30,90).getLDiaplusButton();
         publishButton = new LogoButton(30,190).getLShareButton();
         checkButton = new LogoButton(30,290).getLSearchButton();
-        createLabel = new TextLabel(image.getPCreateModelIcon(),30,140).getLabel();
-        publishLabel = new TextLabel(image.getPPublishModelIcon(),30,240).getLabel();
-        checkLabel = new TextLabel(image.getPCheckIcon(),30,640).getLabel();
-        //createButton.addMouseListener();//创建按钮
+        createLabel = new TextLabel("创建",45,140,50,30).getLabel();
+        publishLabel = new TextLabel("发布",45,235,50,30).getLabel();
+        checkLabel = new TextLabel("查看",45,332,50,30).getLabel();
+        createButton.addMouseListener(new CreateListener());//创建按钮
         add(createButton);
         add(createLabel);
-        //publishButton.addMouseListener();//发布按钮
+        publishButton.addMouseListener(new PublishListener());//发布按钮
         add(publishButton);
         add(publishLabel);
-        //checkButton.addMouseListener();//查看按钮
+        checkButton.addMouseListener(new CheckListener());//查看按钮
         add(checkButton);
         add(checkLabel);
         /*GUI-描述框架*/
         leftPanel.setOpaque(false);
-        creditLabel = new TextLabel(image.getPCreditIcon(),10,30).getLabel();
-        describeLabel = new TextLabel(image.getPDescribeIcon(),10,90).getLabel();
-        sureButton = new LogoButton(172,280).getLYesButton();
-        sureLabel = new TextLabel(image.getPSureIcon(),170,290).getLabel();
-        creditTextField = new JTextField();
-        describeTextArea = new JTextArea();
+        creditLabel = new TextLabel("总体学分",10,30,90,30).getLabel();
+        describeLabel = new TextLabel("框架描述",10,90,90,30).getLabel();
+        sureButton = new LogoButton(272,280).getLYesButton();
+        sureLabel = new TextLabel("确定",332,290,50,30).getLabel();
+        creditTextField = new TextField(90,30,280,30).getTextField();
+        describeTextArea = new TextArea(90,90,280,180).getTextArea();
         leftPanel.add(creditLabel);
         leftPanel.add(describeLabel);
         leftPanel.add(creditTextField);
         leftPanel.add(describeTextArea);
         leftPanel.add(sureButton);
         leftPanel.add(sureLabel);
-        creditTextField.setBounds(110,30,280,30);
-        creditTextField.setFont(font.getFont());
-        describeTextArea.setBounds(110,90,280,180);
-        describeTextArea.setFont(font.getFont());
-        //sureButton.addMouseListener();//确定按钮
+        sureButton.addMouseListener(new SureListener());//确定按钮
         /*GUI-创建模块*/
         rightPanel.setOpaque(false);
-        newMButton = new LogoButton(50,275).getLPlusButton();
-        cancelButton = new LogoButton(190,280).getLCancelButton();
-        newMLabel = new TextLabel(image.getPNewMIcon(),90,290).getLabel();
-        cancelLabel = new TextLabel(image.getPCancelIcon(),230,290).getLabel();
+        newMButton = new LogoButton(120,275).getLPlusButton();
+        cancelButton = new LogoButton(230,280).getLCancelButton();
+        newMLabel = new TextLabel("添加",180,290,50,30).getLabel();
+        cancelLabel = new TextLabel("取消",290,290,50,30).getLabel();
         moduleList = new JList();
         rightPanel.add(newMButton);
         rightPanel.add(cancelButton);
+        rightPanel.add(newMLabel);
+        rightPanel.add(cancelLabel);
         rightPanel.add(moduleList);
-        //newMButton.addMouseListener();//新建模块按钮
-        //cancelButton.addMouseListener();//取消按钮
+        newMButton.addMouseListener(new NewMListener());//新建模块按钮
+        cancelButton.addMouseListener(new CancelListener());//取消按钮
         moduleList.setBounds(20,32,300,235);
         moduleList.setFont(font.getFont());
         listModel = new DefaultListModel();
@@ -95,11 +95,143 @@ public class FramePanel extends javax.swing.JPanel {
         
     }
     
+    /*事件-创建框架*/
+    class CreateListener implements MouseListener {
+
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        public void mousePressed(MouseEvent e) {
+            createButton.setContentAreaFilled(true);
+            createButton.setOpaque(false);
+            createButton.setBackground(Color.black);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            createButton.setContentAreaFilled(false);
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-发布框架*/
+    class PublishListener implements MouseListener {
+
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        public void mousePressed(MouseEvent e) {
+            publishButton.setContentAreaFilled(true);
+            publishButton.setOpaque(false);
+            publishButton.setBackground(Color.black);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            publishButton.setContentAreaFilled(false);
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-查看框架*/
+    class CheckListener implements MouseListener {
+
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        public void mousePressed(MouseEvent e) {
+            checkButton.setContentAreaFilled(true);
+            checkButton.setOpaque(false);
+            checkButton.setBackground(Color.black);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            checkButton.setContentAreaFilled(false);
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-sure按钮*/
+    class SureListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            sureButton.setContentAreaFilled(true);
+            sureButton.setOpaque(false);
+            sureButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            sureButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-cancel按钮*/
+    class CancelListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            cancelButton.setContentAreaFilled(true);
+            cancelButton.setOpaque(false);
+            cancelButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            cancelButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
     /*事件-新建模块*/
     class NewMListener implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
-            
+            newMFrame = new NewMFrame();
+            newMFrame.setVisible(true);
         }
 
         public void mousePressed(MouseEvent e) {
@@ -228,4 +360,5 @@ public class FramePanel extends javax.swing.JPanel {
     private JLabel cancelLabel;
     /*逻辑*/
     private DefaultListModel listModel;
+    private NewMFrame newMFrame;
 }

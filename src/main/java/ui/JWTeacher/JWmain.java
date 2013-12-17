@@ -32,6 +32,7 @@ public class JWMain extends javax.swing.JFrame {
      */
     public JWMain(UserInfoVO v,String ip,int port) {
         initComponents();
+        //com.sun.awt.AWTUtilities.setWindowOpaque(this,false);
          /*逻辑-任天*/
         UserInfoFactory factory = new UserInfoFactory();
         userBL = factory.getUserBLService(ip, port);
@@ -81,7 +82,7 @@ public class JWMain extends javax.swing.JFrame {
         frameButton.addMouseListener(new FrameListener());//教学框架
         menuPanel.add(frameButton);
         menuPanel.add(frameLabel);
-       planButton.addMouseListener(new PlanListener());//教学计划
+        planButton.addMouseListener(new PlanListener());//教学计划
         menuPanel.add(planButton);
         menuPanel.add(planLabel);
         staticsButton.addMouseListener(new StaticsListener());//统计信息
@@ -115,7 +116,7 @@ public class JWMain extends javax.swing.JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            //System.exit(1);
+            System.exit(1);
         }
 
         @Override
@@ -310,6 +311,7 @@ public class JWMain extends javax.swing.JFrame {
         notePanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         navPanel.setBackground(new java.awt.Color(51, 255, 102));
 
@@ -401,6 +403,7 @@ public class JWMain extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

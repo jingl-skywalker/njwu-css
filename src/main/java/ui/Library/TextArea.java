@@ -4,6 +4,7 @@
  */
 package ui.Library;
 
+import java.awt.Color;
 import javax.swing.JTextArea;
 
 /**
@@ -19,6 +20,7 @@ public class TextArea {/*输入文本段落*/
         textArea = new JTextArea();
         font = new MyFont();
         textArea.setBounds(x,y,w,h);
+        textArea.setBackground(new Color(102,102,205));
         textArea.setFont(font.getFont());
     }
     

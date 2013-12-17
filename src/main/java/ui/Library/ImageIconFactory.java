@@ -335,4 +335,8 @@ public class ImageIconFactory {/*图标集合*/
         return new ImageIcon(p+"Bnavigation.gif");
     }
     
+    public ImageIcon getBmodelbackIcon() {
+        return new ImageIcon(p+"Bmodelback.jpg");
+    }
+    
 }

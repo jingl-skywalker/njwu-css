@@ -4,13 +4,18 @@
  */
 package ui.JWTeacher;
 
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import ui.Library.ComboBox;
+import ui.Library.ImageIconFactory;
 import ui.Library.LogoButton;
 import ui.Library.TextArea;
 import ui.Library.TextField;
@@ -27,7 +32,14 @@ public class NewMFrame extends javax.swing.JFrame {
      */
     public NewMFrame() {
         initComponents();
-        /*GUI*/
+        /*GUI-frame背景*/
+        image = new ImageIconFactory();
+        backLabel = new JLabel(image.getBmodelbackIcon());
+        backLabel.setBounds(0,0,543,272);
+        getLayeredPane().add(backLabel,new Integer(Integer.MIN_VALUE));
+        backPanel = (JPanel)getContentPane();
+        backPanel.setOpaque(false);//设置透明
+        /*GUI-组件*/
         ArrayList<String> up = new ArrayList<String>();
         String s = "0";
         for(int i=1;i<15;i++) {
@@ -53,7 +65,9 @@ public class NewMFrame extends javax.swing.JFrame {
         nameTextField = new TextField(80,10,196,30).getTextField();
         describeTextArea = new TextArea(80,60,440,140).getTextArea();
         sureButton = new LogoButton(400,210).getLYesButton();
+        sureButton.addMouseListener(new SureListener());
         cancelButton = new LogoButton(460,210).getLCancelButton();
+        cancelButton.addMouseListener(new CancelListener());
         upComboBox = new ComboBox(up,70,220,50,30).getComboBox();
         downComboBox = new ComboBox(down,200,220,50,30).getComboBox();
         add(nameLabel);
@@ -67,7 +81,66 @@ public class NewMFrame extends javax.swing.JFrame {
         add(upComboBox);
         add(downComboBox);
     }
+    
+    /*事件-sure按钮*/
+    class SureListener implements MouseListener {
 
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            dispose();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            sureButton.setContentAreaFilled(true);
+            sureButton.setOpaque(false);
+            sureButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            sureButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-cancel按钮*/
+    class CancelListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            dispose();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            cancelButton.setContentAreaFilled(true);
+            cancelButton.setOpaque(false);
+            cancelButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            cancelButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +151,8 @@ public class NewMFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,6 +166,7 @@ public class NewMFrame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -129,7 +205,11 @@ public class NewMFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-    /*GUI*/
+    /*GUI-frame背景*/
+    private ImageIconFactory image;
+    private JLabel backLabel;//背景label
+    private JPanel backPanel;//frame最上层面板
+    /*GUI-组件*/
     private JLabel nameLabel;
     private JLabel describeLabel;
     private JLabel upLabel;
