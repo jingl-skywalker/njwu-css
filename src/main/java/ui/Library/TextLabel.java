@@ -6,6 +6,8 @@ package ui.Library;
 
 import java.awt.Color;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -33,6 +35,32 @@ public class TextLabel {/*带字的Label:设置大小*/
     
     public JLabel getLabel() {
         return label;
+    }
+    
+    class LabelListener implements MouseListener {//将就
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            label.setForeground(new Color(204,0,102));
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            label.setForeground(Color.white);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
     }
     
 }

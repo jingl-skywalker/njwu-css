@@ -22,6 +22,7 @@ public class PlanController implements PlanBLService {
     @Override
     public void add(PlanVO pvo) {
     	plan = new Plan(pvo);
+             planList = new PlanList();
     	planList.addPlan(plan);
     }
 
