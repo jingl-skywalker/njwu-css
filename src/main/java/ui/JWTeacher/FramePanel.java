@@ -8,6 +8,7 @@ import ui.Library.MyFont;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import javax.swing.ListModel;
 import ui.Library.ImageIconFactory;
 import ui.Library.LogoButton;
 import ui.Library.Navigation;
+import ui.Library.SList;
 import ui.Library.TextArea;
 import ui.Library.TextField;
 import ui.Library.TextLabel;
@@ -79,7 +81,9 @@ public class FramePanel extends javax.swing.JPanel {
         cancelButton = new LogoButton(230,280).getLCancelButton();
         newMLabel = new TextLabel("添加",180,290,50,30).getLabel();
         cancelLabel = new TextLabel("取消",290,290,50,30).getLabel();
-        moduleList = new JList();
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("模块一");
+        moduleList = new SList(list,20,32,300,235).getList();
         rightPanel.add(newMButton);
         rightPanel.add(cancelButton);
         rightPanel.add(newMLabel);
@@ -87,12 +91,6 @@ public class FramePanel extends javax.swing.JPanel {
         rightPanel.add(moduleList);
         newMButton.addMouseListener(new NewMListener());//新建模块按钮
         cancelButton.addMouseListener(new CancelListener());//取消按钮
-        moduleList.setBounds(20,32,300,235);
-        moduleList.setFont(font.getFont());
-        listModel = new DefaultListModel();
-        listModel.addElement("模块1");
-        moduleList.setModel(listModel);
-        
     }
     
     /*事件-创建框架*/

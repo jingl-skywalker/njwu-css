@@ -17,14 +17,16 @@ public class SList {/*包装JList*/
     
     private JList list;
     private MyFont font;
+    private MyColor color;
     private DefaultListModel model;
     
     public SList(ArrayList<String> content,int x,int y,int w,int h) {
         list = new JList();
         font = new MyFont();
+        color = new MyColor();
         model = new DefaultListModel();
         list.setBounds(x,y,w,h);
-        list.setBackground(new Color(102,102,205));
+        list.setBackground(color.getColor());
         list.setFont(font.getFont());
         for(String s:content) {
             model.addElement(s);

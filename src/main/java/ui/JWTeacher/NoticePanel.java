@@ -10,6 +10,7 @@ import ui.Library.TextLabel;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import ui.Library.ImageIconFactory;
 import ui.Library.Navigation;
 import ui.Library.RadioButton;
+import ui.Library.SList;
 import ui.Library.TextArea;
 import ui.Library.TextField;
 
@@ -48,23 +50,22 @@ public class NoticePanel extends javax.swing.JPanel {
         font = new MyFont();
         addButton = new LogoButton(70,300).getLPlusButton();
         addLabel = new JLabel();//?
-        noticeList = new JList();//通知列表
-        listModel = new DefaultListModel();
-        listModel.addElement("不要迟到");
-        noticeList.setModel(listModel);
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("不要迟到");
+        noticeList = new SList(list,10,10,180,280).getList();//通知列表
         leftPanel.add(noticeList,0,0);
-        noticeList.setBounds(10,10,180,280);
-        noticeList.setFont(font.getFont());
-        //addButton.addMouseListener();//添加通知按钮
+        addButton.addMouseListener(new AddListener());//添加通知按钮
         leftPanel.add(addButton);
         leftPanel.add(addLabel);
         /*GUI-右侧面板*/
         rightPanel.setOpaque(false);
-        titleLabel = new JLabel();//?
-        contentLabel = new JLabel();//?
-        objectLabel = new JLabel();//?
+        titleLabel = new TextLabel("主题",40,10,50,30).getLabel();
+        contentLabel = new TextLabel("内容",40,60,50,30).getLabel();
+        objectLabel = new TextLabel("通知对象",40,268,90,30).getLabel();
         sureButton = new LogoButton(170,305).getLYesButton();
         cancelButton = new LogoButton(300,305).getLCancelButton();
+        sureButton.addMouseListener(new SureListener());
+        cancelButton.addMouseListener(new CancelListener());
         rightPanel.add(titleLabel);
         rightPanel.add(contentLabel);
         rightPanel.add(objectLabel);
@@ -89,9 +90,96 @@ public class NoticePanel extends javax.swing.JPanel {
         rightPanel.add(teaButton);
         rightPanel.add(stuButton);
         rightPanel.add(allButton);
-        
     }
 
+    /*事件-添加新信息*/
+    class AddListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            addButton.setContentAreaFilled(true);
+            addButton.setOpaque(false);
+            addButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            addButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-sure按钮*/
+    class SureListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            sureButton.setContentAreaFilled(true);
+            sureButton.setOpaque(false);
+            sureButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            sureButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-cancel按钮*/
+    class CancelListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            cancelButton.setContentAreaFilled(true);
+            cancelButton.setOpaque(false);
+            cancelButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            cancelButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
     public void update() {
         
     }

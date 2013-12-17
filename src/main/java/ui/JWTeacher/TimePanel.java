@@ -122,6 +122,8 @@ public class TimePanel extends javax.swing.JPanel {
         day2Label = new TextLabel("日",xl3,200,100,90).getLabel();
         sureButton = new LogoButton(600,100).getLYesButton();
         cancelButton = new LogoButton(600,200).getLCancelButton();
+        sureButton.addMouseListener(new SureListener());
+        cancelButton.addMouseListener(new CancelListener());
         yearComboBox = new ComboBox(year,x1,y1,w1,30).getComboBox();
         monComboBox = new ComboBox(mon,x2,y1,w1,30).getComboBox();
         dayComboBox = new ComboBox(day,x3,y1,w1,30).getComboBox();
@@ -152,6 +154,64 @@ public class TimePanel extends javax.swing.JPanel {
         rightPanel.add(day2ComboBox);
         rightPanel.add(hour2ComboBox);
         rightPanel.add(min2ComboBox);
+    }
+    
+    /*事件-sure按钮*/
+    class SureListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            sureButton.setContentAreaFilled(true);
+            sureButton.setOpaque(false);
+            sureButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            sureButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-cancel按钮*/
+    class CancelListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            cancelButton.setContentAreaFilled(true);
+            cancelButton.setOpaque(false);
+            cancelButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            cancelButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
         
     }
 
