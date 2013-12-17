@@ -12,6 +12,9 @@ import businesslogicservice.coursearrangementblservice.Priority;
  */
 public class PriorityImplment1 implements Priority {
 
+    /**
+     * indicate the factor that will influence the priority
+     */
     String stuNumString;
     double priority;
     int lowerCredit;
@@ -30,7 +33,7 @@ public class PriorityImplment1 implements Priority {
     private double calculatorPriority() {
         // TODO Auto-generated method stub
         if (grade == 4 && lowerCredit > hasGottenGeneralCredit) {
-            priority = 1000000;
+            priority = 1000000;//to make sure that  the graduates has the oppotunity to get their scholar
         } else {
             priority = 10 * (lowerCredit - hasGottenGeneralCredit) * (grade);
         }

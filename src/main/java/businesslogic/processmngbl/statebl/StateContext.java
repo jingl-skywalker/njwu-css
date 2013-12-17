@@ -16,7 +16,8 @@ import java.util.logging.Logger;
 import po.processmngpo.StatePO;
 
 /**
- *使用单件确保状态一致性
+ * 使用单件确保状态一致性
+ *
  * @author Administrator
  */
 public class StateContext {
@@ -41,7 +42,7 @@ public class StateContext {
         try {
             dataFactory = (DataFactory) Naming.lookup("dataFactory");
             stateDataService = dataFactory.getStateData();
-            spo=stateDataService.getCurrentState();
+            spo = stateDataService.getCurrentState();
         } catch (RemoteException ex) {
             Logger.getLogger(StateContext.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NotBoundException ex) {
@@ -57,8 +58,20 @@ public class StateContext {
         rss = new ReselectingState(this);
         sls = new SelectingState(this);
         sts = new StartState(this);
-        StateList stateList=new StateList(true);
+        StateList stateList = new StateList(true);
         state = stateList.getState(spo.getStateNum());
+    }
+
+    private StateContext(int stateNum) {
+        state = new StartState();
+        cls = new CourseLaunchingState();
+        ds = new DroppingState();
+        fls = new FrameLaunchingState();
+        gis = new GradeInState();
+        pus = new PlanUploadingState();
+        rss = new ReselectingState();
+        sls = new SelectingState();
+        sts = new StartState();
     }
 
     public static StateContext getStateContext() { //双重加锁保证线程安全
@@ -68,6 +81,13 @@ public class StateContext {
                     uniqueContext = new StateContext();
                 }
             }
+        }
+        return uniqueContext;
+    }
+
+    public static StateContext getStateContext(boolean isTest) {
+        if (uniqueContext == null) {
+            uniqueContext = new StateContext(100);
         }
         return uniqueContext;
     }

@@ -24,10 +24,12 @@ import vo.uservo.UserInfoVO;
  * @author 天
  */
 public class TeacherStaticBL {
+
     Registry registry;
     ArrayList<UserInfoVO> teaVo = new ArrayList<UserInfoVO>(1000);
     UserInfoDataService userInfo;
-    public TeacherStaticBL(String ip,int port) {
+
+    public TeacherStaticBL(String ip, int port) {
         try {
             registry = LocateRegistry.getRegistry(ip, port);
             UserInfoDataFactory factory = (UserInfoDataFactory) registry.lookup("UserInfoFactory");
@@ -40,30 +42,30 @@ public class TeacherStaticBL {
             Logger.getLogger(UserInfoBL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * 常看老师的统计信息
+     *
      * @param ins 查看的院系
      * @return 统计的信息
      */
-    public TeacherStatic showTea(String ins){
+    public TeacherStatic showTea(String ins) {
         try {
             ArrayList<UserInfoPO> pos = userInfo.getTea(ins);
             Calendar ca = Calendar.getInstance();
             int currentYear = ca.get(Calendar.YEAR);
             TeacherStatic teaStatic = new TeacherStatic();
             for (UserInfoPO p : pos) {
-                int birthYear = Integer.parseInt(p.getGrade());
+              int birthYear = Integer.parseInt(p.getYearIn());
+     //          int birthYear=Integer.parseInt(p.getGrade());
                 int old = currentYear - birthYear;
-                if(old<=40){
+                if (old <= 40) {
                     teaStatic.addYoung();
-                   
-                 }
-                else if(old<=60){
+
+                } else if (old <= 60) {
                     teaStatic.addYoungOld();
-            
-                }
-                else{
+
+                } else {
                     teaStatic.addOld();
                 }
             }

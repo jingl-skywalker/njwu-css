@@ -22,7 +22,7 @@ import vo.processmngvo.NoticeVO;
 
 /**
  *
- * @author Administrator
+ * @author ljing12
  */
 public class NoticeController implements NoticeBLService {
 
@@ -34,15 +34,22 @@ public class NoticeController implements NoticeBLService {
     public NoticeController() {
         initNoticeList();
         System.out.println("notice controller constructor");
-        System.out.println("nlist is null:"+nList==null);
+        System.out.println("nlist is null:" + nList == null);
         nList.printNoticeList();
+    }
+
+    /**
+     * just for test
+     */
+    public void setNoticeData(NoticeDataService noticeDataService) {
+        this.noticeDataService = noticeDataService;
     }
 
     private void initNoticeList() {
         try {
             dataFactory = (DataFactory) Naming.lookup("dataFactory");
-            noticeDataService=dataFactory.getNoticeData();
-            System.out.println("in notice controller"+noticeDataService==null);
+            noticeDataService = dataFactory.getNoticeData();
+            System.out.println("in notice controller" + noticeDataService == null);
             npos = noticeDataService.find();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -52,7 +59,7 @@ public class NoticeController implements NoticeBLService {
             Logger.getLogger(NoticeController.class.getName()).log(Level.SEVERE, null, ex);
         }
         nList = new NoticeList(npos);
-        
+
     }
 
     /**
@@ -95,12 +102,19 @@ public class NoticeController implements NoticeBLService {
         return nList;
     }
 
+    public void setNoticeList(NoticeList nl) {
+        this.nList = nl;
+    }
+
     @Override
     public NoticeList getNoticeList(ROLE role) {
         NoticeList roleList = new NoticeList();
         Iterator<Notice> iterator = nList.getIterator();
+        Notice notice;
         while (iterator.hasNext()) {
-            if (iterator.next().getRole().equals(role)) {
+            //     if ((notice=(iterator.next()).getRole().equals(role)) {
+            notice = iterator.next();
+            if (notice.getRole().equals(role)) {
                 roleList.add(iterator.next());
             }
         }

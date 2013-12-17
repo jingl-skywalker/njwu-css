@@ -27,6 +27,7 @@ public class StateOperation {
         this.context = context;
         initStateTime();
     }
+
     private void  initStateTime()
     {
         StateVO svo=sbls.lookStateInfo(this.context.getCurrentStateNum());

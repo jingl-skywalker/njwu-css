@@ -22,7 +22,7 @@ public class CourseStaticController implements CourseStaticBLService{
     
     @Override
     public CourseVO find(String id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return  null;
     }
 
     @Override

@@ -25,6 +25,9 @@ public class FrameData extends UnicastRemoteObject implements FrameDataService {
         utility.clear();
         utility.append(fpo.toStoreString());
     }
+    public void setFileUtility(FileUtility fileUtility){
+        this.utility=fileUtility;
+    }
 
     @Override
     public void update(FramePO fpo) throws RemoteException {

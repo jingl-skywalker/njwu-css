@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 import ui.Student.STUmain;
 import ui.JWTeacher.JWmainFrame;
+import ui.Library.Dialog1;
 import ui.Library.PictureGetter;
 import ui.Teacher.TEAmain;
 import ui.YJWTeacher.YJWmain;
@@ -755,6 +756,7 @@ InformPanel informPanel;
 
     private void insLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel2MouseClicked
         // TODO add your handling code here:
+<<<<<<< HEAD
          insLabel1MouseClicked(evt);
     }//GEN-LAST:event_insLabel2MouseClicked
 
@@ -767,6 +769,15 @@ InformPanel informPanel;
         // TODO add your handling code here:
         insLabel1MouseExited(evt);
     }//GEN-LAST:event_insLabel2MouseExited
+=======
+        ImageIcon icon = new ImageIcon(PictureGetter.getInfo1Path());
+        JOptionPane.showMessageDialog(null, "谢谢使用 O(∩_∩)O~", "Thanks", JOptionPane.INFORMATION_MESSAGE, icon);
+        System.exit(0);
+        //Dialog1 dialog1=new Dialog1();
+        // dialog1.setText("谢谢使用");
+        //dialog1.setVisible(true);
+    }//GEN-LAST:event_jLabel5MouseClicked
+>>>>>>> 08f35c90c67de8a6ee8ad34b5943ed44729a30fd
     public static void main(String[] arg) {
         JFrame loginFrame = new JFrame("css-login");
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -796,7 +807,7 @@ InformPanel informPanel;
 
         System.out.println("________test notice receiver____________________");
         NoticeReceiverFactory noticeReceiverFactory = new NoticeReceiverFactory();
-        NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.ALL);
+        NoticeReceiverService nrs = noticeReceiverFactory.createReceiver(ROLE.STUDENT);
         NoticeList nl = nrs.getNoticeList();
         nl.printNoticeList();
         System.out.println("test_________notice ___receiver_end");

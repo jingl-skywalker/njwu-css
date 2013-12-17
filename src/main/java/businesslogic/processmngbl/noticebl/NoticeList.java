@@ -47,19 +47,20 @@ public class NoticeList {
     }
 
     public Notice getX(int index) {
-        return list.get(index -1);
+        return list.get(index - 1);
     }
 
     public boolean isEmpty() {
         return list.isEmpty();
     }
-    public void printNoticeList(){
-        if(this.list.size()==0){
+
+    public void printNoticeList() {
+        if (this.list.size() == 0) {
             System.out.println("null");
-            return ;
+            return;
         }
-        for(Notice n:this.list){
-            System.out.println(n.getContent()+n.getName()+n.getNum()+n.getTime()+n.getRole());
+        for (Notice n : this.list) {
+            System.out.println(n.getContent() + n.getName() + n.getNum() + n.getTime() + n.getRole());
         }
     }
 }

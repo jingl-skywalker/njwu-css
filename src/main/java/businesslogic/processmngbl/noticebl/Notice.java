@@ -12,12 +12,14 @@ import vo.processmngvo.NoticeVO;
 
 /**
  *
- * @author Administrator
+ * @author ljing12
  */
 public class Notice {
-
-    private ROLE role;
-    private static int index = 0;
+    /**
+     * mainly hold the infomation of a notice
+     */
+    private ROLE role; //the target to be sent
+    private static int index = 0; 
     private String content;
     private Date time;
     private int num;
