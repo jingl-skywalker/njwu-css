@@ -10,7 +10,11 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+import ui.Library.LogoButton;
 import ui.Library.Navigation;
+import ui.Library.TextField;
+import ui.Library.TextLabel;
 
 /**
  *
@@ -28,6 +32,125 @@ public class PerInfoPanel extends javax.swing.JPanel {
         navPanel.setOpaque(false);
         /*GUI-导航*/
         navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
+        /*GUI-组件*/
+        int x1 = 150;//左
+        int x2 = x1+70;
+        int x3 = 550;//右
+        int x4 = x3+70;
+        int y1 = 100;
+        int y2 = y1+70;
+        int y3 = y2+70;
+        int w1 = 250;//textField宽度
+        idLabel = new TextLabel("ID",x1,y1,50,30).getLabel();
+        typeLabel = new TextLabel("身份",x1,y2,50,30).getLabel();
+        birthLabel = new TextLabel("出生日期",x1,y3,90,30).getLabel();
+        nameLabel = new TextLabel("姓名",x3,y1,50,30).getLabel();
+        sexLabel = new TextLabel("性别",x3,y2,50,30).getLabel();
+        identityLabel = new TextLabel("身份证号",x3,y3,90,30).getLabel();
+        idTextField = new TextField(x2,y1,w1,30).getTextField();
+        typeTextField = new TextField(x2,y2,w1,30).getTextField();
+        birthTextField = new TextField(x2,y3,w1,30).getTextField();
+        nameTextField = new TextField(x4,y1,w1,30).getTextField();
+        sexTextField = new TextField(x4,y2,w1,30).getTextField();
+        identityTextField = new TextField(x4,y3,w1,30).getTextField();
+        modifyButton = new LogoButton(380,360).getLPenMofityButton();
+        saveButton = new LogoButton(480,360).getLYesButton();
+        keyButton = new LogoButton(580,360).getLSetButton();
+        add(idLabel); add(nameLabel); add(typeLabel); add(sexLabel); add(birthLabel); add(identityLabel);
+        add(idTextField); add(nameTextField); add(typeTextField); add(sexTextField); add(birthTextField); add(identityTextField);
+        add(modifyButton); 
+        add(saveButton);
+        add(keyButton);
+        modifyButton.addMouseListener(new ModifyListener());
+        saveButton.addMouseListener(new SaveListener());
+        keyButton.addMouseListener(new KeyListener());
+        
+    }
+    
+    /*事件-编辑*/
+    class ModifyListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            modifyButton.setContentAreaFilled(true);
+            modifyButton.setOpaque(false);
+            modifyButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            modifyButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-保存*/
+    class SaveListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            saveButton.setContentAreaFilled(true);
+            saveButton.setOpaque(false);
+            saveButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            saveButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-修改密码*/
+    class KeyListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            keyButton.setContentAreaFilled(true);
+            keyButton.setOpaque(false);
+            keyButton.setBackground(Color.black);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            keyButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
         
     }
 
@@ -76,5 +199,21 @@ public class PerInfoPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     /*GUI-导航*/
     private Navigation navigation;
+    /*GUI-组件*/
+    private JLabel idLabel;
+    private JLabel nameLabel;
+    private JLabel typeLabel;
+    private JLabel sexLabel;
+    private JLabel birthLabel;
+    private JLabel identityLabel;
+    private JTextField idTextField;
+    private JTextField nameTextField;
+    private JTextField typeTextField;
+    private JTextField sexTextField;
+    private JTextField birthTextField;
+    private JTextField identityTextField;
+    private JButton modifyButton;
+    private JButton saveButton;
+    private JButton keyButton;
     
 }
