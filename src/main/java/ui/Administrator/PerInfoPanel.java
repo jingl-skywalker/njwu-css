@@ -382,6 +382,7 @@ UserInfoVO v;
             birthTextField.setEditable(false);
             identityTextField.setEditable(false);
             jButton2.setEnabled(false);
+            frame.updateName();
         }
         else{
             JOptionPane.showConfirmDialog(this, "修改失败", null, JOptionPane.OK_OPTION);
@@ -393,6 +394,18 @@ UserInfoVO v;
         frame.modifyKeyGUI();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    public void update(){
+                // TODO add your handling code here:
+        nameTextField.setEditable(false);
+        sexTextField.setEditable(false);
+        birthTextField.setEditable(false);
+        identityTextField.setEditable(false);
+        jButton2.setEnabled(false);
+
+    }
+      public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;

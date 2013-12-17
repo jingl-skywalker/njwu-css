@@ -360,6 +360,16 @@ public class AddUserPanel extends javax.swing.JPanel {
         frame.mainGUI();
     }//GEN-LAST:event_currentLogo3MouseClicked
 
+     /**
+     * 跟新此界面
+     */
+    public void update(){
+        filePathTextField1.setText("");
+        userListTable.removeAll();
+    }
+    public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowLogo2;
     private javax.swing.JLabel arrowLogo3;

@@ -12,7 +12,8 @@ import businesslogic.staticbl.CourseStaticController;
  */
 public class CourseStaticBLServiceFactory {
 
-    public CourseStaticBLService getCourseStaticBLService(String ip, int port) {
-        return new CourseStaticController(ip, port);
+    public CourseStaticBLService getCourseStaticBLService(String ip,int port) {
+        return new CourseStaticController(ip,port);
     }
+    
 }

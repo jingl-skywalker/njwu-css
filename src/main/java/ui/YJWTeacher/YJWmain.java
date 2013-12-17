@@ -21,22 +21,35 @@ import vo.uservo.UserInfoVO;
  * @author zili chen
  */
 public class YJWmain extends javax.swing.JFrame {
- 
+
+ String ip;
+ int port;
     /**
      * Creates new form YJWmain
      */
-    public YJWmain() {
+    public YJWmain(UserInfoVO userInfoVO,String ip,int port) {
+        this.userInfoVO = userInfoVO;
+        this.ip = ip;
+        this.port = port;
         initComponents();
-        planPanel = new PlanPanel();
-        coursePanel = new CoursePanel();
-        perInfoPanel = new PerInfoPanel();
+        nameLogo.setText(userInfoVO.getName());
+         courseListPanel = new CourseListPanel(userInfoVO,ip,port);
+        planPanel = new PlanPanel(userInfoVO,ip,port);
+         coursePanel = new CoursePanel(userInfoVO,ip,port);
+        perInfoPanel = new PerInfoPanel(userInfoVO,this,ip,port);
+        modifyKeyPanel = new ModifyKeyPanel(userInfoVO,ip,port);
+        addCoursePanel = new AddCoursePanel(userInfoVO,ip,port,this);
         cardLayout = new CardLayout();//-------------------------卡片面板
         containPanel.setLayout(cardLayout);
         containPanel.add(yjwMainPanel,"yjwMainP");
         containPanel.add(planPanel,"planP");
         containPanel.add(coursePanel,"courseP");
         containPanel.add(perInfoPanel,"perInfoP");
+        containPanel.add(modifyKeyPanel, "modifyKeyP");
+        containPanel.add(courseListPanel,"courseListP");
+        containPanel.add(addCoursePanel,"addP");
         cardLayout.show(containPanel,"yjwMainP");
+        
         navigation = new Navigation();//----------------------------导航栏标签
         titelPanel2.add(navigation.getArrow(),0,0);
         titelPanel2.add(navigation.getNow(),0,0);
@@ -78,9 +91,14 @@ public class YJWmain extends javax.swing.JFrame {
         perInfoButton = new javax.swing.JButton();
         perInfoLabel = new javax.swing.JLabel();
         notePanel = new javax.swing.JPanel();
+        courseListButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setResizable(false);
         setUndecorated(true);
 
         backPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -294,6 +312,27 @@ public class YJWmain extends javax.swing.JFrame {
             .addGap(0, 173, Short.MAX_VALUE)
         );
 
+        courseListButton.setText("courseList");
+        courseListButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseListButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("微软雅黑", 0, 13)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("查看课程");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("开设新学期");
+
         javax.swing.GroupLayout yjwMainPanelLayout = new javax.swing.GroupLayout(yjwMainPanel);
         yjwMainPanel.setLayout(yjwMainPanelLayout);
         yjwMainPanelLayout.setHorizontalGroup(
@@ -317,27 +356,46 @@ public class YJWmain extends javax.swing.JFrame {
                             .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(yjwMainPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(perInfoLabel)))))
-                .addContainerGap(251, Short.MAX_VALUE))
+                                .addComponent(perInfoLabel)))
+                        .addGap(80, 80, 80)
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(courseListButton)
+                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2)))
+                        .addGap(57, 57, 57)
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3))
+                            .addComponent(jButton1))))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         yjwMainPanelLayout.setVerticalGroup(
             yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(yjwMainPanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(yjwMainPanelLayout.createSequentialGroup()
+                                .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(planLabel))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, yjwMainPanelLayout.createSequentialGroup()
+                                .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(courseLabel)))
                         .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                            .addComponent(planButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(planLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, yjwMainPanelLayout.createSequentialGroup()
-                            .addComponent(courseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(courseLabel)))
-                    .addGroup(yjwMainPanelLayout.createSequentialGroup()
-                        .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(perInfoLabel)))
+                            .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(perInfoLabel)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3))))
+                    .addGroup(yjwMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(courseListButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -373,7 +431,7 @@ public class YJWmain extends javax.swing.JFrame {
                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(titelPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(containPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         backPanelLayout.setVerticalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,11 +452,11 @@ public class YJWmain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 889, Short.MAX_VALUE)
+            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 570, Short.MAX_VALUE)
+            .addComponent(backPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
         );
 
         pack();
@@ -419,6 +477,7 @@ public class YJWmain extends javax.swing.JFrame {
         cardLayout.show(containPanel,"planP");
         navigation.setNowText("录入教学计划");
         navigation.setVisible(true);
+        planPanel.update();
         
     }//GEN-LAST:event_planButtonActionPerformed
 
@@ -432,6 +491,7 @@ public class YJWmain extends javax.swing.JFrame {
        cardLayout.show(containPanel,"courseP");
        navigation.setNowText("课程信息");
        navigation.setVisible(true);
+       coursePanel.update();
     }//GEN-LAST:event_courseButtonActionPerformed
 
     private void backLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseClicked
@@ -439,8 +499,17 @@ public class YJWmain extends javax.swing.JFrame {
         /*yjwMainPanel.setVisible(true);
         planPanel.setVisible(false);
         coursePanel.setVisible(false);*/
+          if(navigation2==null){
         cardLayout.show(containPanel,"yjwMainP");
         navigation.setVisible(false);
+        }
+        else{
+            titelPanel2.remove(navigation2.getArrow());
+            titelPanel2.remove(navigation2.getNow());
+            navigation2=null;
+            cardLayout.show(containPanel,"perInfoP");
+            perInfoPanel.update();
+        }
     }//GEN-LAST:event_backLabelMouseClicked
 
     private void backLabelMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseMoved
@@ -458,6 +527,13 @@ public class YJWmain extends javax.swing.JFrame {
         /*yjwMainPanel.setVisible(true);
         planPanel.setVisible(false);
         coursePanel.setVisible(false);*/
+         if(navigation2!=null){
+            titelPanel2.remove(navigation2.getArrow());
+            titelPanel2.remove(navigation2.getNow());
+            navigation=null;
+            cardLayout.show(containPanel,"perInfoP");
+            perInfoPanel.update();
+        }
         cardLayout.show(containPanel,"yjwMainP");
         navigation.setVisible(false);
     }//GEN-LAST:event_homeLabelMouseClicked
@@ -489,21 +565,41 @@ public class YJWmain extends javax.swing.JFrame {
     private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
         // TODO add your handling code here:
         cardLayout.show(containPanel,"perInfoP");
+        perInfoPanel.update();
         navigation.setNowText("个人信息");
+        navigation.setVisible(true);
     }//GEN-LAST:event_perInfoButtonActionPerformed
+
+    private void courseListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseListButtonActionPerformed
+        // TODO add your handling code here:
+         cardLayout.show(containPanel,"courseListP");
+        perInfoPanel.update();
+        navigation.setNowText("课程列表");
+        navigation.setVisible(true);
+        courseListPanel.update();
+    }//GEN-LAST:event_courseListButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        cardLayout.show(containPanel,"addP");
+        perInfoPanel.update();
+        navigation.setNowText("开始新学期");
+        navigation.setVisible(true);
+        addCoursePanel.update();
+    }//GEN-LAST:event_jButton1ActionPerformed
   
     public void setUserInfoVO(UserInfoVO u) {
         userInfoVO = u;
     }
     
     public void setIns(String ins){
-        planPanel.setInstitute(ins);
+     //   planPanel.setInstitute(ins);
     }
    
     /**
      * @param args the command line arguments
      */
-    public  void main(String args[],final UserInfoVO userInfoVO) {
+    public static void main(String args[],final UserInfoVO userInfoVO,final String ip,final int port) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -530,9 +626,9 @@ public class YJWmain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                YJWmain frame = new YJWmain();
+                YJWmain frame = new YJWmain(userInfoVO,ip,port);
                 frame.setUserInfoVO(userInfoVO);
-                frame.setIns(userInfoVO.getDepart());
+              //  frame.setIns(userInfoVO.getDepart());
                 frame.setVisible(true);
             }
         });
@@ -548,12 +644,16 @@ public class YJWmain extends javax.swing.JFrame {
     public static javax.swing.JPanel containPanel;
     private javax.swing.JButton courseButton;
     private javax.swing.JLabel courseLabel;
+    private javax.swing.JButton courseListButton;
     private javax.swing.JLabel currentLogo;
     private javax.swing.JLabel exitLabel;
     private javax.swing.JLabel exitLogo;
     private javax.swing.JLabel homeLabel;
     private javax.swing.JLabel homeLogo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel nameLogo;
     private javax.swing.JPanel notePanel;
     private javax.swing.JLabel peopleLogo;
@@ -570,4 +670,20 @@ public class YJWmain extends javax.swing.JFrame {
     private PerInfoPanel perInfoPanel;
     private Navigation navigation;
     public UserInfoVO userInfoVO;
+    private CourseListPanel courseListPanel;
+private Navigation navigation2;
+private ModifyKeyPanel modifyKeyPanel;
+private AddCoursePanel addCoursePanel;
+    /**rt*/
+    void modifyKeyGUI() {
+        cardLayout.show(containPanel,"modifyKeyP");
+        modifyKeyPanel.update();
+        navigation2 = new Navigation();//-------------------------------导航栏标签
+        titelPanel2.add(navigation.getArrow(),0,0);
+        titelPanel2.add(navigation.getNow(),0,0);
+        navigation2.setArrowLocation(295, 7);
+        navigation2.setNowBounds(321, 7, 84, 19);
+         navigation2.setNowText("密码修改");
+         navigation2.setVisible(true);
+    }
 }

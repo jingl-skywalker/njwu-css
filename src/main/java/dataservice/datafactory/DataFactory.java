@@ -34,4 +34,5 @@ public interface DataFactory extends Remote {
     public SelectionDataService getSelectionData() throws RemoteException;
 
     public CourseDataService getCourseData() throws RemoteException;
+    public CourseDataService getCourseData(String file)throws  RemoteException;
 }

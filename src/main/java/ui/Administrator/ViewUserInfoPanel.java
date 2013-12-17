@@ -311,6 +311,11 @@ public class ViewUserInfoPanel extends javax.swing.JPanel {
                 nameComboBox1ActionPerformed(evt);
             }
         });
+        typeComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeComboBox1ActionPerformed(evt);
+            }
+        });
 
         insComboBox1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         insComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All", "法学院", "商学院", "软件学院", "政府管理学院" }));
@@ -325,6 +330,11 @@ public class ViewUserInfoPanel extends javax.swing.JPanel {
         IDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameComboBox1ActionPerformed(evt);
+            }
+        });
+        IDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDTextFieldActionPerformed(evt);
             }
         });
         IDTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -479,7 +489,7 @@ public class ViewUserInfoPanel extends javax.swing.JPanel {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        infoPanel.setBounds(0, 0, 0, 0);
+        infoPanel.setBounds(0, 0, 220, 378);
         jLayeredPane1.add(infoPanel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout userListPanel1Layout = new javax.swing.GroupLayout(userListPanel1);
@@ -535,11 +545,11 @@ public class ViewUserInfoPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 884, Short.MAX_VALUE)
+            .addComponent(titelPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(userListPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -613,6 +623,35 @@ public class ViewUserInfoPanel extends javax.swing.JPanel {
         nameComboBox1ActionPerformed(evt);
     }//GEN-LAST:event_insComboBox1ActionPerformed
 
+    private void IDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDTextFieldActionPerformed
+
+    private void typeComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeComboBox1ActionPerformed
+
+    public void update(){
+          IDTextField.setText("请输入学号");
+        nameComboBox.setSelectedIndex(0);
+        typeComboBox.setSelectedIndex(0);
+        insComboBox.setSelectedIndex(0);
+         vos = userBL.getUser();
+        String[][] content = new String[vos.size()][7];
+        for(int i=0;i<vos.size();i++){
+            content[i] = vos.get(i).getViewInfor();
+        }
+        String[] head = UserInfoVO.getViewHeader();
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+             return false;
+            }
+        };
+        userListTable1.setModel(model);
+    }
+    public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IDTextField;
     private javax.swing.JLabel MainGUILabel;

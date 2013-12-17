@@ -6,7 +6,6 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -320,7 +319,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f0" green="f0" red="f0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&#x5f55;&#x5165;&#x6210;&#x7ee9;"/>
+                    <Property name="text" type="java.lang.String" value="&#x67e5;&#x770b;&#x8bfe;&#x7a0b;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="perInfoButton">

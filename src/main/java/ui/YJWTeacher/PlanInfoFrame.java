@@ -4,8 +4,14 @@
  */
 package ui.YJWTeacher;
 
+import businesslogicservice.courseblservice.CourseBLService;
+import businesslogicservice.courseblservice.CourseOperationFactory;
+import enumeration.ResultMessage;
+import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import ui.Library.MyTitledBorder;
+import vo.coursevo.CourseVO;
 import vo.planvo.PlanVO;
 
 /**
@@ -13,14 +19,21 @@ import vo.planvo.PlanVO;
  * @author zili chen
  */
 public class PlanInfoFrame extends javax.swing.JFrame {
-
+String depart;
+CourseBLService courseBL;
     /**
      * Creates new form PlanInfoFrame
      */
-    public PlanInfoFrame() {
+    public PlanInfoFrame(String modual,String depart,CourseBLService courseBL,String term) {
+        this.module = modual;
+        this.depart= depart;
+        this.courseBL = courseBL;
+        this.term =term;
+       
         initComponents();
         this.setLocationRelativeTo(null);
-        backPanel.setBorder(new MyTitledBorder("课程信息").getTitledBorder());
+        backPanel.setBorder(new MyTitledBorder(modual+"课程信息").getTitledBorder());
+        
     }
 
     /**
@@ -50,7 +63,15 @@ public class PlanInfoFrame extends javax.swing.JFrame {
         insLabel = new javax.swing.JLabel();
         insComboBox = new javax.swing.JComboBox();
         termLabel = new javax.swing.JLabel();
-        termComboBox = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        isOpenComboBox = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
+        periodComboBox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        teaIDTextField = new javax.swing.JTextField();
+        teaNameTextField = new javax.swing.JTextField();
+        timeTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -119,7 +140,7 @@ public class PlanInfoFrame extends javax.swing.JFrame {
         typeLabel.setText("课程类别");
 
         propertyComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        propertyComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "指选", "必修", "选修" }));
+        propertyComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "必修", "选修" }));
         propertyComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 propertyComboBoxActionPerformed(evt);
@@ -152,7 +173,7 @@ public class PlanInfoFrame extends javax.swing.JFrame {
 
         insLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         insLabel.setForeground(new java.awt.Color(204, 204, 204));
-        insLabel.setText("院系");
+        insLabel.setText("修读院系");
 
         insComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         insComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "软件学院", "商学院", "医学院" }));
@@ -164,13 +185,51 @@ public class PlanInfoFrame extends javax.swing.JFrame {
 
         termLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         termLabel.setForeground(new java.awt.Color(204, 204, 204));
-        termLabel.setText("学期");
+        termLabel.setText("上课时间");
 
-        termComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        termComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2012年第一学期", "2012年第二学期", "2013年第一学期", "2013年第二学期", "2014年第一学期", "2014年第二学期", " " }));
-        termComboBox.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("是否开放");
+
+        isOpenComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        isOpenComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "是", "否" }));
+
+        jLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("修读年纪");
+
+        periodComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        periodComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "大一上", "大一下", "大二上", "大二下", "大三上", "大三下", "大四上", "大四下", "All" }));
+
+        jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("任课老师ID");
+
+        jLabel4.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("任课老师姓名");
+
+        teaIDTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        teaIDTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        teaIDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                termComboBoxActionPerformed(evt);
+                teaIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        teaNameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        teaNameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        teaNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teaNameTextFieldActionPerformed(evt);
+            }
+        });
+
+        timeTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        timeTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        timeTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeTextFieldActionPerformed(evt);
             }
         });
 
@@ -181,32 +240,47 @@ public class PlanInfoFrame extends javax.swing.JFrame {
             .addGroup(backPanelLayout.createSequentialGroup()
                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backPanelLayout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backPanelLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(propertyLabel)
-                            .addComponent(creditLabel)
-                            .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(propertyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(creditComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(backPanelLayout.createSequentialGroup()
-                                    .addComponent(insLabel)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(insComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backPanelLayout.createSequentialGroup()
                                 .addComponent(idLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(backPanelLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(idTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(backPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(38, 38, 38)
+                                .addComponent(isOpenComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(backPanelLayout.createSequentialGroup()
+                                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(backPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(teaIDTextField))
+                                    .addComponent(propertyLabel)
+                                    .addComponent(creditLabel)
+                                    .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(propertyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(creditComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(backPanelLayout.createSequentialGroup()
+                                            .addComponent(insLabel)
+                                            .addGap(38, 38, 38)
+                                            .addComponent(insComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(15, 15, 15)
                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addGap(49, 49, 49)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(backPanelLayout.createSequentialGroup()
                         .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(backPanelLayout.createSequentialGroup()
-                                .addComponent(termLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(termComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(periodComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(backPanelLayout.createSequentialGroup()
                                 .addComponent(hourLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -218,12 +292,16 @@ public class PlanInfoFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(42, Short.MAX_VALUE))
-                    .addGroup(backPanelLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(typeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(backPanelLayout.createSequentialGroup()
+                                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(termLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(timeTextField)
+                                    .addComponent(teaNameTextField))))
+                        .addContainerGap())))
         );
         backPanelLayout.setVerticalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,12 +324,30 @@ public class PlanInfoFrame extends javax.swing.JFrame {
                     .addComponent(creditComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hourLabel)
                     .addComponent(hourComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(isOpenComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(periodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(insComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(insLabel)
-                    .addComponent(termLabel)
-                    .addComponent(termComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(teaIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(teaNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(insComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(insLabel)
+                            .addComponent(termLabel)))
+                    .addGroup(backPanelLayout.createSequentialGroup()
+                        .addComponent(timeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,8 +372,33 @@ public class PlanInfoFrame extends javax.swing.JFrame {
     private void sureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sureButtonActionPerformed
         // TODO add your handling code here:
         //setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pvo = new PlanVO(institute,term,module,property,type,courseID,courseName,credit,hour);
-        dispose();
+        if(idTextField.getText().equals("")||nameTextField.getText().equals("")){
+            JOptionPane.showConfirmDialog(this, "课程号和课程名不能为空", null, JOptionPane.OK_OPTION);
+            return ;
+        }
+        int i = JOptionPane.showConfirmDialog(this, "确定添加？", null, JOptionPane.OK_CANCEL_OPTION, WIDTH);
+        if(i!=JOptionPane.OK_OPTION){
+            return ;
+        }
+        CourseVO course = new  CourseVO(idTextField.getText(),nameTextField.getText(),module,
+                (String)propertyComboBox.getSelectedItem(),(String)isOpenComboBox.getSelectedItem(),
+                (String)typeComboBox.getSelectedItem(),term,(String)periodComboBox.getSelectedItem(),
+                (String)creditComboBox.getSelectedItem(),(String)hourComboBox.getSelectedItem(),
+                teaNameTextField.getText(),teaIDTextField.getText(),timeTextField.getText(),depart,
+                "All","0","课程大纲","教才","参考文献") ;
+        //pvo = new PlanVO(institute,term,module,property,type,courseID,courseName+"",credit+"",hour+"","");
+        ResultMessage r;
+        if((r=courseBL.createCourse(course))==ResultMessage.SUCCESS){
+             JOptionPane.showConfirmDialog(this, "添加成功！", null, JOptionPane.OK_OPTION);
+              dispose();
+        }
+        else if(r==ResultMessage.EXIST){
+             JOptionPane.showConfirmDialog(this, "课程号已存在，添加失败！", null, JOptionPane.OK_OPTION);
+        }
+        else{
+             JOptionPane.showConfirmDialog(this, "添加失败！", null, JOptionPane.OK_OPTION);
+        }
+       
     }//GEN-LAST:event_sureButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -289,11 +410,13 @@ public class PlanInfoFrame extends javax.swing.JFrame {
     private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
         // TODO add your handling code here:
         courseID = idTextField.getText();
+        nameTextField.requestFocus();
     }//GEN-LAST:event_idTextFieldActionPerformed
 
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
         courseName =  nameTextField.getText();
+        teaIDTextField.requestFocus();
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void propertyComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertyComboBoxActionPerformed
@@ -316,15 +439,25 @@ public class PlanInfoFrame extends javax.swing.JFrame {
         hour = Integer.parseInt(hourComboBox.getToolTipText());
     }//GEN-LAST:event_hourComboBoxActionPerformed
 
-    private void termComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_termComboBoxActionPerformed
-        // TODO add your handling code here:
-        term = termComboBox.getToolTipText();
-    }//GEN-LAST:event_termComboBoxActionPerformed
-
     private void insComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insComboBoxActionPerformed
         // TODO add your handling code here:
         institute = insComboBox.getToolTipText();
     }//GEN-LAST:event_insComboBoxActionPerformed
+
+    private void teaIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaIDTextFieldActionPerformed
+        // TODO add your handling code here:
+        teaNameTextField.requestFocus();
+    }//GEN-LAST:event_teaIDTextFieldActionPerformed
+
+    private void teaNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaNameTextFieldActionPerformed
+        // TODO add your handling code here:
+        timeTextField.requestFocus();
+    }//GEN-LAST:event_teaNameTextFieldActionPerformed
+
+    private void timeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeTextFieldActionPerformed
+        // TODO add your handling code here:
+        sureButtonActionPerformed(evt);
+    }//GEN-LAST:event_timeTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,7 +489,7 @@ public class PlanInfoFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PlanInfoFrame().setVisible(true);
+                new PlanInfoFrame("","",null,"").setVisible(true);
             }
         });
     }
@@ -371,13 +504,21 @@ public class PlanInfoFrame extends javax.swing.JFrame {
     private javax.swing.JTextField idTextField;
     private javax.swing.JComboBox insComboBox;
     private javax.swing.JLabel insLabel;
+    private javax.swing.JComboBox isOpenComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
+    private javax.swing.JComboBox periodComboBox;
     private javax.swing.JComboBox propertyComboBox;
     private javax.swing.JLabel propertyLabel;
     private javax.swing.JButton sureButton;
-    private javax.swing.JComboBox termComboBox;
+    private javax.swing.JTextField teaIDTextField;
+    private javax.swing.JTextField teaNameTextField;
     private javax.swing.JLabel termLabel;
+    private javax.swing.JTextField timeTextField;
     private javax.swing.JComboBox typeComboBox;
     private javax.swing.JLabel typeLabel;
     // End of variables declaration//GEN-END:variables

@@ -41,7 +41,8 @@ public class SelectionDataItem {
     
     public boolean equalsPO(SelectionPO po){
         
-        return true;
+        return courseNum.equals(po.getCouseNum()) && stuID.equals(po.getStuID())
+                && term.equals(po.getTerm());
     }
     
     public String getCourseNum(){
@@ -61,9 +62,9 @@ public class SelectionDataItem {
     }
     
     public SelectionPO getSelectionPO(){
+        SelectionPO selectionpo = new SelectionPO(courseNum, stuID, term, teacher);
         
-        
-        return null;        
+        return selectionpo;        
     }
     
     public boolean updateGrade(GradePO gradepo){
@@ -82,7 +83,12 @@ public class SelectionDataItem {
         return null;
     }
     
-    public boolean containsTeacher(String id){
-        return teacher.equals(id);
+    public boolean containsTeacher(String name){
+        return teacher.equals(name);
+    }
+    
+    public String toString(){
+        
+        return courseNum + ";" + stuID + ";" + term + ";" + grade + ";" + teacher;
     }
 }

@@ -4,6 +4,9 @@
  */
 package businesslogic.coursebl;
 
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import po.coursepo.CoursePO;
 import vo.coursevo.CourseVO;
 
@@ -182,5 +185,6 @@ public class Course {/*课程类：课程对象*/
 		this.reference = reference;
 	}
 
-    
+   
+
 }

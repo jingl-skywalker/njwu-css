@@ -15,7 +15,12 @@ import vo.gradevo.GradeVO;
  * @author sheyunfeng
  */
 public class GradeController implements GradeBLService{
-    Grade grade = new Grade();
+    Grade grade;
+    
+    public GradeController(){
+        grade = new Grade();
+    }
+    
     @Override
     public ArrayList<GradeVO> getCourseScore(String ID, String term) {
         return grade.getCourseScore(ID, term);

@@ -6,6 +6,7 @@
 
 package businesslogic.gradebl;
 
+import dataservice.datafactory.DataFactory;
 import java.util.ArrayList;
 import vo.gradevo.GradeVO;
 import po.gradepo.Grade_StudentPO;
@@ -24,15 +25,26 @@ public class Grade {
     private Student student = null;
     private Teacher teacher = null;
     GradeDataService gradedataservice;
+    DataFactory dataFactory;
     
-    private boolean addStudent(String stuID){
+    public Grade(){
         gradedataservice = null;
         try{
-            gradedataservice = (GradeDataService)Naming.lookup("GradeDataService");
+            dataFactory = (DataFactory)Naming.lookup("dataFactory");
+            gradedataservice = dataFactory.getGradeData();
         }catch(Exception e){
             System.out.println("SelectionDataService exception:" + e);
         }
         
+    }
+    
+    /**
+     * 
+     * @param stuID
+     * @return 
+     * 若该成绩类还没有指定学生，则添加学生
+     */
+    private boolean addStudent(String stuID){
         Grade_StudentPO studentpo = null;
         try {
             studentpo = gradedataservice.findStudent_Grade(stuID);
@@ -49,6 +61,12 @@ public class Grade {
         
     }
     
+    /**
+     * 
+     * @param stuID
+     * @return 
+     * 检查学生是否为当前学生
+     */
     private boolean checkStudent(String stuID){
         if(student == null){
             return addStudent(stuID);
@@ -57,10 +75,16 @@ public class Grade {
             return student.getStuID().equals(stuID);
     }
     
-    private boolean addTeacher(String teacherID){
+    /**
+     * 
+     * @param stuID
+     * @return 
+     * 若该成绩类还没有指定老师，则添加老师
+     */
+    private boolean addTeacher(String teacherName){
         Grade_TeacherPO teacherpo = null;
         try {
-            teacherpo = gradedataservice.findTeacher_Grade(teacherID);
+            teacherpo = gradedataservice.findTeacher_Grade(teacherName);
         } catch (RemoteException ex) {
             Logger.getLogger(Grade.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,12 +96,18 @@ public class Grade {
             return false;
     }
     
-    private boolean checkTeacher(String teacherID){
+    /**
+     * 
+     * @param stuID
+     * @return 
+     * 检查老师是否为当前老师
+     */
+    private boolean checkTeacher(String teacherName){
         if(teacher == null){
-            return addTeacher(teacherID);
+            return addTeacher(teacherName);
         }
         else
-            return teacher.getTeacherID().equals(teacherID);
+            return teacher.getTeacherID().equals(teacherName);
     }
     
     public ArrayList<GradeVO> getCourseScore(String ID, String term){
@@ -104,8 +134,8 @@ public class Grade {
             return student.getGradeSum(term);
     }
     
-    public boolean recordScore(String teacherID, ArrayList<GradeVO> scores){
-        if(!checkTeacher(teacherID))
+    public boolean recordScore(String teacherName, ArrayList<GradeVO> scores){
+        if(!checkTeacher(teacherName))
             return false;
         
         return teacher.recordScore(scores);

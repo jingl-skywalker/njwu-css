@@ -946,6 +946,49 @@ public class ModifyUserInfoPanel extends javax.swing.JPanel {
             end = -1;
         }
     }
+     /**
+     * 更新此界面
+     */
+    public void update(){
+        fromTextField.setText("");
+        toTextField.setText("");
+        replaceComboBox.setSelectedIndex(0);
+         jTextField1.setText("请输入ID");
+        nameComboBox.setSelectedIndex(0);
+        typeComboBox.setSelectedIndex(0);
+        insComboBox.setSelectedIndex(0);
+        
+        replaceToTextField1.setText("");
+            replaceToTextField2.setText("");
+            replaceToTextField3.setText("");
+            replaceToTextField4.setText("");
+            replaceToTextField5.setText("");
+            replaceToTextField6.setText("");
+            replaceToTextField7.setText("");
+            replaceToTextField8.setText("");
+            
+        replaceComboBoxActionPerformed(null);
+         vos = userBL.getUser();
+        String[][] content = new String[vos.size()][4];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i] = vos.get(i).getModifyInfo();
+        }
+        String[] head = UserInfoVO.getModifyHeader();
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        userListTable.setModel(model);
+        
+
+    }
+      public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowLogo2;
     private javax.swing.JLabel arrowLogo3;

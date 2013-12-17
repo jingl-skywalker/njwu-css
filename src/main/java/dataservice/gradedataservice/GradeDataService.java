@@ -22,4 +22,8 @@ public interface GradeDataService extends Remote {
     public Grade_StudentPO findStudent_Grade(String ID) throws RemoteException;
     
     public Grade_TeacherPO findTeacher_Grade(String ID) throws RemoteException;
+    
+    public ArrayList<GradePO> findCourseInfo(String courseNum, String term) throws RemoteException;
+    
+    public ArrayList<GradePO> findStudentInfo(String stuID) throws RemoteException;
 }

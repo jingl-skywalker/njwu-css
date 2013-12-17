@@ -15,13 +15,17 @@ import java.util.ArrayList;
  */
 public class Selection_StudentPO implements Serializable{
     private String id;
-    private ArrayList<Selection_CoursePO> courselist;
+    private ArrayList<Selection_CoursePO> courselist;           //所有已经确认的选课记录列表
+    private ArrayList<Selection_CoursePO> tempCourselist;       //未确认的选修课选课记录列表
     
-    public Selection_StudentPO(String id, ArrayList<Selection_CoursePO> courselist){
+    public Selection_StudentPO(String id, ArrayList<Selection_CoursePO> courselist, 
+            ArrayList<Selection_CoursePO> tempCourselist){
         this.id = id;
         this.courselist = courselist;
+        this.tempCourselist = tempCourselist;
     }
-    
+
+
     public void setID(String id){
         this.id = id;
     }
@@ -36,5 +40,13 @@ public class Selection_StudentPO implements Serializable{
     
     public ArrayList<Selection_CoursePO> getCourseList(){
         return courselist;
+    }
+    
+    public void setTempCourseList(ArrayList<Selection_CoursePO> tempCourselist){
+        this.tempCourselist = tempCourselist;
+    }
+    
+    public ArrayList<Selection_CoursePO> getTempCourseList(){
+        return tempCourselist;
     }
 }

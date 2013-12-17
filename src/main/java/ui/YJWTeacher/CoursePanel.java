@@ -6,14 +6,25 @@
 package ui.YJWTeacher;
 
 
+import businesslogicservice.courseblservice.CourseBLService;
+import businesslogicservice.courseblservice.CourseOperationFactory;
+import enumeration.ResultMessage;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import  ui.Library.CheckListCellRenderer;
 import  ui.Library.CheckValue;
 import  ui.Library.FullComboBox;
 import  ui.Library.MyComboBox;
 import  ui.Library.MyTitledBorder;
 import vo.coursevo.CourseVO;
+import vo.uservo.UserInfoVO;
 
 
 /**
@@ -21,16 +32,30 @@ import vo.coursevo.CourseVO;
  * @author zili chen
  */
 public class CoursePanel extends javax.swing.JPanel {
-
+UserInfoVO userInfo;
+String ip;
+int port;
+CourseBLService courseBL;
+CourseOperationFactory factory = new CourseOperationFactory();
+ArrayList<CourseVO> vos;
+CourseVO v;
+DefaultListModel listModel = new DefaultListModel();
+boolean isEdit =false;
     /**
      * Creates new form CoursePanel
      */
-    public CoursePanel() {
+    public CoursePanel(UserInfoVO v,String ip,int port) {
+         this.userInfo = v;
+        this.ip = ip;
+        this.port = port;
+       
         initComponents();
-        insFull = new FullComboBox();
+        
+        
         coursePanel.setBorder(new MyTitledBorder("可开设课程列表").getTitledBorder());
         courseInfoPanel.setBorder(new MyTitledBorder("课程信息").getTitledBorder());
         /*多选下拉框——修读院系*/
+       /* insFull = new FullComboBox();
         learnInsComboBox = insFull.getComboBox();
         insFull.add("法学院");
         insFull.add("软件学院");
@@ -39,13 +64,21 @@ public class CoursePanel extends javax.swing.JPanel {
         insFull.add("政府管理学院");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 32;
-        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.gridy = 28;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.ipadx = 40;
         //insComboBox.setBounds(0, 0, 72, 25);
         courseInfoPanel.add(learnInsComboBox, gridBagConstraints);
-        learnInsComboBox.setVisible(true);
+        learnInsComboBox.setVisible(true);*/
         /*逻辑处理*/
+        
+        courseBL = factory.createCourseBL();
+        String[] s=courseBL.getAllTerms();
+        for(String str:s){
+            listModel.addElement(str);
+        }
+        termList.setModel(listModel);
+        
         
     }
 
@@ -65,7 +98,7 @@ public class CoursePanel extends javax.swing.JPanel {
         idLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        courseTable = new javax.swing.JTable();
         idTextField = new javax.swing.JTextField();
         nameTextField = new javax.swing.JTextField();
         courseInfoPanel = new javax.swing.JPanel();
@@ -78,20 +111,29 @@ public class CoursePanel extends javax.swing.JPanel {
         hourLabel = new javax.swing.JLabel();
         hourComboBox = new javax.swing.JComboBox();
         teacherLabel = new javax.swing.JLabel();
-        teaTextField = new javax.swing.JTextField();
+        teaNameTextField = new javax.swing.JTextField();
         timeLabel = new javax.swing.JLabel();
-        timeTextField = new javax.swing.JTextField();
+        leanInsTextField = new javax.swing.JTextField();
         insLabel = new javax.swing.JLabel();
         learnInsLabel = new javax.swing.JLabel();
-        idTextField1 = new javax.swing.JTextField();
-        nameTextField1 = new javax.swing.JTextField();
-        insComboBox = new javax.swing.JComboBox();
-        createButton = new javax.swing.JButton();
+        teaIDTextField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        isOpenComboBox = new javax.swing.JComboBox();
+        propertyComboBox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        modualComboBox = new javax.swing.JComboBox();
+        periodComboBox = new javax.swing.JComboBox();
+        timeTextField = new javax.swing.JTextField();
+        insTextField = new javax.swing.JTextField();
+        deleteButton = new javax.swing.JButton();
         modifyButton = new javax.swing.JButton();
         sureButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         addStuButton = new javax.swing.JButton();
         cancelAddButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        termList = new javax.swing.JList();
 
         createButton5.setBackground(new java.awt.Color(0, 0, 0));
         createButton5.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -118,8 +160,8 @@ public class CoursePanel extends javax.swing.JPanel {
         nameLabel.setForeground(new java.awt.Color(240, 240, 240));
         nameLabel.setText("课程名");
 
-        jTable1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        courseTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        courseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -145,11 +187,32 @@ public class CoursePanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(courseTable);
+        courseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                int s[] = courseTable.getSelectedRows();
+                if(s.length<1)
+                return;
+                if(s[0]>=0){
+                    TableValueChanged(s[0]);
+
+                }
+            }
+        });
 
         idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        idTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idTextFieldActionPerformed(evt);
+            }
+        });
 
         nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout coursePanelLayout = new javax.swing.GroupLayout(coursePanel);
         coursePanel.setLayout(coursePanelLayout);
@@ -186,26 +249,26 @@ public class CoursePanel extends javax.swing.JPanel {
         courseInfoPanel.setBackground(new java.awt.Color(0, 0, 0));
         courseInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true), "课程信息", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("微软雅黑", 0, 14), new java.awt.Color(204, 204, 204))); // NOI18N
         java.awt.GridBagLayout courseInfoPanelLayout = new java.awt.GridBagLayout();
-        courseInfoPanelLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
+        courseInfoPanelLayout.columnWidths = new int[] {0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0};
         courseInfoPanelLayout.rowHeights = new int[] {0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0, 3, 0};
         courseInfoPanel.setLayout(courseInfoPanelLayout);
 
         idLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         idLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        idLabel1.setText("课程号");
+        idLabel1.setText("模块");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(idLabel1, gridBagConstraints);
 
         nameLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         nameLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        nameLabel1.setText("课程名");
+        nameLabel1.setText("性质");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(nameLabel1, gridBagConstraints);
@@ -215,16 +278,16 @@ public class CoursePanel extends javax.swing.JPanel {
         typeLabel.setText("类型");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(typeLabel, gridBagConstraints);
 
         typeComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "思想政治", "学科平台", "专业选修", " " }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 97;
         gridBagConstraints.ipady = 1;
@@ -236,7 +299,7 @@ public class CoursePanel extends javax.swing.JPanel {
         creditLabel.setText("学分");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(creditLabel, gridBagConstraints);
@@ -245,7 +308,7 @@ public class CoursePanel extends javax.swing.JPanel {
         creditComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 131;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -256,7 +319,7 @@ public class CoursePanel extends javax.swing.JPanel {
         hourLabel.setText("周学时");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(hourLabel, gridBagConstraints);
@@ -265,7 +328,7 @@ public class CoursePanel extends javax.swing.JPanel {
         hourComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 123;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -276,19 +339,24 @@ public class CoursePanel extends javax.swing.JPanel {
         teacherLabel.setText("授课老师");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(teacherLabel, gridBagConstraints);
 
-        teaTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        teaNameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        teaNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teaNameTextFieldActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 22;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 163;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        courseInfoPanel.add(teaTextField, gridBagConstraints);
+        courseInfoPanel.add(teaNameTextField, gridBagConstraints);
 
         timeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         timeLabel.setForeground(new java.awt.Color(240, 240, 240));
@@ -300,21 +368,24 @@ public class CoursePanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(timeLabel, gridBagConstraints);
 
-        timeTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        leanInsTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        leanInsTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leanInsTextFieldActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 24;
-        gridBagConstraints.gridwidth = 13;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.ipadx = 163;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        courseInfoPanel.add(timeTextField, gridBagConstraints);
+        courseInfoPanel.add(leanInsTextField, gridBagConstraints);
 
         insLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         insLabel.setForeground(new java.awt.Color(240, 240, 240));
         insLabel.setText("开课院系");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 28;
+        gridBagConstraints.gridy = 26;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(insLabel, gridBagConstraints);
@@ -324,53 +395,100 @@ public class CoursePanel extends javax.swing.JPanel {
         learnInsLabel.setText("修读院系");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 32;
+        gridBagConstraints.gridy = 28;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(learnInsLabel, gridBagConstraints);
 
-        idTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        teaIDTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 20;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 163;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        courseInfoPanel.add(idTextField1, gridBagConstraints);
+        courseInfoPanel.add(teaIDTextField, gridBagConstraints);
 
-        nameTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("老师ID");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 20;
+        courseInfoPanel.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("是否开放");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 12;
+        courseInfoPanel.add(jLabel2, gridBagConstraints);
+
+        isOpenComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "否", "是" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 12;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 7;
+        courseInfoPanel.add(isOpenComboBox, gridBagConstraints);
+
+        propertyComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "必修", "选修" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 13;
+        courseInfoPanel.add(propertyComboBox, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("修读年纪");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 10;
+        courseInfoPanel.add(jLabel3, gridBagConstraints);
+
+        modualComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "通识", "通修", "学科专业", "毕业论文/设计" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 6;
+        courseInfoPanel.add(modualComboBox, gridBagConstraints);
+
+        periodComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "大一上", "大一下", "大二上", "大二下", "大三上", "大三下", "大四上", "大四下", "All" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 10;
+        courseInfoPanel.add(periodComboBox, gridBagConstraints);
+
+        timeTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 14;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.gridwidth = 13;
         gridBagConstraints.ipadx = 163;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        courseInfoPanel.add(nameTextField1, gridBagConstraints);
+        courseInfoPanel.add(timeTextField, gridBagConstraints);
 
-        insComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "法学院", "软件学院", "商学院", "医学院", "政府管理学院" }));
-        insComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        insComboBox.addActionListener(new java.awt.event.ActionListener() {
+        insTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        insTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insComboBoxActionPerformed(evt);
+                insTextFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 14;
-        gridBagConstraints.gridy = 28;
-        gridBagConstraints.gridwidth = 13;
-        gridBagConstraints.ipadx = 55;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        courseInfoPanel.add(insComboBox, gridBagConstraints);
+        gridBagConstraints.gridy = 26;
+        gridBagConstraints.ipadx = 163;
+        courseInfoPanel.add(insTextField, gridBagConstraints);
 
-        createButton.setBackground(new java.awt.Color(0, 0, 0));
-        createButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        createButton.setForeground(new java.awt.Color(204, 204, 204));
-        createButton.setText("开设课程");
-        createButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
-        createButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setBackground(new java.awt.Color(0, 0, 0));
+        deleteButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(204, 204, 204));
+        deleteButton.setText("删除课程");
+        deleteButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        deleteButton.setEnabled(false);
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -379,6 +497,7 @@ public class CoursePanel extends javax.swing.JPanel {
         modifyButton.setForeground(new java.awt.Color(204, 204, 204));
         modifyButton.setText("编辑课程");
         modifyButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        modifyButton.setEnabled(false);
         modifyButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modifyButtonActionPerformed(evt);
@@ -390,6 +509,7 @@ public class CoursePanel extends javax.swing.JPanel {
         sureButton.setForeground(new java.awt.Color(204, 204, 204));
         sureButton.setText("确认");
         sureButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        sureButton.setEnabled(false);
         sureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sureButtonActionPerformed(evt);
@@ -401,6 +521,7 @@ public class CoursePanel extends javax.swing.JPanel {
         cancelButton.setForeground(new java.awt.Color(204, 204, 204));
         cancelButton.setText("取消");
         cancelButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        cancelButton.setEnabled(false);
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -412,6 +533,7 @@ public class CoursePanel extends javax.swing.JPanel {
         addStuButton.setForeground(new java.awt.Color(204, 204, 204));
         addStuButton.setText("添加学生名单");
         addStuButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        addStuButton.setEnabled(false);
         addStuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addStuButtonActionPerformed(evt);
@@ -423,11 +545,19 @@ public class CoursePanel extends javax.swing.JPanel {
         cancelAddButton.setForeground(new java.awt.Color(204, 204, 204));
         cancelAddButton.setText("撤销名单添加");
         cancelAddButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        cancelAddButton.setEnabled(false);
         cancelAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelAddButtonActionPerformed(evt);
             }
         });
+
+        termList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                termListValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(termList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -436,59 +566,156 @@ public class CoursePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(coursePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(courseInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addStuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cancelAddButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                .addComponent(addStuButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cancelButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addGap(215, 215, 215))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(courseInfoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addStuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(courseInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_createButtonActionPerformed
+        if(v==null){
+            return ;
+        }
+        if(v.getModule().equals("通修")){
+            JOptionPane.showMessageDialog(this, "无权删除！");
+            return;
+        }
+        if(courseBL.delete(v.getCourseID())==ResultMessage.SUCCESS){
+        vos.remove(v);
+        v = null;
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+         JOptionPane.showMessageDialog(this, "删除成功！");
+         deleteButton.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "删除失败！");
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
         // TODO add your handling code here:
+        sureButton.setEnabled(true);
+        if(!((String)modualComboBox.getSelectedItem()).equals("通修")){
+             modualComboBox.setEnabled(true);
+        propertyComboBox.setEnabled(true);
+        periodComboBox.setEnabled(true);
+        isOpenComboBox.setEnabled(true);
+        typeComboBox.setEnabled(true);
+        creditComboBox.setEnabled(true);
+        hourComboBox.setEnabled(true);
+        leanInsTextField.setEnabled(true);
+       // insTextField.setEditable(true);
+        //materialTextField.setText(v.getMaterial());
+        //insTextField.setEditable(false);
+        }
+        timeTextField.setEnabled(true);
+        teaIDTextField.setEditable(true);
+        teaNameTextField.setEditable(true);
     }//GEN-LAST:event_modifyButtonActionPerformed
 
     private void sureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sureButtonActionPerformed
         // TODO add your handling code here:
+        v.setModule((String)modualComboBox.getSelectedItem());
+         v.setProperty((String)propertyComboBox.getSelectedItem());
+         v.setPeriod((String)periodComboBox.getSelectedItem());
+         v.setIsOpen((String)isOpenComboBox.getSelectedItem());
+          v.setType((String)typeComboBox.getSelectedItem());
+           v.setCredit((String)creditComboBox.getSelectedItem());
+          v.setHour((String)hourComboBox.getSelectedItem());
+          v.setTeaID((String)teaIDTextField.getText());
+           v.setTeaName((String)teaNameTextField.getText());
+           ResultMessage r;
+           if(v.getModule().equals("通修")){
+               r = courseBL.jupdateCourse(v);
+           }
+           else{
+               r =courseBL.modifyCourse(v);
+           }
+        if(r==ResultMessage.SUCCESS){
+            JOptionPane.showMessageDialog(this, "修改成功！");
+        } else {
+            JOptionPane.showMessageDialog(this, "修改失败！");
+        }
+        
     }//GEN-LAST:event_sureButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
+       
+        if(v==null){
+            
+            return ;
+        }
+        modualComboBox.setSelectedItem(v.getModule());
+        propertyComboBox.setSelectedItem(v.getProperty());
+        periodComboBox.setSelectedItem(v.getPeriod());
+        isOpenComboBox.setSelectedIndex(Integer.parseInt(v.getIsOpen()));
+        typeComboBox.setSelectedItem(v.getType());
+        creditComboBox.setSelectedItem(v.getCredit());
+        hourComboBox.setSelectedItem(v.getHour());
+        teaIDTextField.setText(v.getTeaID());
+        teaNameTextField.setText(v.getTeaName());
+        leanInsTextField.setText(v.getInstitute());
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void addStuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStuButtonActionPerformed
         // TODO add your handling code here:
+                if(v==null){
+            return ;
+        }
     }//GEN-LAST:event_addStuButtonActionPerformed
 
     private void createButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButton5ActionPerformed
@@ -497,42 +724,181 @@ public class CoursePanel extends javax.swing.JPanel {
 
     private void cancelAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelAddButtonActionPerformed
         // TODO add your handling code here:
+                if(v==null){
+            return ;
+        }
     }//GEN-LAST:event_cancelAddButtonActionPerformed
 
-    private void insComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insComboBoxActionPerformed
+    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_insComboBoxActionPerformed
+         nameTextField.setText("");
+         vos = courseBL.findCourseID(idTextField.getText());
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
 
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+    }//GEN-LAST:event_idTextFieldActionPerformed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+        // TODO add your handling code here:
+         idTextField.setText("");
+         vos = courseBL.findCourseName(nameTextField.getText());
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+    }//GEN-LAST:event_nameTextFieldActionPerformed
+
+    private void teaNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teaNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_teaNameTextFieldActionPerformed
+
+    private void leanInsTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leanInsTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_leanInsTextFieldActionPerformed
+
+    private void termListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_termListValueChanged
+        // TODO add your handling code here:
+        String term=(String) termList.getSelectedValue();
+        if(term==null){
+            return;
+        }
+        if(term.equals((String)listModel.lastElement())){
+            isEdit = true;
+        }
+        else{
+            isEdit = false;
+        }
+        
+        deleteButton.setEnabled(false);
+            modifyButton.setEnabled(false);
+            sureButton.setEnabled(false);
+            cancelButton.setEnabled(false);
+            addStuButton.setEnabled(false);
+            cancelAddButton.setEnabled(false);
+            
+        courseBL = factory.createCourseBL(term);
+       vos = courseBL.observeInsLeanCour(userInfo.getDepart());
+       updateTable();
+       v=null;
+    }//GEN-LAST:event_termListValueChanged
+
+    private void insTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_insTextFieldActionPerformed
+
+    public void TableValueChanged(int i){
+        v = vos.get(i);
+        if(isEdit){
+        deleteButton.setEnabled(true);
+        modifyButton.setEnabled(true);
+        sureButton.setEnabled(true);
+            cancelButton.setEnabled(true);
+            addStuButton.setEnabled(true);
+            cancelAddButton.setEnabled(true);
+        }
+        else{
+            deleteButton.setEnabled(false);
+            modifyButton.setEnabled(false);
+            sureButton.setEnabled(false);
+            cancelButton.setEnabled(false);
+            addStuButton.setEnabled(false);
+            cancelAddButton.setEnabled(false);
+        }
+        //idTextField1.setText(v.getCourseID());
+        modualComboBox.setSelectedItem(v.getModule());
+        propertyComboBox.setSelectedItem(v.getProperty());
+        periodComboBox.setSelectedItem(v.getPeriod());
+        isOpenComboBox.setSelectedItem(v.getIsOpen());
+        typeComboBox.setSelectedItem(v.getType());
+        creditComboBox.setSelectedItem(v.getCredit());
+        hourComboBox.setSelectedItem(v.getHour());
+        teaIDTextField.setText(v.getTeaID());
+        teaNameTextField.setText(v.getTeaName());
+        timeTextField.setText(v.getTime());
+        //materialTextField.setText(v.getMaterial());
+        insTextField.setText(v.getInstitute());
+        leanInsTextField.setText(v.getLearnIns());
+        
+        modualComboBox.setEnabled(false);
+        propertyComboBox.setEnabled(false);
+        periodComboBox.setEnabled(false);
+        isOpenComboBox.setEnabled(false);
+        typeComboBox.setEnabled(false);
+        creditComboBox.setEnabled(false);
+        hourComboBox.setEnabled(false);
+        teaIDTextField.setEditable(false);
+        teaNameTextField.setEditable(false);
+        timeTextField.setEditable(false);
+        leanInsTextField.setEditable(false);
+        //materialTextField.setText(v.getMaterial());
+       // insTextField.setEditable(false);
+        //referenceTextArea.setText(v.getReference().replace('=', '\n'));
+        //summaryTextArea.setText(v.getSummary().replace('=', '\n'));
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addStuButton;
     private javax.swing.JButton cancelAddButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel courseInfoPanel;
     private javax.swing.JPanel coursePanel;
-    private javax.swing.JButton createButton;
+    private javax.swing.JTable courseTable;
     private javax.swing.JButton createButton5;
     private javax.swing.JComboBox creditComboBox;
     private javax.swing.JComboBox creditComboBox2;
     private javax.swing.JLabel creditLabel;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JComboBox hourComboBox;
     private javax.swing.JLabel hourLabel;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idLabel1;
     private javax.swing.JTextField idTextField;
-    private javax.swing.JTextField idTextField1;
-    private javax.swing.JComboBox insComboBox;
     private javax.swing.JLabel insLabel;
+    private javax.swing.JTextField insTextField;
+    private javax.swing.JComboBox isOpenComboBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField leanInsTextField;
     private javax.swing.JLabel learnInsLabel;
     private javax.swing.JButton modifyButton;
+    private javax.swing.JComboBox modualComboBox;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel nameLabel1;
     private javax.swing.JTextField nameTextField;
-    private javax.swing.JTextField nameTextField1;
+    private javax.swing.JComboBox periodComboBox;
+    private javax.swing.JComboBox propertyComboBox;
     private javax.swing.JButton sureButton;
-    private javax.swing.JTextField teaTextField;
+    private javax.swing.JTextField teaIDTextField;
+    private javax.swing.JTextField teaNameTextField;
     private javax.swing.JLabel teacherLabel;
+    private javax.swing.JList termList;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JTextField timeTextField;
     private javax.swing.JComboBox typeComboBox;
@@ -558,4 +924,58 @@ public class CoursePanel extends javax.swing.JPanel {
     private String institute;//开设院系
     private String learnIns;//修读院系
 
+    private void updateTable(){
+        //vos = courseBL.observeInsLeanCour(userInfo.getDepart());
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+
+    }
+    
+    public void update(){
+        listModel.removeAllElements();
+        String[] s=courseBL.getAllTerms();
+        for(String str:s){
+            listModel.addElement(str);
+        }
+        termList.repaint();
+        if(vos!=null){
+        vos.clear();
+        updateTable();
+        }
+       
+        
+         deleteButton.setEnabled(false);
+            modifyButton.setEnabled(false);
+            sureButton.setEnabled(false);
+            cancelButton.setEnabled(false);
+            addStuButton.setEnabled(false);
+            cancelAddButton.setEnabled(false);
+            
+             modualComboBox.setSelectedIndex(0);
+        propertyComboBox.setSelectedIndex(0);
+        periodComboBox.setSelectedIndex(0);
+        isOpenComboBox.setSelectedIndex(0);
+        typeComboBox.setSelectedIndex(0);
+        creditComboBox.setSelectedIndex(0);
+        hourComboBox.setSelectedIndex(0);
+        teaIDTextField.setText("");
+        teaNameTextField.setText("");
+        timeTextField.setText("");
+        //materialTextField.setText(v.getMaterial());
+        leanInsTextField.setText("");
+    }
 }

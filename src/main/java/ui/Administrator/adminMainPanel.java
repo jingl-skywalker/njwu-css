@@ -648,6 +648,9 @@ public class adminMainPanel extends javax.swing.JPanel {
         jButton1ActionPerformed(null);
     }//GEN-LAST:event_perInfoLabel1MouseClicked
 
+     public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addUserButton;
     private javax.swing.JLabel addUserLabel;

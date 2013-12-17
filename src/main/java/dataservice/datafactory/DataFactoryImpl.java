@@ -71,4 +71,9 @@ public class DataFactoryImpl extends UnicastRemoteObject implements DataFactory 
     public CourseDataService getCourseData() throws RemoteException {
         return new CourseData();
     }
+
+    @Override
+    public CourseDataService getCourseData(String file) throws RemoteException {
+        return new CourseData(file);
+    }
 }

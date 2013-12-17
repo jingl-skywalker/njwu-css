@@ -21,6 +21,16 @@ public class AdminMain extends javax.swing.JFrame {
      UserInfoVO userInfo;
    UserBLService userBL;
    adminMainPanel adminMain;
+   
+   ViewUserInfoPanel view;
+   ModifyUserInfoPanel modify;
+   AddUserPanel add;
+   DeleteUserPanel delete;
+   ResetKeyPanel reset;
+   PerInfoPanel perInfo;
+   ModifyKeyPanel change;
+   InformMessagePanel info;
+   adminMainPanel main;
     /**
      * Creates new form JWmain
      */
@@ -32,15 +42,24 @@ public class AdminMain extends javax.swing.JFrame {
          UserInfoFactory factory = new UserInfoFactory();
         userBL = factory.getUserBLService(ip, port);
         adminMainPanel.setLayout(card);
-        adminMainPanel.add("main",new adminMainPanel(userInfo.getName(),this));
-        adminMainPanel.add("view",new ViewUserInfoPanel(userInfo.getName(),this,userBL));
-        adminMainPanel.add("modify",new ModifyUserInfoPanel(userInfo.getName(),this,userBL));
-        adminMainPanel.add("add",new AddUserPanel(userInfo.getName(),this,userBL));
-        adminMainPanel.add("delete",new DeleteUserPanel(userInfo.getName(),this,userBL));
-        adminMainPanel.add("reset",new ResetKeyPanel(userInfo.getName(),this,userBL));
-        adminMainPanel.add("perInfo",new PerInfoPanel(userInfo,this,userBL));
-        adminMainPanel.add("change",new ModifyKeyPanel(userInfo,this,userBL));
-        adminMainPanel.add("info",new InformMessagePanel(userInfo.getName(),this,userBL));
+        main = new adminMainPanel(userInfo.getName(),this);
+        adminMainPanel.add("main",main);
+        view = new ViewUserInfoPanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("view",view);
+        modify = new ModifyUserInfoPanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("modify",modify);
+        add =new AddUserPanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("add",add);
+        delete = new DeleteUserPanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("delete",delete);
+        reset = new ResetKeyPanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("reset",reset);
+        perInfo = new PerInfoPanel(userInfo,this,userBL);
+        adminMainPanel.add("perInfo",perInfo);
+        change = new ModifyKeyPanel(userInfo,this,userBL);
+        adminMainPanel.add("change",change);
+        info =new InformMessagePanel(userInfo.getName(),this,userBL);
+        adminMainPanel.add("info",info);
         
          
     }
@@ -213,6 +232,7 @@ public class AdminMain extends javax.swing.JFrame {
 
     void viewGUI() {
         card.show(adminMainPanel, "view");
+        view.update();
     }
 
     void mainGUI() {
@@ -221,22 +241,27 @@ public class AdminMain extends javax.swing.JFrame {
 
     void addGUI() {
         card.show(adminMainPanel, "add");
+        add.update();
     }
 
     void resetGUI() {
         card.show(adminMainPanel, "reset");
+        reset.update();
     }
 
     void ModifyGUI() {
         card.show(adminMainPanel, "modify");
+        modify.update();
     }
 
     void deleteGUI() {
         card.show(adminMainPanel, "delete");
+        delete.update();
     }
 
     void personInfoGUI() {
         card.show(adminMainPanel, "perInfo");
+        perInfo.update();
     }
 
     void InformMessageGUI() {
@@ -245,5 +270,17 @@ public class AdminMain extends javax.swing.JFrame {
 
     void modifyKeyGUI() {
         card.show(adminMainPanel, "change");
+    }
+    void updateName(){
+        String name = userInfo.getName();
+        view.updateName(name);
+        main.updateName(name);
+        add.updateName(name);
+        reset.updateName(name);
+        modify.updateName(name);
+        delete.updateName(name);
+        perInfo.updateName(name);
+        info.updateName(name);
+        change.updateName(name);
     }
 }

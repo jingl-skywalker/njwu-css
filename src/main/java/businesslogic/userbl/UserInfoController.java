@@ -24,6 +24,10 @@ public class UserInfoController implements UserBLService{
         userInfo = new UserInfoBL(ip,port);
     }
 
+    public UserInfoController() {
+         userInfo = new UserInfoBL("locakhost",1099);
+    }
+
     @Override
     public ArrayList<UserInfoVO> addUser(String file) {
         return userInfo.addUser(file);

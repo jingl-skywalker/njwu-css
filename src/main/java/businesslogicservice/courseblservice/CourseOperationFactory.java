@@ -15,5 +15,9 @@ public class CourseOperationFactory {
     public CourseBLService createCourseBL() {
         return new CourseController();
     }
+
+    public CourseBLService createCourseBL(String term) {
+        return new CourseController(term);
+    }
     
 }

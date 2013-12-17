@@ -260,7 +260,9 @@ UserBLService userBL;
             JOptionPane.showConfirmDialog(this, "修改失败！", null, JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
-
+  public void updateName(String name){
+         nameLogo2.setText(name);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowLogo2;
     private javax.swing.JLabel arrowLogo3;

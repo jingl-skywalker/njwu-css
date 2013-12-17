@@ -9,5 +9,5 @@ package enumeration;
  * @author Administrator
  */
 public enum ResultMessage {
-    SUCCESS,FAIL,ILLEGALFORM
+    SUCCESS,FAIL,ILLEGALFORM,EXIST
 }

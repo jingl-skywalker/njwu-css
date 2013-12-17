@@ -7,6 +7,10 @@ package ui.Teacher;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import ui.Administrator.WaitPanelj;
 import ui.Library.Navigation;
 import vo.uservo.UserInfoVO;
 
@@ -17,14 +21,20 @@ import vo.uservo.UserInfoVO;
  */
 public class TEAmain extends javax.swing.JFrame {
 
+    UserInfoVO userInfo;
     /**
      * Creates new form TEAmain
      */
-    public TEAmain() {
+    public TEAmain(UserInfoVO v,String ip,int port) {
+        userInfo = v;
         initComponents();
-        gradePanel = new GradePanel();
-        courseInfoPanel = new CourseInfoPanel ();
-        perInfoPanel = new PerInfoPanel();
+         nameLogo.setText(v.getName());
+         
+        gradePanel = new GradePanel(v,ip,port);
+        courseInfoPanel = new CourseInfoPanel (v,ip,port);
+        perInfoPanel = new PerInfoPanel(v,this,ip,port);
+        modifyKeyPanel = new ModifyKeyPanel(v,ip,port);
+        courseListPanel = new CourseListPanel(v,ip,port);
         cardLayout = new CardLayout();
         backLabel.setForeground(Color.BLUE);
         homeLabel.setForeground(Color.BLUE);
@@ -34,10 +44,13 @@ public class TEAmain extends javax.swing.JFrame {
         containPanel.add(gradePanel,"gradeP");
         containPanel.add(courseInfoPanel,"courseInfoP");
         containPanel.add(perInfoPanel,"perInfoP");
+        containPanel.add(modifyKeyPanel,"modifyKeyP");
+        containPanel.add(courseListPanel,"courseListP");
         navigation = new Navigation();//-------------------------------导航栏标签
         titelPanel2.add(navigation.getArrow(),0,0);
         titelPanel2.add(navigation.getNow(),0,0);
         navigation.setNowBounds(201, 7, 84, 19);
+       
     }
 
     /**
@@ -157,7 +170,7 @@ public class TEAmain extends javax.swing.JFrame {
 
         gradeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gradeLabel.setForeground(new java.awt.Color(240, 240, 240));
-        gradeLabel.setText("录入成绩");
+        gradeLabel.setText("查看课程");
 
         perInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         perInfoButton.setText("perInfo");
@@ -421,8 +434,17 @@ public class TEAmain extends javax.swing.JFrame {
 
     private void backLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseClicked
         // TODO add your handling code here:
+        if(navigation2==null){
         cardLayout.show(containPanel,"teaMainP");
         navigation.setVisible(false);
+        }
+        else{
+            titelPanel2.remove(navigation2.getArrow());
+            titelPanel2.remove(navigation2.getNow());
+            navigation2=null;
+            cardLayout.show(containPanel,"perInfoP");
+            perInfoPanel.update();
+        }
     }//GEN-LAST:event_backLabelMouseClicked
 
     private void backLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backLabelMouseExited
@@ -437,6 +459,13 @@ public class TEAmain extends javax.swing.JFrame {
 
     private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked
         // TODO add your handling code here:
+        if(navigation2!=null){
+            titelPanel2.remove(navigation2.getArrow());
+            titelPanel2.remove(navigation2.getNow());
+            navigation=null;
+            cardLayout.show(containPanel,"perInfoP");
+            perInfoPanel.update();
+        }
         cardLayout.show(containPanel,"teaMainP");
         navigation.setVisible(false);
     }//GEN-LAST:event_homeLabelMouseClicked
@@ -470,6 +499,7 @@ public class TEAmain extends javax.swing.JFrame {
         cardLayout.show(containPanel,"gradeP");
         navigation.setNowText("查看学生列表");
         navigation.setVisible(true);
+        gradePanel.update();
     }//GEN-LAST:event_stuListButtonActionPerformed
 
     private void courseInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseInfoButtonActionPerformed
@@ -477,18 +507,22 @@ public class TEAmain extends javax.swing.JFrame {
         cardLayout.show(containPanel,"courseInfoP");
         navigation.setNowText("补充课程信息");
         navigation.setVisible(true);
+        courseInfoPanel.update();
     }//GEN-LAST:event_courseInfoButtonActionPerformed
 
     private void gradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeButtonActionPerformed
         // TODO add your handling code here:
-        cardLayout.show(containPanel,"gradeP");
-        navigation.setNowText("录入成绩");
+        cardLayout.show(containPanel,"courseListP");
+        navigation.setNowText("查看课程");
         navigation.setVisible(true);
+        courseListPanel.update();
+        
     }//GEN-LAST:event_gradeButtonActionPerformed
 
     private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
         // TODO add your handling code here:
         cardLayout.show(containPanel,"perInfoP");
+        perInfoPanel.update();
         navigation.setNowText("个人信息");
         navigation.setVisible(true);
     }//GEN-LAST:event_perInfoButtonActionPerformed
@@ -496,7 +530,7 @@ public class TEAmain extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public  void main(String args[], UserInfoVO userInfoVO) {
+    public  static void main(String args[],final UserInfoVO v,final String ip,final int port) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -518,12 +552,12 @@ public class TEAmain extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TEAmain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TEAmain().setVisible(true);
+                
+                new TEAmain(v,ip,port).setVisible(true);
             }
         });
     }
@@ -559,6 +593,21 @@ public class TEAmain extends javax.swing.JFrame {
    private GradePanel gradePanel;
    private CourseInfoPanel courseInfoPanel;
    private PerInfoPanel perInfoPanel;
+   private CourseListPanel courseListPanel;
     private Navigation navigation;
    private CardLayout cardLayout;
+   private ModifyKeyPanel modifyKeyPanel;
+    private Navigation navigation2=null;
+
+    void modifyKeyGUI() {
+         cardLayout.show(containPanel,"modifyKeyP");
+        modifyKeyPanel.update();
+        navigation2 = new Navigation();//-------------------------------导航栏标签
+        titelPanel2.add(navigation.getArrow(),0,0);
+        titelPanel2.add(navigation.getNow(),0,0);
+        navigation2.setArrowLocation(295, 7);
+        navigation2.setNowBounds(321, 7, 84, 19);
+         navigation2.setNowText("密码修改");
+         navigation2.setVisible(true);
+    }
 }

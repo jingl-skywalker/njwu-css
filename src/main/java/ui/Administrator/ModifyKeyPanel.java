@@ -388,12 +388,25 @@ UserBLService userBL;
         v.setPsw(s3);
          if(userBL.changeAdminInfo(v)==ResultMessage.SUCCESS){
             JOptionPane.showConfirmDialog(this, "修改成功！", null, JOptionPane.OK_OPTION);
+            oldPasswordField.setText("");
+            newPasswordField1.setText("");
+            newPasswordField2.setText("");
+
          }
         else{
             JOptionPane.showConfirmDialog(this, "修改失败", null, JOptionPane.OK_OPTION);
         }
     }//GEN-LAST:event_setKeyButtonActionPerformed
+  public void updateName(String name){
+         nameLogo2.setText(name);
+    }
+  public void update(){
+      oldPasswordField.setText("");
+      newPasswordField1.setText("");
+       newPasswordField2.setText("");
+       tipLabel.setText("");
 
+  }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel arrowLogo2;
     private javax.swing.JLabel arrowLogo3;

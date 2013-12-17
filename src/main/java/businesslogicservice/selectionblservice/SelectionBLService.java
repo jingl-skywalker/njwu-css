@@ -17,13 +17,25 @@ public interface SelectionBLService {
 
     public boolean addCourse(SelectionVO selectionvo);
 
+    public boolean addDirectCourse(SelectionVO selectionvo);
+    
     public boolean deleteCourse(SelectionVO selectionvo);
 
     public boolean quitCourse(SelectionVO selectionvo);
     
     public ArrayList<CourseVO> getCourseList();
     
+    public ArrayList<CourseVO> getSelCourseList();
+    
     public ArrayList<CourseVO> getMyCourseList(String stuID);
+    
+    public ArrayList<CourseVO> getReSelCourseList();
+    
+    public ArrayList<String> getMySelectedCourseList(String stuID);
 
     public boolean verify();
+    
+    public ArrayList<CourseVO> getTempCourseList(String stuID);
+    
+    public boolean addCompulsoryCourse(CourseVO course, String institute, String stuGrade, String term);
 }

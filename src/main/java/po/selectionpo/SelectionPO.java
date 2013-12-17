@@ -18,6 +18,12 @@ public class SelectionPO implements Serializable{
     private String term;
     private String teacher;
 
+    public SelectionPO(String num, String id, String term){
+        courseNum = num;
+        stuID = id;
+        this.term = term;
+    }
+    
     public SelectionPO(String num, String id, String term, String teacher) {
         courseNum = num;
         stuID = id;

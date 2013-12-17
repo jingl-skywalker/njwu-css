@@ -82,4 +82,6 @@ public interface UserInfoDataService extends Remote {
      * @throws RemoteException 
      */
     public ArrayList<UserInfoPO> getStu(String ins,String year) throws RemoteException;
+    
+    public UserInfoPO getStudent(String id) throws RemoteException;
 }

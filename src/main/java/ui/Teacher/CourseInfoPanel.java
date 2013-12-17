@@ -4,21 +4,53 @@
  */
 package ui.Teacher;
 
+import businesslogicservice.courseblservice.CourseBLService;
+import businesslogicservice.courseblservice.CourseOperationFactory;
+import enumeration.ResultMessage;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import ui.Library.MyTitledBorder;
+import vo.coursevo.CourseVO;
+import vo.uservo.UserInfoVO;
 
 /**
  *
  * @author zili chen
  */
 public class CourseInfoPanel extends javax.swing.JPanel {
-
+UserInfoVO userInfo;
+String ip;
+int port;
+CourseBLService courseBL;
+ArrayList<CourseVO> vos=new ArrayList<CourseVO>();
+CourseVO v;
+DefaultListModel listModel = new DefaultListModel();
+boolean isEdit =false;
+ CourseOperationFactory factory = new CourseOperationFactory();
     /**
      * Creates new form CourseInfoPanel
      */
-    public CourseInfoPanel() {
+    public CourseInfoPanel(UserInfoVO v,String ip,int port) {
+        this.userInfo = v;
+        this.ip = ip;
+        this.port = port;
+      
+   
         initComponents();
         coursePanel.setBorder(new MyTitledBorder("授课列表").getTitledBorder());
         courseInfoPanel.setBorder(new MyTitledBorder("课程信息").getTitledBorder());
+        
+        courseBL = factory.createCourseBL();
+        String[] s=courseBL.getAllTerms();
+        for(String str:s){
+            listModel.addElement(str);
+        }
+        termList.setModel(listModel);
+
     }
 
     /**
@@ -62,6 +94,8 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         modifyButton = new javax.swing.JButton();
         sureButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        termList = new javax.swing.JList();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -77,6 +111,17 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         nameLabel.setText("课程名");
 
         courseTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        courseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent e) {
+                int s[] = courseTable.getSelectedRows();
+                if(s.length<1)
+                return;
+                if(s[0]>=0){
+                    TableValueChanged(s[0]);
+
+                }
+            }
+        });
         courseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -107,9 +152,19 @@ public class CourseInfoPanel extends javax.swing.JPanel {
 
         idTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         idTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        idTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idTextFieldActionPerformed(evt);
+            }
+        });
 
         nameTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         nameTextField.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTextFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout coursePanelLayout = new javax.swing.GroupLayout(coursePanel);
         coursePanel.setLayout(coursePanelLayout);
@@ -181,7 +236,6 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         courseInfoPanel.add(typeLabel, gridBagConstraints);
 
         typeComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        typeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 8;
@@ -202,7 +256,6 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         courseInfoPanel.add(creditLabel, gridBagConstraints);
 
         creditComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        creditComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 12;
@@ -222,7 +275,6 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         courseInfoPanel.add(hourLabel, gridBagConstraints);
 
         hourComboBox.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        hourComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
         gridBagConstraints.gridy = 16;
@@ -241,6 +293,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(timeLabel, gridBagConstraints);
 
+        timeTextField.setEditable(false);
         timeTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
@@ -269,6 +322,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(materialLabel, gridBagConstraints);
 
+        idTextField1.setEditable(false);
         idTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
@@ -278,6 +332,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(idTextField1, gridBagConstraints);
 
+        nameTextField1.setEditable(false);
         nameTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
@@ -298,6 +353,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         courseInfoPanel.add(materialLabel1, gridBagConstraints);
 
         referenceTextArea.setColumns(20);
+        referenceTextArea.setEditable(false);
         referenceTextArea.setRows(5);
         jScrollPane2.setViewportView(referenceTextArea);
 
@@ -311,6 +367,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         courseInfoPanel.add(jScrollPane2, gridBagConstraints);
 
+        materialTextField.setEditable(false);
         materialTextField.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 10;
@@ -321,6 +378,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         courseInfoPanel.add(materialTextField, gridBagConstraints);
 
         summaryTextArea.setColumns(20);
+        summaryTextArea.setEditable(false);
         summaryTextArea.setRows(5);
         jScrollPane3.setViewportView(summaryTextArea);
 
@@ -338,18 +396,48 @@ public class CourseInfoPanel extends javax.swing.JPanel {
         modifyButton.setForeground(new java.awt.Color(204, 204, 204));
         modifyButton.setText("编辑课程信息");
         modifyButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        modifyButton.setEnabled(false);
+        modifyButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyButtonActionPerformed(evt);
+            }
+        });
 
         sureButton.setBackground(new java.awt.Color(0, 0, 0));
         sureButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         sureButton.setForeground(new java.awt.Color(204, 204, 204));
         sureButton.setText("确认");
         sureButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        sureButton.setEnabled(false);
+        sureButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sureButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setBackground(new java.awt.Color(0, 0, 0));
         cancelButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         cancelButton.setForeground(new java.awt.Color(204, 204, 204));
         cancelButton.setText("取消");
         cancelButton.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true)));
+        cancelButton.setEnabled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        termList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        termList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                termListValueChanged(evt);
+            }
+        });
+        jScrollPane4.setViewportView(termList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -361,31 +449,167 @@ public class CourseInfoPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(courseInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(modifyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(sureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(courseInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(courseInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(30, 30, 30)
+                        .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(modifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(sureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void idTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextFieldActionPerformed
+        // TODO add your handling code here:
+         nameTextField.setText("");
+         vos = courseBL.findCourseID(idTextField.getText());
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+    }//GEN-LAST:event_idTextFieldActionPerformed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+        // TODO add your handling code here:
+         idTextField.setText("");
+         vos = courseBL.findCourseName(nameTextField.getText());
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+    }//GEN-LAST:event_nameTextFieldActionPerformed
+
+    private void modifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyButtonActionPerformed
+        // TODO add your handling code here:
+         materialTextField.setEditable(true);
+         referenceTextArea.setEditable(true);
+         summaryTextArea.setEditable(true);
+         sureButton.setEnabled(true);
+         cancelButton.setEnabled(false);
+    }//GEN-LAST:event_modifyButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+        if(v==null){
+            return ;
+        }
+         materialTextField.setText(v.getMaterial());
+         referenceTextArea.setText(v.getReference().replace('=', '\n'));
+        summaryTextArea.setText(v.getSummary().replace('=', '\n'));
+        
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void sureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sureButtonActionPerformed
+        // TODO add your handling code here:
+        if(v==null)
+            return ;
+        v.setMaterial(materialTextField.getText());
+        v.setReference(referenceTextArea.getText().replace('\n', '='));
+        v.setSummary(summaryTextArea.getText().replace('\n', '='));
+        
+          if (courseBL.modifyCourse(v) == ResultMessage.SUCCESS) {
+            JOptionPane.showMessageDialog(this, "修改成功！");
+            sureButton.setEnabled(false);
+            cancelButton.setEnabled(false);
+            materialTextField.setEditable(false);
+         referenceTextArea.setEditable(false);
+         summaryTextArea.setEditable(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "修改失败！");
+        }
+    }//GEN-LAST:event_sureButtonActionPerformed
+
+    private void termListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_termListValueChanged
+        // TODO add your handling code here:
+         String term=(String) termList.getSelectedValue();
+        if(term==null){
+            return;
+        }
+        if(term.equals((String)listModel.lastElement())){
+            isEdit = true;
+            
+        }
+        else{
+            isEdit = false;
+             modifyButton.setEnabled(false);
+            cancelButton.setEnabled(false);
+            sureButton.setEnabled(false);
+        }
+        courseBL = factory.createCourseBL(term);
+       vos = courseBL.observeList("teaID", userInfo.getID());
+       updateTable();
+       v=null;
+       idTextField1.setText("");
+        nameTextField1.setText("");
+        timeTextField.setText("");
+        materialTextField.setText("");
+        typeComboBox.removeAllItems();
+        creditComboBox.removeAllItems();
+        hourComboBox.removeAllItems();
+        referenceTextArea.setText("");
+        summaryTextArea.setText("");
+    }//GEN-LAST:event_termListValueChanged
+
+     public void TableValueChanged(int i){
+         if(isEdit){
+             modifyButton.setEnabled(true);
+            cancelButton.setEnabled(true);
+         }
+        v = vos.get(i);
+        idTextField1.setText(v.getCourseID());
+        nameTextField1.setText(v.getCourseName());
+        timeTextField.setText(v.getTime());
+        materialTextField.setText(v.getMaterial());
+        typeComboBox.removeAllItems();
+        typeComboBox.addItem(v.getType());
+        creditComboBox.removeAllItems();
+        creditComboBox.addItem(v.getCredit());
+        hourComboBox.removeAllItems();
+        hourComboBox.addItem(v.getHour());
+        referenceTextArea.setText(v.getReference().replace('=', '\n'));
+        summaryTextArea.setText(v.getSummary().replace('=', '\n'));
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel courseInfoPanel;
@@ -402,6 +626,7 @@ public class CourseInfoPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel materialLabel;
     private javax.swing.JLabel materialLabel1;
     private javax.swing.JTextField materialTextField;
@@ -414,9 +639,56 @@ public class CourseInfoPanel extends javax.swing.JPanel {
     private javax.swing.JLabel summaryLabel;
     private javax.swing.JTextArea summaryTextArea;
     private javax.swing.JButton sureButton;
+    private javax.swing.JList termList;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JTextField timeTextField;
     private javax.swing.JComboBox typeComboBox;
     private javax.swing.JLabel typeLabel;
     // End of variables declaration//GEN-END:variables
+    public void updateTable(){
+         
+        String[][] content = new String[vos.size()][3];
+        for (int i = 0; i < vos.size(); i++) {
+
+            //初始化table
+
+            content[i][0] = vos.get(i).getCourseID();
+            content[i][1] = vos.get(i).getCourseName();
+            content[i][2] = vos.get(i).getCredit();
+        }
+        String[] head = {"课程号","课程名","学分"};
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        courseTable.setModel(model);
+    }
+
+    public void update(){
+        listModel.removeAllElements();
+        String[] s=courseBL.getAllTerms();
+        for(String str:s){
+            listModel.addElement(str);
+        }
+        termList.repaint();
+        
+        idTextField1.setText("");
+        nameTextField1.setText("");
+        idTextField.setText("");
+        nameTextField.setText("");
+        timeTextField.setText("");
+        materialTextField.setText("");
+        typeComboBox.removeAllItems();
+        creditComboBox.removeAllItems();
+        hourComboBox.removeAllItems();
+        referenceTextArea.setText("");
+        summaryTextArea.setText("");
+        vos.clear();
+        modifyButton.setEnabled(false);
+        isEdit = false;
+        sureButton.setEnabled(isEdit);
+        cancelButton.setEnabled(isEdit);
+        updateTable();
+    }
 }

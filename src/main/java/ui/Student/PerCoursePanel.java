@@ -186,19 +186,31 @@ public class PerCoursePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void termListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_termListMouseClicked
-        String term = (String)termList.getSelectedValue();
+        String term_ch = (String)termList.getSelectedValue();
+        String term = term_ch.substring(0, 4);
+        if(term_ch.charAt(5) == '一'){
+            term += "-1";
+        }
+        else{
+            term += "-2";
+        }
+               
         Iterator<CourseVO> iterator = myCourseList.iterator();
         DefaultTableModel tableModel = (DefaultTableModel)courseListTable.getModel();
         while(iterator.hasNext()){
             CourseVO course = iterator.next();
-            String courseNum = course.getCourseID();
-            String courseName = course.getCourseName();
-            String credit = "" + course.getCredit();
-            String teacher = course.getTeaName();
-            String time = course.getTime();
-            String type = course.getProperty();
+            
+            if(course.getTerm().equals(term)){            
+                String courseNum = course.getCourseID();
+                String courseName = course.getCourseName();
+                String credit = "" + course.getCredit();
+                String teacher = course.getTeaName();
+                String time = course.getTime();
+                String type = course.getProperty();
                     
-            tableModel.addRow(new Object[]{courseNum, courseName, credit, teacher, time, type});
+                tableModel.addRow(new Object[]{courseNum, courseName, credit, teacher, time, type});
+            
+            }
         }
     }//GEN-LAST:event_termListMouseClicked
 

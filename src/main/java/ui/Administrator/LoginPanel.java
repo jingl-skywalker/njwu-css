@@ -16,8 +16,10 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import businesslogicservice.userblservice.UserLoginBLService;
 import businesslogicservice.userblservice.UserLoginFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import javax.swing.*;
 import ui.Student.STUmain;
 import ui.JWTeacher.JWmainFrame;
 import ui.Library.PictureGetter;
@@ -30,20 +32,19 @@ import vo.uservo.UserInfoVO;
  * @author zili chen
  */
 public class LoginPanel extends javax.swing.JPanel {
-
     UserLoginBLService userLogin;
     private Type type = Type.STUDENT;   //用户类型
     String t = "学生";
     String ip;//服务器的ip
     int port;//端口号
     JFrame frame;
-
+InformPanel informPanel;
     /**
      * Creates new form LoginPanel
      */
     public LoginPanel(JFrame frame) {
         initComponents();
-        jTextArea1.setEditable(false);
+       
         this.frame = frame;
         frame.setUndecorated(true);
         frame.setLocationRelativeTo(null);
@@ -73,7 +74,7 @@ public class LoginPanel extends javax.swing.JPanel {
             userLogin = ul.getUserLoginController(ip, port);
             String info = userLogin.getNotice();
             if (info != null) {
-                jTextArea1.setText(info);
+                informPanel = new InformPanel(info);
             }
         } catch (RemoteException ex) {
             Logger.getLogger(LoginPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,216 +92,51 @@ public class LoginPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         idButtonGroup = new javax.swing.ButtonGroup();
-        infoPanel = new javax.swing.JPanel();
-        idLabel = new javax.swing.JLabel();
-        idTextField1 = new javax.swing.JTextField();
-        passwordLabel = new javax.swing.JLabel();
-        studentRadioButton = new javax.swing.JRadioButton();
-        teacherRadioButton = new javax.swing.JRadioButton();
-        adminRadioButton = new javax.swing.JRadioButton();
-        deanRadioButton = new javax.swing.JRadioButton();
-        insDeanRadioButton = new javax.swing.JRadioButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        notePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        loginButton1 = new javax.swing.JButton();
+        cancelButton1 = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         tip = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        idTextField1 = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        loginButton2 = new javax.swing.JButton();
+        cancelButton2 = new javax.swing.JButton();
+        helpButton1 = new javax.swing.JButton();
+        helpButton2 = new javax.swing.JButton();
+        stuLabel1 = new javax.swing.JLabel();
+        stuLabel2 = new javax.swing.JLabel();
+        teaLabel1 = new javax.swing.JLabel();
+        teaLabel2 = new javax.swing.JLabel();
+        deanLabel1 = new javax.swing.JLabel();
+        deanLabel2 = new javax.swing.JLabel();
+        insLabel1 = new javax.swing.JLabel();
+        insLabel2 = new javax.swing.JLabel();
+        adminLabel11 = new javax.swing.JLabel();
+        adminLabel12 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(0, 0, 0));
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(720, 450));
 
-        infoPanel.setBackground(new java.awt.Color(0, 0, 0));
-
-        idLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idLabel.setForeground(new java.awt.Color(204, 204, 204));
-        idLabel.setText("ID");
-
-        idTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        idTextField1.setToolTipText("ID");
-        idTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        idTextField1.addActionListener(new java.awt.event.ActionListener() {
+        loginButton1.setFont(new java.awt.Font("微软雅黑", 0, 12)); // NOI18N
+        loginButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginLogin.gif"))); // NOI18N
+        loginButton1.setBorder(null);
+        loginButton1.setContentAreaFilled(false);
+        loginButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idTextField1ActionPerformed(evt);
+                loginButton1ActionPerformed(evt);
             }
         });
 
-        passwordLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        passwordLabel.setForeground(new java.awt.Color(204, 204, 204));
-        passwordLabel.setText("Password");
-
-        studentRadioButton.setBackground(new java.awt.Color(0, 0, 0));
-        idButtonGroup.add(studentRadioButton);
-        studentRadioButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        studentRadioButton.setForeground(new java.awt.Color(204, 204, 204));
-        studentRadioButton.setSelected(true);
-        studentRadioButton.setText("学生");
-        studentRadioButton.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/exit.gif"))); // NOI18N
+        cancelButton1.setContentAreaFilled(false);
+        cancelButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                studentRadioButtonActionPerformed(evt);
-            }
-        });
-
-        teacherRadioButton.setBackground(new java.awt.Color(0, 0, 0));
-        idButtonGroup.add(teacherRadioButton);
-        teacherRadioButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        teacherRadioButton.setForeground(new java.awt.Color(204, 204, 204));
-        teacherRadioButton.setText("任课老师");
-        teacherRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                teacherRadioButtonActionPerformed(evt);
-            }
-        });
-
-        adminRadioButton.setBackground(new java.awt.Color(0, 0, 0));
-        idButtonGroup.add(adminRadioButton);
-        adminRadioButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        adminRadioButton.setForeground(new java.awt.Color(204, 204, 204));
-        adminRadioButton.setText("管理员");
-        adminRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminRadioButtonActionPerformed(evt);
-            }
-        });
-
-        deanRadioButton.setBackground(new java.awt.Color(0, 0, 0));
-        idButtonGroup.add(deanRadioButton);
-        deanRadioButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        deanRadioButton.setForeground(new java.awt.Color(204, 204, 204));
-        deanRadioButton.setText("教务处老师");
-        deanRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deanRadioButtonActionPerformed(evt);
-            }
-        });
-
-        insDeanRadioButton.setBackground(new java.awt.Color(0, 0, 0));
-        idButtonGroup.add(insDeanRadioButton);
-        insDeanRadioButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        insDeanRadioButton.setForeground(new java.awt.Color(204, 204, 204));
-        insDeanRadioButton.setText("院教务员");
-        insDeanRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insDeanRadioButtonActionPerformed(evt);
-            }
-        });
-
-        jPasswordField1.setToolTipText("密码");
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
-        infoPanel.setLayout(infoPanelLayout);
-        infoPanelLayout.setHorizontalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(infoPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
-                                .addComponent(adminRadioButton)
-                                .addGap(18, 18, 18))
-                            .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(studentRadioButton)
-                                .addGap(32, 32, 32)))
-                        .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(infoPanelLayout.createSequentialGroup()
-                                .addComponent(deanRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(insDeanRadioButton))
-                            .addComponent(teacherRadioButton)))
-                    .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addComponent(idLabel)
-                        .addGap(58, 58, 58)
-                        .addComponent(idTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(infoPanelLayout.createSequentialGroup()
-                        .addComponent(passwordLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        infoPanelLayout.setVerticalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(infoPanelLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idLabel)
-                    .addComponent(idTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordLabel)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(adminRadioButton)
-                    .addComponent(deanRadioButton)
-                    .addComponent(insDeanRadioButton))
-                .addGap(18, 18, 18)
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(teacherRadioButton)
-                    .addComponent(studentRadioButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        notePanel.setBackground(new java.awt.Color(255, 255, 255));
-        notePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        notePanel.setForeground(new java.awt.Color(255, 255, 255));
-        notePanel.setPreferredSize(new java.awt.Dimension(326, 2));
-
-        jLabel1.setFont(new java.awt.Font("宋体", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel1.setText("通知公告");
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 3, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout notePanelLayout = new javax.swing.GroupLayout(notePanel);
-        notePanel.setLayout(notePanelLayout);
-        notePanelLayout.setHorizontalGroup(
-            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(notePanelLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(notePanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        notePanelLayout.setVerticalGroup(
-            notePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(notePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-
-        jButton1.setText("登陆");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("取消");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButton1ActionPerformed(evt);
             }
         });
 
@@ -330,101 +166,330 @@ public class LoginPanel extends javax.swing.JPanel {
             }
         });
 
+        idTextField1.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        idTextField1.setToolTipText("ID");
+        idTextField1.setBorder(null);
+        idTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idTextField1ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField1.setToolTipText("密码");
+        jPasswordField1.setBorder(null);
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
+            }
+        });
+
+        loginButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginLoginT.gif"))); // NOI18N
+        loginButton2.setPreferredSize(new java.awt.Dimension(35, 35));
+        loginButton2.setContentAreaFilled(false);
+        loginButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButton2ActionPerformed(evt);
+            }
+        });
+
+        cancelButton2.setContentAreaFilled(false);
+        cancelButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginCancelT.gif"))); // NOI18N
+        cancelButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButton2ActionPerformed(evt);
+            }
+        });
+
+        helpButton1.setContentAreaFilled(false);
+        helpButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginHelp.gif"))); // NOI18N
+        helpButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButton1ActionPerformed(evt);
+            }
+        });
+
+        helpButton2.setContentAreaFilled(false);
+        helpButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginHelpT.gif"))); // NOI18N
+        helpButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpButton2ActionPerformed(evt);
+            }
+        });
+
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu2.gif"))); // NOI18N
+        stuLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stuLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                stuLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                stuLabel1MouseExited(evt);
+            }
+        });
+
+        stuLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStuT.gif"))); // NOI18N
+        stuLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stuLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                stuLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                stuLabel2MouseExited(evt);
+            }
+        });
+
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+        teaLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                teaLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                teaLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                teaLabel1MouseExited(evt);
+            }
+        });
+
+        teaLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTeaT.gif"))); // NOI18N
+        teaLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                teaLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                teaLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                teaLabel2MouseExited(evt);
+            }
+        });
+
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+        deanLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deanLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deanLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deanLabel1MouseExited(evt);
+            }
+        });
+
+        deanLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJWT.gif"))); // NOI18N
+        deanLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deanLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deanLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deanLabel2MouseExited(evt);
+            }
+        });
+
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+        insLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                insLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                insLabel1MouseExited(evt);
+            }
+        });
+
+        insLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJWT.gif"))); // NOI18N
+        insLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                insLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                insLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                insLabel2MouseExited(evt);
+            }
+        });
+
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+        adminLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adminLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adminLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                adminLabel11MouseExited(evt);
+            }
+        });
+
+        adminLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdminT.gif"))); // NOI18N
+        adminLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adminLabel12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adminLabel12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                adminLabel12MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(tip, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(92, 92, 92)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(457, 457, 457)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 540, Short.MAX_VALUE)
+                .addComponent(jLabel5))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addGap(81, 81, 81)
+                        .addComponent(loginButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(loginButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(cancelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(helpButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(helpButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5))))
+                        .addGap(95, 95, 95)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tip, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(deanLabel1)
+                                .addGap(108, 108, 108))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(deanLabel2)
+                                .addGap(127, 127, 127)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(insLabel2)
+                            .addComponent(insLabel1)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(73, 73, 73))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(143, 143, 143)
+                        .addComponent(stuLabel1)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(teaLabel1)
+                                .addGap(91, 91, 91)
+                                .addComponent(adminLabel11))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(teaLabel2)
+                                .addGap(139, 139, 139)
+                                .addComponent(adminLabel12))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(448, 448, 448)
+                        .addComponent(stuLabel2)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(adminLabel11)
+                                    .addComponent(teaLabel1))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(teaLabel2)
+                            .addComponent(adminLabel12)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(stuLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(stuLabel2)))))
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tip, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(idTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tip, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addContainerGap(72, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(helpButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loginButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cancelButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cancelButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(helpButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loginButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40))
+                                .addComponent(insLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(insLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))))))
+                                .addComponent(deanLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(deanLabel2)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void teacherRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teacherRadioButtonActionPerformed
-        // TODO add your handling code here:
-        type = Type.TEACHER;
-        t = "任课老师";
-    }//GEN-LAST:event_teacherRadioButtonActionPerformed
-
-    private void studentRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentRadioButtonActionPerformed
-        // TODO add your handling code here:
-        type = Type.STUDENT;
-        t = "学生";
-
-    }//GEN-LAST:event_studentRadioButtonActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
         // TODO add your handling code here:
         idTextField1.setText("");
         jPasswordField1.setText("");
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_cancelButton1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
         // TODO add your handling code here:
         tip.setText("");
         String ID = idTextField1.getText();
@@ -434,14 +499,17 @@ public class LoginPanel extends javax.swing.JPanel {
             tip.setText("用户名或密码错误");
             return;
         }
-        frame.dispose();
+       // frame.remove(this);
+       //new WaitTip(frame);
+       frame.dispose(); 
         switch (type) {
             case STUDENT: {
                 new STUmain().main(null, userVO);
                 break;
             }
             case TEACHER: {
-                new TEAmain().main(null, userVO);
+               // WaitPanelj w = new WaitPanelj();
+                TEAmain.main(null, userVO,ip,port);
                 break;
             }
             case DEAN: {
@@ -450,57 +518,280 @@ public class LoginPanel extends javax.swing.JPanel {
                 break;
             }
             case INS_DEAN: {
-                new YJWmain().main(null, userVO);
+                YJWmain.main(null, userVO,ip,port);
                 break;
             }
             case ADMIN: {
-                frame.dispose();
                 new AdminMain(userVO, ip, port).setVisible(true);
                 break;
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void adminRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminRadioButtonActionPerformed
-        // TODO add your handling code here:
-        type = Type.ADMIN;
-        t = "管理员";
-    }//GEN-LAST:event_adminRadioButtonActionPerformed
-
-    private void deanRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deanRadioButtonActionPerformed
-        // TODO add your handling code here:
-        type = Type.DEAN;
-        t = "教务处老师";
-    }//GEN-LAST:event_deanRadioButtonActionPerformed
-
-    private void insDeanRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insDeanRadioButtonActionPerformed
-        // TODO add your handling code here:
-        type = Type.INS_DEAN;
-        t = "院教务员";
-    }//GEN-LAST:event_insDeanRadioButtonActionPerformed
+    }//GEN-LAST:event_loginButton1ActionPerformed
 
     private void idTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idTextField1ActionPerformed
         // TODO add your handling code here:
-        jButton1ActionPerformed(evt);
+        jPasswordField1.setFocusable(true);
+        jPasswordField1.requestFocus(true);
     }//GEN-LAST:event_idTextField1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
-        jButton1ActionPerformed(evt);
+        loginButton1ActionPerformed(evt);
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         ImageIcon icon = new ImageIcon(PictureGetter.getInfo1Path());
         JOptionPane.showMessageDialog(null, "谢谢使用 O(∩_∩)O~", "Thanks", JOptionPane.INFORMATION_MESSAGE, icon);
+        System.exit(0);
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void loginButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton2ActionPerformed
+        // TODO add your handling code here:
+        loginButton1ActionPerformed(evt);
+    }//GEN-LAST:event_loginButton2ActionPerformed
+
+    private void helpButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButton2ActionPerformed
+        // TODO add your handling code here:
+        helpButton1ActionPerformed(evt);
+    }//GEN-LAST:event_helpButton2ActionPerformed
+
+    private void cancelButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton2ActionPerformed
+        // TODO add your handling code here:
+        cancelButton1ActionPerformed(evt);
+    }//GEN-LAST:event_cancelButton2ActionPerformed
+
+    private void helpButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helpButton1ActionPerformed
+
+    private void stuLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel1MouseClicked
+        // TODO add your handling code here:
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+        
+        t = "学生";
+        type = Type.STUDENT;
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu2.gif"))); // NOI18N
+    }//GEN-LAST:event_stuLabel1MouseClicked
+
+    private void stuLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel1MouseEntered
+        // TODO add your handling code here:
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu2.gif"))); // NOI18N
+
+    }//GEN-LAST:event_stuLabel1MouseEntered
+
+    private void stuLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel1MouseExited
+        // TODO add your handling code here:
+        if(type==Type.STUDENT){
+            return ;
+        }
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu.gif"))); // NOI18N
+
+    }//GEN-LAST:event_stuLabel1MouseExited
+
+    private void stuLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel2MouseClicked
+        // TODO add your handling code here:
+        stuLabel1MouseClicked(evt);
+    }//GEN-LAST:event_stuLabel2MouseClicked
+
+    private void stuLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel2MouseEntered
+        // TODO add your handling code here:
+        stuLabel1MouseEntered(evt);
+    }//GEN-LAST:event_stuLabel2MouseEntered
+
+    private void stuLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stuLabel2MouseExited
+        // TODO add your handling code here:
+         stuLabel1MouseExited(evt);
+    }//GEN-LAST:event_stuLabel2MouseExited
+
+    private void teaLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel1MouseClicked
+        // TODO add your handling code here:
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu.gif"))); // NOI18N
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+        
+        t = "任课老师";
+        type = Type.TEACHER;
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea2.gif"))); // NOI18N
+    }//GEN-LAST:event_teaLabel1MouseClicked
+
+    private void teaLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel1MouseEntered
+        // TODO add your handling code here:
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea2.gif"))); // NOI18N
+    }//GEN-LAST:event_teaLabel1MouseEntered
+
+    private void teaLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel1MouseExited
+        // TODO add your handling code here:
+        if(type == Type.TEACHER){
+            return ;
+        }
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+    }//GEN-LAST:event_teaLabel1MouseExited
+
+    private void teaLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel2MouseClicked
+        // TODO add your handling code here:
+        teaLabel1MouseClicked(evt);
+    }//GEN-LAST:event_teaLabel2MouseClicked
+
+    private void teaLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel2MouseEntered
+        // TODO add your handling code here:
+        teaLabel1MouseEntered(evt);
+    }//GEN-LAST:event_teaLabel2MouseEntered
+
+    private void teaLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teaLabel2MouseExited
+        // TODO add your handling code here:
+        teaLabel1MouseExited(evt);
+    }//GEN-LAST:event_teaLabel2MouseExited
+
+    private void adminLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel11MouseClicked
+        // TODO add your handling code here:
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu.gif"))); // NOI18N
+        
+        t = "管理员";
+        type = Type.ADMIN;
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin2.gif"))); // NOI18N
+    }//GEN-LAST:event_adminLabel11MouseClicked
+
+    private void adminLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel11MouseEntered
+        // TODO add your handling code here:
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin2.gif"))); // NOI18N
+    }//GEN-LAST:event_adminLabel11MouseEntered
+
+    private void adminLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel11MouseExited
+        // TODO add your handling code here:
+        if(type==Type.ADMIN){
+            return;
+        }
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+    }//GEN-LAST:event_adminLabel11MouseExited
+
+    private void adminLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel12MouseClicked
+        // TODO add your handling code here:
+        adminLabel11MouseClicked(evt);
+    }//GEN-LAST:event_adminLabel12MouseClicked
+
+    private void adminLabel12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel12MouseEntered
+        // TODO add your handling code here:
+         adminLabel11MouseEntered(evt);
+    }//GEN-LAST:event_adminLabel12MouseEntered
+
+    private void adminLabel12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminLabel12MouseExited
+        // TODO add your handling code here:
+        adminLabel11MouseExited(evt);
+    }//GEN-LAST:event_adminLabel12MouseExited
+
+    private void deanLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel1MouseClicked
+        // TODO add your handling code here:
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu.gif"))); // NOI18N
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+        
+        t = "教务处老师";
+        type =Type.DEAN;
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW2.gif"))); // NOI18N
+    }//GEN-LAST:event_deanLabel1MouseClicked
+
+    private void deanLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel1MouseEntered
+        // TODO add your handling code here:
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW2.gif"))); // NOI18N
+    }//GEN-LAST:event_deanLabel1MouseEntered
+
+    private void deanLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel1MouseExited
+        // TODO add your handling code here:
+        if(type == Type.DEAN){
+            return;
+        }
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+    }//GEN-LAST:event_deanLabel1MouseExited
+
+    private void deanLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel2MouseClicked
+        // TODO add your handling code here:
+        deanLabel1MouseClicked(evt);
+    }//GEN-LAST:event_deanLabel2MouseClicked
+
+    private void deanLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel2MouseEntered
+        // TODO add your handling code here:
+        deanLabel1MouseEntered(evt);
+    }//GEN-LAST:event_deanLabel2MouseEntered
+
+    private void deanLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deanLabel2MouseExited
+        // TODO add your handling code here
+        deanLabel1MouseExited(evt);
+        
+    }//GEN-LAST:event_deanLabel2MouseExited
+
+    private void insLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel1MouseClicked
+        // TODO add your handling code here:
+        teaLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginTea.gif"))); // NOI18N
+        deanLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginJW.gif"))); // NOI18N
+        stuLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginStu.gif"))); // NOI18N
+        adminLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginAdmin.gif"))); // NOI18N
+        
+        t = "院教务员";
+        type = Type.INS_DEAN;
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW2.gif"))); // NOI18N
+    }//GEN-LAST:event_insLabel1MouseClicked
+
+    private void insLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel1MouseEntered
+        // TODO add your handling code here:
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW2.gif"))); // NOI18N
+    }//GEN-LAST:event_insLabel1MouseEntered
+
+    private void insLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel1MouseExited
+        // TODO add your handling code here:
+        if(type ==Type.INS_DEAN){
+            return;
+        }
+        insLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/loginUI/loginYJW.gif"))); // NOI18N
+    }//GEN-LAST:event_insLabel1MouseExited
+
+    private void insLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel2MouseClicked
+        // TODO add your handling code here:
+         insLabel1MouseClicked(evt);
+    }//GEN-LAST:event_insLabel2MouseClicked
+
+    private void insLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel2MouseEntered
+        // TODO add your handling code here:
+        insLabel1MouseEntered(evt);
+    }//GEN-LAST:event_insLabel2MouseEntered
+
+    private void insLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_insLabel2MouseExited
+        // TODO add your handling code here:
+        insLabel1MouseExited(evt);
+    }//GEN-LAST:event_insLabel2MouseExited
     public static void main(String[] arg) {
         JFrame loginFrame = new JFrame("css-login");
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         LoginPanel loginPanel = new LoginPanel(loginFrame);
-        loginFrame.setSize(720, 450);
+        loginFrame.setSize(1024, 625);
+        
+        ImageIcon background = new ImageIcon("src/main/resources/picture/loginUI/login2.gif");// 背景图片
+        JLabel label = new JLabel(background);// 把背景图片显示在一个标签里面
+        // 把标签的大小位置设置为图片刚好填充整个面板
+        label.setBounds(0, 0, background.getIconWidth(),background.getIconHeight());
+        // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明
+        JPanel imagePanel = (JPanel) loginFrame.getContentPane();
+         imagePanel.setOpaque(false);
+        // 内容窗格默认的布局管理器为BorderLayout
+       imagePanel.setLayout(new FlowLayout());
+
+         loginFrame.getLayeredPane().setLayout(null);
+       // 把背景图片添加到分层窗格的最底层作为背景
+       loginFrame.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));
+        
         loginFrame.setLocationRelativeTo(loginFrame.getOwner());
-        loginFrame.add(loginPanel);
+        loginFrame.setLayout(null);
+        LoginPanel login = new LoginPanel(loginFrame);
+        login.setBounds(0, 209, 1024, 406);
+        loginFrame.add(login);
         loginFrame.setVisible(true);
 
         System.out.println("________test notice receiver____________________");
@@ -511,28 +802,30 @@ public class LoginPanel extends javax.swing.JPanel {
         System.out.println("test_________notice ___receiver_end");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton adminRadioButton;
-    private javax.swing.JRadioButton deanRadioButton;
+    private javax.swing.JLabel adminLabel11;
+    private javax.swing.JLabel adminLabel12;
+    private javax.swing.JButton cancelButton1;
+    private javax.swing.JButton cancelButton2;
+    private javax.swing.JLabel deanLabel1;
+    private javax.swing.JLabel deanLabel2;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.JButton helpButton1;
+    private javax.swing.JButton helpButton2;
     private javax.swing.ButtonGroup idButtonGroup;
-    private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTextField1;
-    private javax.swing.JPanel infoPanel;
-    private javax.swing.JRadioButton insDeanRadioButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel insLabel1;
+    private javax.swing.JLabel insLabel2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel notePanel;
-    private javax.swing.JLabel passwordLabel;
-    private javax.swing.JRadioButton studentRadioButton;
-    private javax.swing.JRadioButton teacherRadioButton;
+    private javax.swing.JButton loginButton1;
+    private javax.swing.JButton loginButton2;
+    private javax.swing.JLabel stuLabel1;
+    private javax.swing.JLabel stuLabel2;
+    private javax.swing.JLabel teaLabel1;
+    private javax.swing.JLabel teaLabel2;
     private javax.swing.JLabel tip;
     // End of variables declaration//GEN-END:variables
 }

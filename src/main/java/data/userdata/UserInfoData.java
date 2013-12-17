@@ -138,4 +138,19 @@ public class UserInfoData extends UnicastRemoteObject implements UserInfoDataSer
         }
         return target;
     }
+
+    @Override
+    public UserInfoPO getStudent(String id) throws RemoteException {
+        FileUtility file = new FileutilityImpl("src//main//resources//user.txt");
+        ArrayList<String[]> ins = file.getAllUser();
+        ArrayList<UserInfoPO> pos = new ArrayList<UserInfoPO>(1000);
+        for (String[] in : ins) {
+            UserInfoPO p=new UserInfoPO(in);
+            if(p.getID().equals(id)){
+                return p;
+            }
+        }
+        return null;
+
+    }
 }

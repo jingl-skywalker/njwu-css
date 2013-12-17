@@ -4,9 +4,12 @@
  */
 package ui.Student;
 
-import businesslogic.gradebl.GradeFactory;
-import businesslogic.selectionbl.SelectionFactory;
+import businesslogic.gradebl.GradeBLServiceStub;
+import businesslogic.selectionbl.SelectionBLServiceStub;
+import businesslogicservice.gradeblservice.GradeBLService;
+import businesslogicservice.gradeblservice.GradeFactory;
 import businesslogicservice.selectionblservice.SelectionBLService;
+import businesslogicservice.selectionblservice.SelectionFactory;
 import java.awt.CardLayout;
 import ui.Student.PerInfoPanel;
 import ui.Student.AllCoursePanel;
@@ -28,6 +31,7 @@ public class STUmain extends javax.swing.JFrame {
     private PerInfoPanel perInfoPanel;
     private AllCoursePanel allCoursePanel;
     private SelectPanel selectPanel;
+    private ReSelectPanel reSelectPanel;
     private ViewGradePanel viewGradePanel;
     private GradeFactory gradeFactory;
     private SelectionFactory selectionFactory;
@@ -35,6 +39,7 @@ public class STUmain extends javax.swing.JFrame {
 
     public STUmain() {
         initComponents();
+        
         setLocationRelativeTo(null);
 //        setUndecorated(true);
 
@@ -43,20 +48,32 @@ public class STUmain extends javax.swing.JFrame {
     public void initMyConpontent() {
         gradeFactory = new GradeFactory();
         selectionFactory = new SelectionFactory();
-        
+
         perCoursePanel = new PerCoursePanel(student.getID(), selectionFactory.getSelectionController());
         perInfoPanel = new PerInfoPanel(student);
         allCoursePanel = new AllCoursePanel(selectionFactory.getSelectionController());
         selectPanel = new SelectPanel(student.getID(), selectionFactory.getSelectionController());
+        reSelectPanel = new ReSelectPanel(student.getID(), selectionFactory.getSelectionController());
         viewGradePanel = new ViewGradePanel(student.getID(), gradeFactory.getGradeController());
-
+        
+        /*
+        SelectionBLService selectionbl = new SelectionBLServiceStub();
+        GradeBLService gradebl = new GradeBLServiceStub();
+        perCoursePanel = new PerCoursePanel(student.getID(), selectionbl);
+        perInfoPanel = new PerInfoPanel(student);
+        allCoursePanel = new AllCoursePanel(selectionbl);
+        selectPanel = new SelectPanel(student.getID(), selectionbl);
+        viewGradePanel = new ViewGradePanel(student.getID(), gradebl);
+        */
+        
         stuCardPanel.add(perCoursePanel, "perCoursePanel");
         stuCardPanel.add(perInfoPanel, "perInfoPanel");
         stuCardPanel.add(allCoursePanel, "allCoursePanel");
         stuCardPanel.add(selectPanel, "selectPanel");
+        stuCardPanel.add(reSelectPanel, "reSelectPanel");
         stuCardPanel.add(viewGradePanel, "viewGradePanel");
 
-        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "card2");
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "selectPanel");
     }
 
     /**
@@ -98,6 +115,8 @@ public class STUmain extends javax.swing.JFrame {
         allCourseLabel = new javax.swing.JLabel();
         perInfoButton = new javax.swing.JButton();
         perInfoLabel = new javax.swing.JLabel();
+        reSelectButton = new javax.swing.JButton();
+        reSelectLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -194,7 +213,7 @@ public class STUmain extends javax.swing.JFrame {
                 .addComponent(arrowLogo2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(currentLogo2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 429, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 443, Short.MAX_VALUE)
                 .addComponent(backLogo2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(backLabel2)
@@ -304,6 +323,18 @@ public class STUmain extends javax.swing.JFrame {
         perInfoLabel.setForeground(new java.awt.Color(240, 240, 240));
         perInfoLabel.setText("个人信息");
 
+        reSelectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        reSelectButton.setText("reSelect");
+        reSelectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reSelectButtonActionPerformed(evt);
+            }
+        });
+
+        reSelectLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
+        reSelectLabel.setForeground(new java.awt.Color(240, 240, 240));
+        reSelectLabel.setText("补选");
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
@@ -313,36 +344,48 @@ public class STUmain extends javax.swing.JFrame {
                 .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(homePanelLayout.createSequentialGroup()
-                        .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(reSelectLabel)
+                                .addGap(46, 46, 46))
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                .addComponent(reSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)))
+                        .addGap(17, 17, 17)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
+                                .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(gradeLabel)
+                                .addGap(39, 39, 39)))
                         .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(homePanelLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(gradeLabel))
+                                .addComponent(perCourseLabel))
+                            .addComponent(perCourseButton))
+                        .addGap(28, 28, 28)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(homePanelLayout.createSequentialGroup()
-                                .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(perCourseButton)))))
-                .addContainerGap(283, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addComponent(allCourseLabel)))
+                        .addGap(26, 26, 26)
+                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(homePanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(perInfoLabel))
+                            .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(260, Short.MAX_VALUE))
             .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(homePanelLayout.createSequentialGroup()
                     .addGap(28, 28, 28)
                     .addComponent(selectLabel)
-                    .addGap(209, 209, 209)
-                    .addComponent(perCourseLabel)
-                    .addGap(60, 60, 60)
-                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homePanelLayout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(allCourseLabel))
-                        .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(47, 47, 47)
-                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homePanelLayout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(perInfoLabel))
-                        .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(307, Short.MAX_VALUE)))
+                    .addContainerGap(833, Short.MAX_VALUE)))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,28 +394,24 @@ public class STUmain extends javax.swing.JFrame {
                 .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(perCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(gradeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(perInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(reSelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gradeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gradeLabel)
+                    .addComponent(perInfoLabel)
+                    .addComponent(allCourseLabel)
+                    .addComponent(perCourseLabel)
+                    .addComponent(reSelectLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(notePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(homePanelLayout.createSequentialGroup()
-                    .addGap(54, 54, 54)
-                    .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(selectLabel)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, homePanelLayout.createSequentialGroup()
-                                .addGap(74, 74, 74)
-                                .addComponent(perInfoLabel))
-                            .addComponent(perInfoButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(allCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(homePanelLayout.createSequentialGroup()
-                            .addGap(74, 74, 74)
-                            .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(allCourseLabel)
-                                .addComponent(perCourseLabel))))
+                    .addGap(128, 128, 128)
+                    .addComponent(selectLabel)
                     .addContainerGap(223, Short.MAX_VALUE)))
         );
 
@@ -441,28 +480,39 @@ public class STUmain extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
+        System.out.println("selectbutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "selectPanel");
     }//GEN-LAST:event_selectButtonActionPerformed
 
     private void gradeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradeButtonActionPerformed
+        System.out.println("gradebutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "viewGradePanel");
     }//GEN-LAST:event_gradeButtonActionPerformed
 
     private void perCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perCourseButtonActionPerformed
+        System.out.println("percoursebutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perCoursePanel");
     }//GEN-LAST:event_perCourseButtonActionPerformed
 
     private void allCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allCourseButtonActionPerformed
+        System.out.println("allcoursebutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "allCoursePanel");
     }//GEN-LAST:event_allCourseButtonActionPerformed
 
     private void perInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_perInfoButtonActionPerformed
+        System.out.println("perinfobutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "perInfoPanel");
     }//GEN-LAST:event_perInfoButtonActionPerformed
 
     private void homeLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabel2MouseClicked
+        System.out.println("homebutton");
         ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "card2");
     }//GEN-LAST:event_homeLabel2MouseClicked
+
+    private void reSelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reSelectButtonActionPerformed
+        System.out.println("reselectbutton");
+        ((CardLayout) stuCardPanel.getLayout()).show(stuCardPanel, "reSelectPanel");
+    }//GEN-LAST:event_reSelectButtonActionPerformed
 
     public void setStudentVO(UserInfoVO userInfoVO) {
         this.student = userInfoVO;
@@ -514,6 +564,8 @@ public class STUmain extends javax.swing.JFrame {
     private javax.swing.JLabel perCourseLabel;
     private javax.swing.JButton perInfoButton;
     private javax.swing.JLabel perInfoLabel;
+    private javax.swing.JButton reSelectButton;
+    private javax.swing.JLabel reSelectLabel;
     private javax.swing.JButton selectButton;
     private javax.swing.JLabel selectLabel;
     private javax.swing.JPanel stuCardPanel;

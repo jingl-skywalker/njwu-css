@@ -16,7 +16,10 @@ import vo.selectionvo.SelectionVO;
  */
 public class SelectionController implements SelectionBLService{
 
-    Selection selection = new Selection();
+    Selection selection;
+    public SelectionController(){
+       selection = new Selection();
+    }
     
     public boolean addCourse(SelectionVO selectionvo) {
         return selection.addCourse(selectionvo.stuID(), selectionvo.getCouseNum());
@@ -42,11 +45,42 @@ public class SelectionController implements SelectionBLService{
         return selection.getCourseList();
         
     }
+    
+    public ArrayList<CourseVO> getSelCourseList(){
+        return selection.getSelCourseList();
+    }
 
     @Override
     public ArrayList<CourseVO> getMyCourseList(String stuID) {
         return selection.getCourseList(stuID);
     }
+
+    @Override
+    public ArrayList<CourseVO> getTempCourseList(String stuID) {
+        return selection.getTempCourseList(stuID);
+    }
+
+    @Override
+    public boolean addCompulsoryCourse(CourseVO course, String institute, String stuGrade, String term) {
+        return selection.addCompulsoryCourse(course, institute, stuGrade, term);
+    }
+
+    @Override
+    public boolean addDirectCourse(SelectionVO selectionvo) {
+        return selection.addDirectCourse(selectionvo.getCouseNum(), selectionvo.stuID());
+    }
+
+    @Override
+    public ArrayList<CourseVO> getReSelCourseList() {
+        return selection.getReSelCourseList();
+    }
+
+    @Override
+    public ArrayList<String> getMySelectedCourseList(String stuID) {
+        return selection.getMySelectedCourseList(stuID);
+    }
+    
+    
     
     
 }

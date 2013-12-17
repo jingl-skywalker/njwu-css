@@ -224,7 +224,7 @@ public class AllCoursePanel extends javax.swing.JPanel {
     
     private void termListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_termListMouseClicked
         String term_ch = (String)termList.getSelectedValue();
-        String term = term_ch.substring(3);
+        String term = term_ch.substring(0,4);
         if(term_ch.charAt(5) == '一'){
             term += "-1";
         }

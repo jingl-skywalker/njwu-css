@@ -4,11 +4,15 @@
  */
 package ui.Student;
 
+import businesslogic.selectionbl.SelectionBLServiceStub;
 import businesslogicservice.selectionblservice.SelectionBLService;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import ui.Library.FullComboBox;
+import ui.Library.MyComboBox;
 import vo.coursevo.CourseVO;
 import vo.selectionvo.SelectionVO;
 
@@ -28,19 +32,20 @@ public class SelectPanel extends javax.swing.JPanel {
     private ArrayList<CourseVO> showCourseList;
     private ArrayList<CourseVO> myCourseList;
     
-    private String[] day = new String[]{"", "monday", "tuesday", "wednesday", "thursday", "friday"};
-    private int[] credit = new int[]{0, 1, 2, 3, 4, 5};
-    private String[] type = new String[]{"", "generalCourse", "seminar"};
-    private String[] keyword = new String[]{"", "IT", "philosophy"};
+    private FullComboBox dayBox;
+    private FullComboBox timeBox;
+    private FullComboBox instituteBox;
+    private FullComboBox creditBox;
+   
     
-    
-    public SelectPanel(String stuID, SelectionBLService selectionbl) {
+    public SelectPanel(String stuID, SelectionBLService bl) {
         initComponents();
         this.stuID = stuID;
-        this.selectionbl = selectionbl;
+        this.selectionbl = bl;
         
-        totalCourseList = selectionbl.getCourseList();
-        myCourseList = selectionbl.getMyCourseList(stuID);
+        
+        totalCourseList = selectionbl.getSelCourseList();
+        myCourseList = selectionbl.getTempCourseList(stuID);
         
         Iterator<CourseVO> iterator= myCourseList.iterator();
         DefaultTableModel tableModel = (DefaultTableModel)selectedListTable.getModel();
@@ -53,7 +58,31 @@ public class SelectPanel extends javax.swing.JPanel {
         tableModel = (DefaultTableModel)courseListTable.getModel();
         while(iterator.hasNext()){
             CourseVO course = iterator.next();
-            tableModel.addRow(new Object[]{course.getCourseID(), course.getCourseName()});
+            tableModel.addRow(new Object[]{course.getCourseID(), course.getCourseName(),
+                   course.getCredit(), course.getTeaName(), course.getTime(), course.getInstitute()});
+        }
+        
+        dayBox = new FullComboBox();
+        timeBox = new FullComboBox();
+        instituteBox = new FullComboBox();
+        creditBox = new FullComboBox();
+        
+        String[] ss1 = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+        String[] ss2 = {"1-2节", "3-4节", "5-6节", "7-8节", "9-10节"};
+        String[] ss3 = {"软件学院", "商学院", "文学院", "历史学院", "政府管理学院"};
+        String[] ss4 = {"2", "3", "4"};
+        
+        for(int i = 0; i < ss1.length; i++){
+            dayBox.add(ss1[i]);
+        }
+        for(int i = 0; i < ss2.length; i++){
+            timeBox.add(ss2[i]);
+        }
+        for(int i = 0; i < ss3.length; i++){
+            instituteBox.add(ss3[i]);
+        }
+        for(int i = 0; i < ss4.length; i++){
+            creditBox.add(ss4[i]);
         }
         
     }
@@ -65,84 +94,90 @@ public class SelectPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     private void showTotalCourse(){
-        int dayIndex = dayList.getSelectedIndex();
-        int creditIndex = creditList.getSelectedIndex();
-        int typeIndex = typeList.getSelectedIndex();
-        int keywordIndex = keywordList.getSelectedIndex();
+        Vector dayVal = dayBox.getComboBox().getComboVc();
+        Vector timeVal = timeBox.getComboBox().getComboVc();
+        Vector instituteVal = instituteBox.getComboBox().getComboVc();
+        Vector creditVal = creditBox.getComboBox().getComboVc();
     
         showCourseList = (ArrayList<CourseVO>)totalCourseList.clone();
         Iterator<CourseVO> iterator = showCourseList.iterator();
         
         iterator = showCourseList.iterator();
-        if(dayIndex > 0){
+        for(int i = 0; i < dayVal.size(); i++){
             while(iterator.hasNext()){
-                if(!iterator.next().getTime().equals(day[dayIndex])){
+                String day = iterator.next().getTime().substring(0, 3);
+                if(! day.equals((String)dayVal.elementAt(i))){
                     iterator.remove();
                 }
             }
         }
         
         iterator = showCourseList.iterator();
-        if(creditIndex > 0){
+        for(int i = 0; i < timeVal.size(); i++){
             while(iterator.hasNext()){
-                int c1=Integer.parseInt(iterator.next().getCredit());
-                if(c1!= credit[creditIndex]){
+                String time = iterator.next().getTime().substring(3);
+                String time2 = ((String)timeVal.elementAt(i)).substring(0, 3);
+                if(! time.equals(time2)){
                     iterator.remove();
                 }
             }
         }
         
-        /*iterator = showCourseList.iterator();
-        if(typeIndex > 0){
+        iterator = showCourseList.iterator();
+        for(int i = 0; i < instituteVal.size(); i++){
             while(iterator.hasNext()){
-                ///////////undefined course type
+                if(! iterator.next().getInstitute().equals((String)instituteVal.elementAt(i))){
+                    iterator.remove();
+                }
             }
-        }*/
+        }
         
-        /*iterator = showCourseList.iterator();
-        if(keywordIndex > 0){
+        iterator = showCourseList.iterator();
+        for(int i = 0; i < creditVal.size(); i++){
             while(iterator.hasNext()){
-                ///////////undefined coures keyword
+                if(! iterator.next().getCredit().equals((String)creditVal.elementAt(i))){
+                    iterator.remove();
+                }
             }
-        }*/
+        }
         
         courseListTable.removeAll();
         iterator = showCourseList.iterator();
         DefaultTableModel tableModel = (DefaultTableModel)courseListTable.getModel();
         while(iterator.hasNext()){
             CourseVO course = iterator.next();
-            tableModel.addRow(new Object[]{course.getCourseID(), course.getCourseName()});
+            tableModel.addRow(new Object[]{course.getCourseID(), course.getCourseName(),
+                   course.getCredit(), course.getTeaName(), course.getTime(), course.getInstitute()});
         }
         
         
         
     }
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox3 = new javax.swing.JComboBox();
         siftPanel = new javax.swing.JPanel();
         keywordLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        dayList = new javax.swing.JList();
         dayLabel = new javax.swing.JLabel();
         creditLabel = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        creditList = new javax.swing.JList();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        typeList = new javax.swing.JList();
         typeLabel = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        keywordList = new javax.swing.JList();
+        jComboBox1 = dayBox.getComboBox();
+        jComboBox2 = timeBox.getComboBox();
+        jComboBox4 = instituteBox.getComboBox();
+        jComboBox5 = creditBox.getComboBox();
         coursePanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         courseListTable = new javax.swing.JTable();
-        viewInfoButton = new javax.swing.JButton();
         selectButton = new javax.swing.JButton();
         selectedPanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         selectedListTable = new javax.swing.JTable();
         dropButton = new javax.swing.JButton();
         submitButton = new javax.swing.JButton();
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setBackground(new java.awt.Color(0, 0, 0));
         setPreferredSize(new java.awt.Dimension(889, 368));
@@ -153,20 +188,7 @@ public class SelectPanel extends javax.swing.JPanel {
         keywordLabel.setBackground(new java.awt.Color(0, 0, 0));
         keywordLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         keywordLabel.setForeground(new java.awt.Color(204, 204, 204));
-        keywordLabel.setText("关键字");
-
-        dayList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        dayList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        dayList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dayListMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(dayList);
+        keywordLabel.setText("学分");
 
         dayLabel.setBackground(new java.awt.Color(0, 0, 0));
         dayLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
@@ -176,51 +198,36 @@ public class SelectPanel extends javax.swing.JPanel {
         creditLabel.setBackground(new java.awt.Color(0, 0, 0));
         creditLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         creditLabel.setForeground(new java.awt.Color(204, 204, 204));
-        creditLabel.setText("学分");
-
-        creditList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        creditList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "1", "2", "3", "4", "5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        creditList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                creditListMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(creditList);
-
-        typeList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        typeList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "通识课", "研讨课", "网络课程", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        typeList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                typeListMouseClicked(evt);
-            }
-        });
-        jScrollPane4.setViewportView(typeList);
+        creditLabel.setText("节数");
 
         typeLabel.setBackground(new java.awt.Color(0, 0, 0));
         typeLabel.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         typeLabel.setForeground(new java.awt.Color(204, 204, 204));
-        typeLabel.setText("类别");
+        typeLabel.setText("开课院系");
 
-        keywordList.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        keywordList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "信息", "哲学", "艺术", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        keywordList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                keywordListMouseClicked(evt);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
-        jScrollPane5.setViewportView(keywordList);
+
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout siftPanelLayout = new javax.swing.GroupLayout(siftPanel);
         siftPanel.setLayout(siftPanelLayout);
@@ -228,54 +235,43 @@ public class SelectPanel extends javax.swing.JPanel {
             siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(siftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addComponent(keywordLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(siftPanelLayout.createSequentialGroup()
                         .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(creditLabel)
-                            .addComponent(dayLabel)
-                            .addComponent(typeLabel))
-                        .addGap(24, 24, 24)
+                            .addComponent(typeLabel)
+                            .addComponent(keywordLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(siftPanelLayout.createSequentialGroup()
+                        .addComponent(dayLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         siftPanelLayout.setVerticalGroup(
             siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(siftPanelLayout.createSequentialGroup()
-                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(dayLabel))
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(creditLabel))
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(typeLabel)))
-                .addGap(23, 23, 23)
-                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(siftPanelLayout.createSequentialGroup()
-                        .addComponent(keywordLabel)
-                        .addGap(0, 36, Short.MAX_VALUE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dayLabel)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(creditLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(siftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(keywordLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         coursePanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -285,20 +281,37 @@ public class SelectPanel extends javax.swing.JPanel {
         courseListTable.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         courseListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "课程号", "课程名"
+                "课程号", "课程名", "学分", "教师", "上课时间", "开课院系"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -311,14 +324,6 @@ public class SelectPanel extends javax.swing.JPanel {
         });
         courseListTable.setGridColor(new java.awt.Color(204, 204, 204));
         jScrollPane6.setViewportView(courseListTable);
-
-        viewInfoButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
-        viewInfoButton.setText("查看信息");
-        viewInfoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewInfoButtonActionPerformed(evt);
-            }
-        });
 
         selectButton.setFont(new java.awt.Font("微软雅黑", 0, 14)); // NOI18N
         selectButton.setText("选择课程");
@@ -333,13 +338,11 @@ public class SelectPanel extends javax.swing.JPanel {
         coursePanelLayout.setHorizontalGroup(
             coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(coursePanelLayout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
-                .addComponent(viewInfoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(selectButton)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(coursePanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
                 .addContainerGap())
         );
         coursePanelLayout.setVerticalGroup(
@@ -347,10 +350,8 @@ public class SelectPanel extends javax.swing.JPanel {
             .addGroup(coursePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(selectButton)
-                    .addComponent(viewInfoButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selectButton)
                 .addGap(13, 13, 13))
         );
 
@@ -409,23 +410,22 @@ public class SelectPanel extends javax.swing.JPanel {
         selectedPanelLayout.setHorizontalGroup(
             selectedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(selectedPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(selectedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(selectedPanelLayout.createSequentialGroup()
-                        .addGap(0, 55, Short.MAX_VALUE)
-                        .addComponent(dropButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 55, Short.MAX_VALUE))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dropButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, selectedPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         selectedPanelLayout.setVerticalGroup(
             selectedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(selectedPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(selectedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(dropButton))
@@ -438,44 +438,26 @@ public class SelectPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(siftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(siftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selectedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(coursePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(selectedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(siftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(selectedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(siftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void dayListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dayListMouseClicked
-        showTotalCourse();
-    }//GEN-LAST:event_dayListMouseClicked
-
-    private void creditListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creditListMouseClicked
-        showTotalCourse();
-    }//GEN-LAST:event_creditListMouseClicked
-
-    private void typeListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_typeListMouseClicked
-        showTotalCourse();
-    }//GEN-LAST:event_typeListMouseClicked
-
-    private void keywordListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_keywordListMouseClicked
-        showTotalCourse();
-    }//GEN-LAST:event_keywordListMouseClicked
-
-    private void viewInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewInfoButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewInfoButtonActionPerformed
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         DefaultTableModel mytablemodel = (DefaultTableModel)selectedListTable.getModel();
@@ -532,29 +514,41 @@ public class SelectPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        showTotalCourse();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        showTotalCourse();
+    }//GEN-LAST:event_jComboBox5ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        showTotalCourse();
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        showTotalCourse();
+    }//GEN-LAST:event_jComboBox4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable courseListTable;
     private javax.swing.JPanel coursePanel;
     private javax.swing.JLabel creditLabel;
-    private javax.swing.JList creditList;
     private javax.swing.JLabel dayLabel;
-    private javax.swing.JList dayList;
     private javax.swing.JButton dropButton;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox jComboBox4;
+    private javax.swing.JComboBox jComboBox5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel keywordLabel;
-    private javax.swing.JList keywordList;
     private javax.swing.JButton selectButton;
     private javax.swing.JTable selectedListTable;
     private javax.swing.JPanel selectedPanel;
     private javax.swing.JPanel siftPanel;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel typeLabel;
-    private javax.swing.JList typeList;
-    private javax.swing.JButton viewInfoButton;
     // End of variables declaration//GEN-END:variables
 }

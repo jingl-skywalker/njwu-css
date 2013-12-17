@@ -225,7 +225,15 @@ public class ViewGradePanel extends javax.swing.JPanel {
     }
     
     private void termListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_termListMouseClicked
-        String term = (String)termList.getSelectedValue();
+        String term_ch = (String)termList.getSelectedValue();
+        String term = term_ch.substring(0, 4);
+        if(term_ch.charAt(5) == '一'){
+            term += "-1";
+        }
+        else{
+            term += "-2";
+        }
+        
         ArrayList<GradeVO> gradelist = gradebl.getCourseScore(stuID, term);
         
         clearAll();

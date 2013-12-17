@@ -760,6 +760,8 @@ int i=-1;
         }
          if(userBL.changeUserInfo()==ResultMessage.SUCCESS){
                 JOptionPane.showConfirmDialog(frame, "修改成功", null, JOptionPane.OK_OPTION);
+                newPasswordField1.setText("");
+                newPasswordField2.setText("");
             }
             else{
                 JOptionPane.showConfirmDialog(frame, "修改失败", null, JOptionPane.OK_OPTION);
@@ -776,6 +778,47 @@ int i=-1;
         birthLabel2.setText(v.getGrade());
         yearLabel2.setText(v.getYearIn());
         sexLabel2.setText(v.getSex());
+    }
+    public void update(){
+         vos = userBL.getUser();
+        String[][] content = new String[vos.size()][4];
+        for(int i=0;i<vos.size();i++){
+
+        //初始化table
+        
+            content[i] = vos.get(i).getModifyInfo();
+        }
+        String[] head = UserInfoVO.getModifyHeader();
+        DefaultTableModel model = new DefaultTableModel(content, head) {
+            public boolean isCellEditable(int row, int column) {
+             return false;
+            }
+        };
+        userListTable.setModel(model);
+        newPasswordField1.setText("");
+        newPasswordField2.setText("");
+        tipLabel.setText("");
+          fromeTextField.setText("");
+        toTextField.setText("");
+         IDTextField1.setText("请输入ID");
+        yearComboBox.setSelectedIndex(0);
+        typeComboBox.setSelectedIndex(0);
+        insComboBox.setSelectedIndex(0);
+      
+         idLabel2.setText("xx");
+        nameLabel2.setText("xx");
+        typeLabel2.setText("xx");
+        insLabel2.setText("xx");
+        identityLabel2.setText("xx");
+        birthLabel2.setText("xx");
+        yearLabel2.setText("xx");
+        sexLabel2.setText("xx");
+
+
+    }
+    
+      public void updateName(String name){
+         nameLogo2.setText(name);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField IDTextField1;
