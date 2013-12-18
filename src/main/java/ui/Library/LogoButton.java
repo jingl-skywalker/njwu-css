@@ -244,5 +244,10 @@ public class LogoButton {/*各种按钮*/
         return button;
     }
 
+    public JButton getLCreditButton() {
+        image = icon.getLCreditIcon();
+        setButton();
+        return button;
+    }
     
 }

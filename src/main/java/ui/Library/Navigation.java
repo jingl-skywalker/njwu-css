@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import ui.Admin.LoginFrame;
 
@@ -116,10 +117,9 @@ public class Navigation {/*导航类*/
     
     /*事件-close*/
     class CloseListener implements MouseListener {
-        LoginFrame login;
+
         @Override
         public void mouseClicked(MouseEvent e) {
-            login = new LoginFrame();
             
         }
 
@@ -143,6 +143,10 @@ public class Navigation {/*导航类*/
         public void mouseExited(MouseEvent e) {
         }
         
+    }
+    
+    public JButton getCloseButton() {
+        return closeButton;
     }
     
 }

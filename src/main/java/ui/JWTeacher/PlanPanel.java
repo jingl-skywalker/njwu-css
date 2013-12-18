@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import ui.Library.Navigation;
 import ui.Library.SList;
+import ui.Library.ScrollPane;
+import ui.Library.Table;
 
 /**
  *
@@ -33,12 +35,23 @@ public class PlanPanel extends javax.swing.JPanel {
         navPanel.setOpaque(false);
         /*GUI-导航*/
         navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
-        /*GUI-主界面*/
+        /*GUI-左界面*/
+        leftPanel.setOpaque(false);
         ArrayList<String> ins = new ArrayList<String>();
         ins.add("软件学院");
-        insList = new SList(ins,10,10,100,400).getList();
-        
-     
+        insList = new SList(ins,30,10,200,400).getList();
+        leftPanel.add(insList);
+       /*GUI-右界面*/
+        rightPanel.setOpaque(false);
+        ArrayList<String> content = new ArrayList<String>();
+        content.add("通识通修;软件工程;00122;4;4");
+        ArrayList<String> head = new ArrayList<String>();
+        head.add("所属模块");head.add("课程名");head.add("课程号");head.add("学分");head.add("周学时");
+        String s = ";";
+        planTable = new Table(content,head,s).getTable();
+        scroll = new ScrollPane(10,10,670,400).getScrollPane();
+        scroll.setViewportView(planTable);
+        rightPanel.add(scroll);
     }
     
     public void update() {
@@ -124,9 +137,10 @@ public class PlanPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     /*GUI-导航*/
     private Navigation navigation;
-    /*GUI-主界面*/
+    /*GUI-左界面*/
     private JList insList;
-    private JTable planTabel;
+    /*GUI-右界面*/
+    private JTable planTable;
     private JScrollPane scroll;
     
 }

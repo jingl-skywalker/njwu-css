@@ -15,7 +15,7 @@ public class MyColor {/*文本框的颜色*/
    private Color color;
    
    public MyColor() {
-       color = new Color(102,102,205);
+       color = new Color(204,204,255);//Color(102,102,205);
    }
    
    public MyColor(int r,int b,int g) {

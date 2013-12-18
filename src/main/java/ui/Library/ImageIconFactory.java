@@ -160,6 +160,10 @@ public class ImageIconFactory {/*图标集合*/
         return new ImageIcon(p+"Lyes.gif");
     }
     
+    public ImageIcon getLCreditIcon() {
+        return new ImageIcon(p+"Lcredit.gif");
+    }
+    
     /*文字图标*/
     public ImageIcon getPAddUserIcon() {
         return new ImageIcon(p+"PaddUser.gif");
@@ -214,7 +218,7 @@ public class ImageIconFactory {/*图标集合*/
     }
     
     public ImageIcon getPNoteIcon() {
-        return new ImageIcon(p+"Pnote.gif");
+        return new ImageIcon(p+"PnoteT.gif");
     }
     
     public ImageIcon getPPerInfoIcon() {

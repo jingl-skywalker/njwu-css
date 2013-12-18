@@ -9,12 +9,15 @@ import businesslogicservice.userblservice.UserInfoFactory;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import ui.Admin.LoginFrame;
 import ui.Library.ImageIconFactory;
 import ui.Library.LogoButton;
 import ui.Library.Navigation;
@@ -56,6 +59,8 @@ public class JWMain extends javax.swing.JFrame {
         navPanel.setOpaque(false);
         /*GUI-导航*/
         navigation = new Navigation(navPanel,card,contain,"mainP");
+        exit = navigation.getCloseButton();
+        exit.addActionListener(new CloseListener());
         /*GUI-通知面板*/
         notePanel.setOpaque(false);
         noteButton = new LogoButton(30,20).getLNoteButton();
@@ -109,6 +114,18 @@ public class JWMain extends javax.swing.JFrame {
         contain.add(perInfoPanel,"perInfoP");
         contain.add(timePanel,"timeP");
         contain.add(noticePanel,"noticeP");
+    }
+    
+    /*事件-close*/
+    class CloseListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            login = new LoginFrame();
+            login.setVisible(true);
+            dispose();
+        }
+        
     }
     
     /*事件-exit*/
@@ -489,6 +506,8 @@ public class JWMain extends javax.swing.JFrame {
     static CardLayout card;//卡片式布局
     /*GUI-导航*/
     private Navigation navigation;
+    private LoginFrame login;
+    private JButton exit;
     /*GUI-通知面板*/
     private JButton noteButton;
     private JLabel noteLabel;

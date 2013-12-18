@@ -6,6 +6,8 @@ package ui.JWTeacher;
 
 import ui.Library.MyFont;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import ui.Admin.LoginFrame;
 import ui.Library.ImageIconFactory;
 import ui.Library.LogoButton;
 import ui.Library.Navigation;
@@ -92,7 +95,7 @@ public class FramePanel extends javax.swing.JPanel {
         newMButton.addMouseListener(new NewMListener());//新建模块按钮
         cancelButton.addMouseListener(new CancelListener());//取消按钮
     }
-    
+
     /*事件-创建框架*/
     class CreateListener implements MouseListener {
 
