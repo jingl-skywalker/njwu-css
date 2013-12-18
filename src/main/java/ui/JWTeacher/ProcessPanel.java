@@ -34,9 +34,9 @@ public class ProcessPanel extends javax.swing.JPanel {
         navigation = new Navigation(navPanel,JWMain.card,JWMain.contain,"mainP");
         /*GUI-进程管理*/
         timeButton = new LogoButton(80,100).getJModifyrButton();
-        timeLabel = new TextLabel(image.getPTimeIcon(),80,120).getLabel();
+        timeLabel = new TextLabel(image.getPTimeIcon(),80,170).getLabel();
         noticeButton = new LogoButton(200,100).getJTwoDocButton();
-        noticeLabel = new TextLabel(image.getPNoticeIcon(),200,120).getLabel();
+        noticeLabel = new TextLabel(image.getPNoticeIcon(),200,170).getLabel();
         timeButton.addMouseListener(new TimeListener());//时间安排按钮
         add(timeButton);
         add(timeLabel);

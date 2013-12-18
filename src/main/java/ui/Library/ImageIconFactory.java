@@ -164,6 +164,18 @@ public class ImageIconFactory {/*图标集合*/
         return new ImageIcon(p+"Lcredit.gif");
     }
     
+    public ImageIcon getLDeleteIcon() {
+        return new ImageIcon(p+"Ldelete.gif");
+    }
+    
+    public ImageIcon getLRefreshIcon() {
+        return new ImageIcon(p+"Lrefresh.gif");
+    }
+    
+    public ImageIcon getLOpenIcon() {
+        return new ImageIcon(p+"Lopen.gif");
+    }
+    
     /*文字图标*/
     public ImageIcon getPAddUserIcon() {
         return new ImageIcon(p+"PaddUser.gif");
@@ -278,11 +290,15 @@ public class ImageIconFactory {/*图标集合*/
     }
     
     public ImageIcon getPTimeIcon() {
-        return new ImageIcon(p+".gif");
+        return new ImageIcon(p+"Ptime.gif");
     }
     
     public ImageIcon getPNoticeIcon() {
-        return new ImageIcon(p+".gif");
+        return new ImageIcon(p+"Pnotice.gif");
+    }
+    
+    public ImageIcon getPTongshiIcon() {
+        return new ImageIcon(p+"Ptongshi.gif");
     }
     
     /*登录小人*/

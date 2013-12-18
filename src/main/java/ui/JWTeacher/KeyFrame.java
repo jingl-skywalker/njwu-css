@@ -27,6 +27,7 @@ public class KeyFrame extends javax.swing.JFrame {
      */
     public KeyFrame() {
         initComponents();
+        /*GUI-frame背景*/
         image = new ImageIconFactory();
         backLabel = new JLabel(image.getBmodelbackIcon());
         backLabel.setBounds(0,0,543,272);

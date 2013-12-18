@@ -78,12 +78,14 @@ public class JWMain extends javax.swing.JFrame {
         planButton = new LogoButton(220,40).getJTwoPenButton();
         staticsButton = new LogoButton(330,40).getJRecycleButton();
         processButton = new LogoButton(115,170).getJPencilButton();
-        perInfoButton = new LogoButton(220,172).getJPersonButton();
+        courseButton = new LogoButton(220,172).getJPenButton();
+        perInfoButton = new LogoButton(330,172).getJPersonButton();
         frameLabel = new TextLabel(image.getPFrameIcon(),110,110).getLabel();
         planLabel = new TextLabel(image.getPPlanIcon(),220,108).getLabel();
         staticsLabel = new TextLabel(image.getPStaticsIcon(),330,108).getLabel();
         processLabel = new TextLabel(image.getPProcessIcon(),110,238).getLabel();
-        perInfoLabel = new TextLabel(image.getPPerInfoIcon(),220,238).getLabel();
+        courseLabel = new TextLabel(image.getPTongshiIcon(),220,240).getLabel();
+        perInfoLabel = new TextLabel(image.getPPerInfoIcon(),330,238).getLabel();
         frameButton.addMouseListener(new FrameListener());//教学框架
         menuPanel.add(frameButton);
         menuPanel.add(frameLabel);
@@ -96,6 +98,9 @@ public class JWMain extends javax.swing.JFrame {
         processButton.addMouseListener(new ProcessListener());//进程管理
         menuPanel.add(processButton);
         menuPanel.add(processLabel);
+        courseButton.addMouseListener(new CourseListener());//通识通修
+        menuPanel.add(courseButton);
+        menuPanel.add(courseLabel);
         perInfoButton.addMouseListener(new PerInfoListener());//个人信息
         menuPanel.add(perInfoButton);
         menuPanel.add(perInfoLabel);
@@ -104,6 +109,7 @@ public class JWMain extends javax.swing.JFrame {
         planPanel = new PlanPanel();
         staticsPanel = new StaticsPanel();
         processPanel = new ProcessPanel();
+        coursePanel = new CoursePanel();
         perInfoPanel = new PerInfoPanel();
         timePanel = new TimePanel();
         noticePanel = new NoticePanel();
@@ -113,6 +119,7 @@ public class JWMain extends javax.swing.JFrame {
         contain.add(processPanel,"processP");
         contain.add(perInfoPanel,"perInfoP");
         contain.add(timePanel,"timeP");
+        contain.add(coursePanel,"courseP");
         contain.add(noticePanel,"noticeP");
     }
     
@@ -270,6 +277,37 @@ public class JWMain extends javax.swing.JFrame {
         @Override
         public void mouseReleased(MouseEvent e) {
             processButton.setContentAreaFilled(false);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-通识通修*/
+    class CourseListener  implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            card.show(contain,"courseP");
+            coursePanel.update();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            courseButton.setContentAreaFilled(true);
+            courseButton.setBackground(Color.black);
+            courseButton.setOpaque(false);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            courseButton.setContentAreaFilled(false);
         }
 
         @Override
@@ -517,11 +555,13 @@ public class JWMain extends javax.swing.JFrame {
     private JButton planButton;
     private JButton staticsButton;
     private JButton processButton;
+    private JButton courseButton;
     private JButton perInfoButton;
     private JLabel frameLabel;
     private JLabel planLabel;
     private JLabel staticsLabel;
     private JLabel processLabel;
+    private JLabel courseLabel;
     private JLabel perInfoLabel;
     /*逻辑-切换面板*/
     private FramePanel framePanel;
@@ -531,6 +571,7 @@ public class JWMain extends javax.swing.JFrame {
     private PerInfoPanel perInfoPanel;
     private TimePanel timePanel;
     private NoticePanel noticePanel;
+    private CoursePanel coursePanel;
     /*逻辑-任天*/
     private UserBLService userBL;
     private UserInfoVO userInfoVO;

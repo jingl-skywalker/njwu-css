@@ -250,4 +250,22 @@ public class LogoButton {/*各种按钮*/
         return button;
     }
     
+    public JButton getLDeleteButton() {
+        image = icon.getLDeleteIcon();
+        setButton();
+        return button;
+    }
+    
+    public JButton getLRefreshButton() {
+        image = icon.getLRefreshIcon();
+        setButton();
+        return button;
+    }
+    
+    public JButton getLOpenButton() {
+        image = icon.getLOpenIcon();
+        setButton();
+        return button;
+    }
+    
 }
