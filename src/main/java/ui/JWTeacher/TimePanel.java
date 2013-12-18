@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import ui.Library.ComboBox;
 import ui.Library.LogoButton;
+import ui.Library.MyColor;
 import ui.Library.Navigation;
 import ui.Library.TextLabel;
 
@@ -37,15 +38,16 @@ public class TimePanel extends javax.swing.JPanel {
         /*GUI-左侧面板*/
         leftPanel.setOpaque(false);
         int x = 50;
-        int h = 90;
-        termLabel = new TextLabel("学期",x,10,100,h).getLabel();
-        frameLabel = new TextLabel("教学框架制定",x,40,100,h).getLabel();
-        planLabel = new TextLabel("教学计划制定",x,70,100,h).getLabel();
-        courseLabel = new TextLabel("课程发布",x,100,100,h).getLabel();
-        selectLabel = new TextLabel("选课",x,130,100,h).getLabel();
-        reSelectLabel = new TextLabel("补选",x,160,100,h).getLabel();
-        drawlLabel = new TextLabel("退选",x,190,100,h).getLabel();
-        gradeLabel = new TextLabel("成绩录入",x,220,100,h).getLabel();
+        int h = 30;
+        int y = 50;
+        termLabel = new TextLabel("学期",x,y,100,h).getLabel();
+        frameLabel = new TextLabel("教学框架制定",x,y+30,100,h).getLabel();
+        planLabel = new TextLabel("教学计划制定",x,y+2*30,100,h).getLabel();
+        courseLabel = new TextLabel("课程发布",x,y+3*30,100,h).getLabel();
+        selectLabel = new TextLabel("选课",x,y+4*30,100,h).getLabel();
+        reSelectLabel = new TextLabel("补选",x,y+5*30,100,h).getLabel();
+        drawlLabel = new TextLabel("退选",x,y+6*30,100,h).getLabel();
+        gradeLabel = new TextLabel("成绩录入",x,y+7*30,100,h).getLabel();
         leftPanel.add(termLabel);
         leftPanel.add(frameLabel);
         leftPanel.add(planLabel);
@@ -54,6 +56,14 @@ public class TimePanel extends javax.swing.JPanel {
         leftPanel.add(reSelectLabel);
         leftPanel.add(drawlLabel);
         leftPanel.add(gradeLabel);
+        termLabel.addMouseListener(new TermListener());
+        frameLabel.addMouseListener(new FrameListener());
+        planLabel.addMouseListener(new PlanListener());
+        courseLabel.addMouseListener(new CourseListener());
+        selectLabel.addMouseListener(new SelectListener());
+        reSelectLabel.addMouseListener(new ReSelectListener());
+        drawlLabel.addMouseListener(new DrawlListener());
+        gradeLabel.addMouseListener(new GradeListener());
         /*GUI-右侧面板*/
         rightPanel.setOpaque(false);
         ArrayList<String> year = new ArrayList<String>();//年
@@ -64,9 +74,8 @@ public class TimePanel extends javax.swing.JPanel {
             s = s+i;
             mon.add(s);
             s = "0";
-            if(i>8) {
+            if(i>8) 
                 s = "";
-            }
         }
         ArrayList<String> day = new ArrayList<String>();//日
         s = "0";
@@ -74,9 +83,8 @@ public class TimePanel extends javax.swing.JPanel {
             s = s+i;
             day.add(s);
             s = "0";
-            if(i>8) {
+            if(i>8) 
                 s = "";
-            }
         }
         ArrayList<String> hour = new ArrayList<String>();//时
         s = "0";
@@ -84,9 +92,8 @@ public class TimePanel extends javax.swing.JPanel {
             s = s+i;
             hour.add(s);
             s = "0";
-            if(i>8) {
+            if(i>8) 
                 s = "";
-            }
         }
         ArrayList<String> min = new ArrayList<String>();//分
         s = "0";
@@ -94,9 +101,8 @@ public class TimePanel extends javax.swing.JPanel {
             s = s+i;
             min.add(s);
             s = "0";
-            if(i>8) {
+            if(i>8) 
                 s = "";
-            }
         }
         int x1 = 70;//年
         int x2 = 230;//月
@@ -154,6 +160,240 @@ public class TimePanel extends javax.swing.JPanel {
         rightPanel.add(day2ComboBox);
         rightPanel.add(hour2ComboBox);
         rightPanel.add(min2ComboBox);
+        color1 = new MyColor(255,255,0);
+        color2 = new MyColor(255,255,255);
+    }
+    
+    /*事件-学期*/
+    class TermListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            termLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            termLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            termLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-教学框架制定*/
+    class FrameListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            frameLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            frameLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            frameLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-教学计划制定*/
+    class PlanListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            planLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            planLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            planLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-课程发布*/
+    class CourseListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            courseLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            courseLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            courseLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-选课*/
+    class SelectListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            selectLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            selectLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            selectLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-补选*/
+    class ReSelectListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            reSelectLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            reSelectLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            reSelectLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-退选*/
+    class DrawlListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            cleanColor();
+            drawlLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            drawlLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            drawlLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
+    }
+    
+    /*事件-成绩录入*/
+    class GradeListener implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           cleanColor();
+           gradeLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            gradeLabel.setForeground(color1.getColor());
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            gradeLabel.setForeground(color2.getColor());
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+        }
+        
     }
     
     /*事件-sure按钮*/
@@ -215,6 +455,17 @@ public class TimePanel extends javax.swing.JPanel {
         
     }
 
+    public void cleanColor() {
+        termLabel.setForeground(color2.getColor());
+        frameLabel.setForeground(color2.getColor());
+        planLabel.setForeground(color2.getColor());
+        courseLabel.setForeground(color2.getColor());
+        selectLabel.setForeground(color2.getColor());
+        reSelectLabel.setForeground(color2.getColor());
+        drawlLabel.setForeground(color2.getColor());
+        gradeLabel.setForeground(color2.getColor());
+    }
+    
     public void update() {
         
     }
@@ -329,5 +580,6 @@ public class TimePanel extends javax.swing.JPanel {
     private JComboBox minComboBox;
     private JComboBox hour2ComboBox;
     private JComboBox min2ComboBox;
-    
+    private MyColor color1;
+    private MyColor color2;
 }

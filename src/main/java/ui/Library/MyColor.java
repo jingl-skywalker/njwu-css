@@ -18,7 +18,12 @@ public class MyColor {/*文本框的颜色*/
        color = new Color(102,102,205);
    }
    
+   public MyColor(int r,int b,int g) {
+       color = new Color(r,b,g);
+   }
+   
    public Color getColor() {
        return color;
    }
+  
 }
